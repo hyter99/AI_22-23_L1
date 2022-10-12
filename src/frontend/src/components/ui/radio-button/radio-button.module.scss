@@ -1,0 +1,75 @@
+@import "src/frontend/src/styles/variables";
+
+.radioButton {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  align-items: center;
+  cursor: pointer;
+
+  &.disabledRadioButton {
+    cursor: not-allowed;
+  }
+
+  .input {
+    margin: 0;
+    appearance: none;
+    background-color: $colorWhite;
+    width: 23px;
+    height: 23px;
+    border: 2px solid $colorBlack;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+
+    // The checked circle - when it's not checked
+    &::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: 120ms transform ease-in-out;
+      box-shadow: inset 1em 1em $colorDarkPurple;
+    }
+
+    // Fire the checked circle
+    &:checked {
+      &::before {
+        transform: scale(1);
+      }
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      border-color: $colorSolidDarkGray;
+
+      &::before {
+        box-shadow: inset 1em 1em $colorSolidDarkGray;
+      }
+    }
+  }
+
+  p {
+    color: $colorBlack;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 17px;
+    text-align: center;
+    padding-left: 14px;
+    transform: translateY(1px);
+  }
+
+  // Hover
+  &:hover {
+    .input {
+      border-color: $colorDarkPurple;
+
+      &.disabled {
+        border-color: $colorSolidDarkGray;
+      }
+    }
+  }
+}

@@ -1,0 +1,134 @@
+@import "src/frontend/src/styles/variables";
+
+.selectContainer {
+  width: 100%;
+  height: 100%;
+
+  .label {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 3px;
+    padding-left: 2px;
+
+    p {
+      color: $colorBlack;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 15px;
+    }
+  }
+
+  .select {
+    width: 100%;
+    height: 33px;
+    background-color: $colorGray;
+    border: 1px solid $colorDarkGray;
+    border-radius: 10px;
+    padding: 7px 9px;
+    position: relative;
+    cursor: pointer;
+
+    &.openedSelect {
+      border-color: $colorLightPurple;
+    }
+
+    &.error {
+      background-color: $colorLightRed;
+      border-color: $colorRed;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 700;
+      font-style: normal;
+      color: $colorSolidDarkGray;
+
+      &.placeholder {
+        color: $colorDarkerGray;
+        font-size: 13px;
+        font-weight: 400;
+      }
+    }
+
+    .arrow {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      width: auto;
+      height: auto;
+
+      svg {
+        transform: rotate(0deg);
+        transition: transform ease-in-out 0.25s;
+
+        &.rotateUp {
+          transform: rotate(-180deg);
+          top: 3px;
+        }
+      }
+    }
+
+    .options {
+      width: 100%;
+      height: 92px;
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+      background-color: $colorWhite;
+      border: 1px solid $colorDarkGray;
+      border-radius: 10px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      z-index: 150;
+
+      &.extended {
+        height: 122px;
+      }
+
+      .optionsScroll {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        .option {
+          width: 100%;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+
+          &:hover {
+            background-color: $colorLightGray;
+          }
+
+          p {
+            font-size: 14px;
+            font-weight: 600;
+            font-style: normal;
+            color: $colorSolidDarkGray;
+          }
+        }
+      }
+    }
+  }
+
+  .errorMessage {
+    height: 20px;
+    padding-left: 2px;
+
+    p {
+      color: $colorRed;
+      font-size: 13px;
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+}

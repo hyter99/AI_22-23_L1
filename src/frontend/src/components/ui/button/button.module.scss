@@ -1,0 +1,82 @@
+@import "src/frontend/src/styles/variables";
+
+.buttonWrap {
+  width: 100%;
+  height: 100%;
+
+  .button {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
+
+    &.backgroundColorLightPurple {
+      background-color: $colorLightPurple;
+    }
+
+    &.backgroundColorPurple {
+      background-color: $colorSemiDarkPurple;
+    }
+
+    &.backgroundColorRed {
+      background-color: $colorRed;
+    }
+
+    &.backgroundColorBlack {
+      background-color: $colorBlack;
+    }
+
+    &.fontColorWhite {
+      color: $colorWhite;
+    }
+
+    &.hoverColorsLightPurple {
+      &:hover {
+        background-color: $colorSemiDarkPurple;
+      }
+    }
+
+    &.hoverColorsPurple {
+      &:hover {
+        background-color: $colorLightPurple;
+      }
+    }
+
+    &.hoverColorsRed {
+      &:hover {
+        color: $colorBlack;
+        background-color: $colorLightRed;
+      }
+    }
+
+    &.hoverColorsBlack {
+      &:hover {
+        color: $colorBlack;
+        background-color: $colorWhite;
+      }
+    }
+
+    &.disabledColors {
+      color: $colorDarkGray;
+      background-color: $colorSolidDarkGray;
+    }
+
+    &.noBorderRadius {
+      border-radius: 0;
+    }
+
+    &.defaultCursor {
+      cursor: default;
+    }
+  }
+}
