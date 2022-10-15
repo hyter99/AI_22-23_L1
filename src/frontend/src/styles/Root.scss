@@ -1,0 +1,73 @@
+/* TO DO - import the fonts */
+@import "src/frontend/src/styles/variables.scss";
+
+// -- Global settings --
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+// -- Tags --
+a {
+  text-decoration: none;
+  color: $colorBlack;
+}
+
+p {
+  margin: 0;
+}
+
+// -- Classes --
+// noSelect
+.noSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+// loader
+.loader {
+  border: 11px solid #f3f3f3; /* Light grey */
+  border-top: 11px solid $colorDarkPurple; /* Purple */
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// custom scrollbar
+.customScrollBar {
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $colorLighterPurple $colorLightGray;
+
+  // Chromium
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $colorLightGray;
+    border-radius: 100px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $colorLighterPurple;
+    border-radius: 100px;
+  }
+}
