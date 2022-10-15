@@ -1,6 +1,10 @@
+# environment
+.env
+
 # compiled output
 /dist
 /node_modules
+/.vite
 
 # Logs
 logs
