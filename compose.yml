@@ -1,0 +1,33 @@
+services:
+    app:
+        build: .
+        image: stock:dev
+        networks:
+            - main-network
+        ports:
+          - published: 5173
+            target: 5173
+          - published: 3000
+            target: 3000
+        environment:
+            DATABASE_URL: postgres://postgres:postgres@db:5432
+        depends_on:
+            - "db"
+        command: "npm run start:fulldev"
+    db:
+        image: postgres:15.0
+        restart: unless-stopped
+        networks:
+          - main-network
+        volumes:
+          - type: volume
+            source: postgres-data
+            target: /var/lib/postgresql/data
+        environment:
+            POSTGRES_PASSWORD: postgres
+
+networks:
+    main-network:
+
+volumes:
+    postgres-data:
