@@ -3,7 +3,7 @@ FROM node:16
 # Update package lists and system dependencies
 RUN apt update && apt upgrade -y
 
-#USER node
+USER node
 
 # Application directory
 WORKDIR /usr/local/stock-app/
@@ -12,11 +12,12 @@ WORKDIR /usr/local/stock-app/
 COPY package.json package-lock.json .
 RUN npm ci
 
+# Copy Prisma schemas and setup Prisma
+COPY prisma prisma/
+RUN npx prisma generate
+
 # Copy remaining sources
 COPY . .
-
-# Setup Prisma
-RUN npx prisma generate
 
 # Run Node servers
 CMD ["npm", "run", "start:fulldev"]
