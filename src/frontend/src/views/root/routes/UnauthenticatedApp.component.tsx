@@ -25,10 +25,25 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
       {/*Login view - main view*/}
       <Route
         exact
+        path="/akcje"
+        component={() =>
+          <div>akcje dla niezalogowanego użytkownika</div>
+        }
+      />
+      <Route
+        exact
+        path="/rejestracja"
+        component={() =>
+          // <ViewLogin appVersion={appVersion} />
+          <div>rejestracja</div>
+        }
+      />
+      <Route
+        exact
         path="/"
         component={() =>
           // <ViewLogin appVersion={appVersion} />
-          <div>placeholder</div>
+          <div>logowanie</div>
         }
       />
       {/*Other routes*/}

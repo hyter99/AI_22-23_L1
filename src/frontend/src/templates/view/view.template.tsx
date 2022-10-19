@@ -1,3 +1,5 @@
+// This template has menu
+
 import React, { ReactNode } from "react";
 import {RouteComponentProps, withRouter} from "react-router";
 import {Helmet} from "react-helmet-async";
@@ -18,14 +20,12 @@ interface ITemplateView extends RouteComponentProps<any> {
     children: ReactNode;
     viewTitle: string;
     appVersion: string;
-    hasNoMenu?: boolean;
 }
 
 const TemplateView: React.FC<ITemplateView> = ({
     children,
     viewTitle,
-    appVersion,
-    hasNoMenu
+    appVersion
   }) => {
 
   return (
@@ -35,13 +35,11 @@ const TemplateView: React.FC<ITemplateView> = ({
       </Helmet>
       {
         <div className={styles.app}>
+          {/*HERE WILL BE NAV-MENU TEMPLATE WITH COMPONENT*/}
           {/*{*/}
-          {/*  !hasNoMenu ?*/}
           {/*    <TemplateTopMenu>*/}
           {/*      <UserMenu/>*/}
           {/*    </TemplateTopMenu>*/}
-          {/*  :*/}
-          {/*    null*/}
           {/*}*/}
           <div className={`${styles.appContent}`}>
             {children}

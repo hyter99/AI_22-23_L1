@@ -28,11 +28,19 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       {/*Main menu*/}
       <Route
         exact
-        path="/"
+        path="/akcje"
         component={() => (
             //<ViewStudentMainMenu appVersion={appVersion} />
-          <div>placeholder x</div>
+            <div>akcje dla zalogowanego użytkownika</div>
           )
+        }
+      />
+      <Route
+        exact
+        path="/"
+        component={() => (
+          <Redirect to="/akcje" />
+        )
         }
       />
       {/*Other routes*/}

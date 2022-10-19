@@ -25,7 +25,6 @@ export const loginUser = (userName: string, password: string) => {
 
       const loginResults: AdminLogin = {
         accessToken: data.token ? data.token : "",
-        refreshToken: data.refreshToken ? data.refreshToken : "",
         user: {
           id: data.id ? data.id : "",
           username: data.username ? data.username : "",

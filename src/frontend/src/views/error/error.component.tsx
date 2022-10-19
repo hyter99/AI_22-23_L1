@@ -4,7 +4,10 @@ import React from "react";
 import styles from "./error.module.scss";
 
 // templates
-import TemplateView from "../../templates/view/view.template";
+import TemplateFullScreenView from "../../templates/full-screen-view/full-screen-view.template";
+
+// components
+import {Link} from "react-router-dom";
 
 // interfaces
 interface IViewError {
@@ -14,11 +17,14 @@ interface IViewError {
 const ViewError:React.FC<IViewError> = ({appVersion}) => {
 
   return (
-    <TemplateView appVersion={appVersion} viewTitle="Nie ma takiej strony" hasNoMenu>
+    <TemplateFullScreenView appVersion={appVersion} viewTitle="Nie ma takiej strony">
       <div className={styles.error}>
-        Nie ma takiej strony
+        <p>Nie ma takiej strony.</p>
+        <p className={styles.inline}>
+          Wróć do<Link to="/">strony z akcjami</Link>.
+        </p>
       </div>
-    </TemplateView>
+    </TemplateFullScreenView>
   );
 };
 

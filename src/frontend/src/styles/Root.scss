@@ -1,9 +1,9 @@
-/* TO DO - import the fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 @import "src/frontend/src/styles/variables.scss";
 
 // -- Global settings --
 html {
-  font-family: sans-serif;
+  font-family: 'Nunito', sans-serif; //Available font weights: 300,400,600,700
 }
 
 body {

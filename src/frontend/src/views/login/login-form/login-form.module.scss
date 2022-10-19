@@ -1,0 +1,13 @@
+@import "src/frontend/src/styles/variables";
+
+.loginForm {
+  width: 800px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 30px 20px;
+
+}

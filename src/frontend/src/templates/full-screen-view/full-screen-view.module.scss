@@ -1,0 +1,10 @@
+@import "src/frontend/src/styles/variables";
+
+.appContent {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
