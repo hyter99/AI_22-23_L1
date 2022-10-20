@@ -1,9 +1,9 @@
 export interface ILoginInputs {
-  userName: string;
+  email: string;
   password: string;
 }
 
 export interface IErrorLoginInputs {
-  userNameMessage: string;
+  emailMessage: string;
   passwordMessage: string;
 }

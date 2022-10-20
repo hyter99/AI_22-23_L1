@@ -9,5 +9,130 @@
   border-radius: 20px;
   overflow: hidden;
   padding: 30px 20px;
+  background-color: $colorDarkGray2;
 
+  .leftSite {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: $colorSemiDarkPurple;
+    padding: 20px 10px;
+
+    .loginImage {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+    }
+
+    .description {
+      width: 180px;
+
+      p.descriptionText {
+        font-weight: 400;
+        font-size: 15px;
+        font-style: normal;
+        color: $colorWhite;
+
+        b {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .rightSite {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: $colorWhite;
+    padding: 30px 50px;
+    position: relative;
+
+    .header {
+      width: 100%;
+      height: auto;
+      margin-bottom: 40px;
+
+      .headerText {
+        font-weight: 700;
+        font-size: 25px;
+        color: $colorBlack;
+        font-style: normal;
+      }
+
+      .subHeaderText {
+        font-weight: 400;
+        font-size: 20px;
+        color: $colorBlack;
+        font-style: normal;
+      }
+    }
+
+    .inputForm {
+      width: 100%;
+      height: auto;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .input {
+        width: 100%;
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 23px;
+        }
+      }
+    }
+
+    .submitButtonForm {
+      width: 100%;
+      height: 33px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 12px;
+
+      .buttonWrap {
+        width: 193px;
+        height: 100%;
+      }
+    }
+
+    .loginErrorWrap {
+      width: 100%;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .additionalInfo {
+      p {
+        font-weight: 600;
+        font-size: 15px;
+        font-style: normal;
+        color: $colorBlack;
+      }
+
+      a {
+        font-weight: 600;
+        font-size: 15px;
+        font-style: normal;
+        color: $colorDarkPurple;
+        padding-left: 5px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 }

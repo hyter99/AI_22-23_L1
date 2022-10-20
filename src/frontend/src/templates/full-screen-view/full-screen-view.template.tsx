@@ -25,7 +25,7 @@ const TemplateFullScreenView: React.FC<ITemplateFullScreenView> = ({
       <Helmet>
         <title>{viewTitle} {appVersion}</title>
       </Helmet>
-      <div className={`${styles.appContent}`}>
+      <div className={`backgroundImage ${styles.appContent}`}>
         {children}
       </div>
     </>

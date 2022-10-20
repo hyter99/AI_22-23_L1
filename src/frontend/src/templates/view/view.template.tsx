@@ -33,20 +33,18 @@ const TemplateView: React.FC<ITemplateView> = ({
       <Helmet>
         <title>{viewTitle} {appVersion}</title>
       </Helmet>
-      {
-        <div className={styles.app}>
-          {/*HERE WILL BE NAV-MENU TEMPLATE WITH COMPONENT*/}
-          {/*{*/}
-          {/*    <TemplateTopMenu>*/}
-          {/*      <UserMenu/>*/}
-          {/*    </TemplateTopMenu>*/}
-          {/*}*/}
-          <div className={`${styles.appContent}`}>
-            {children}
-          </div>
-          {/* Here can be footer */}
+      <div className={styles.app}>
+        {/*HERE WILL BE NAV-MENU TEMPLATE WITH COMPONENT*/}
+        {/*{*/}
+        {/*    <TemplateTopMenu>*/}
+        {/*      <UserMenu/>*/}
+        {/*    </TemplateTopMenu>*/}
+        {/*}*/}
+        <div className={`backgroundImage ${styles.appContent}`}>
+          {children}
+          {/* Here can be footer - then make outer appContent div flex with column direction*/}
         </div>
-      }
+      </div>
     </>
   );
 };

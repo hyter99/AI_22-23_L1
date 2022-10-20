@@ -16,6 +16,7 @@ const useLoginForm = () => {
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
   const {loginUser, setLoginErrorMessage, setLoading} = useActions();
   const {loading: loadingLogin, error: errorLogin} = useTypedSelector(state => state.login);
+  const emailRgx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   useEffect(() => {
     setLoginErrorMessage(null);
@@ -25,9 +26,9 @@ const useLoginForm = () => {
   // Live validating - userName
   useEffect(() => {
     if (isLiveValidation) {
-      validateUserName();
+      validateEmail();
     }
-  },[loginInputs.userName]);
+  },[loginInputs.email]);
 
   // Live validating - password
   useEffect(() => {
@@ -36,15 +37,15 @@ const useLoginForm = () => {
     }
   },[loginInputs.password]);
 
-  const validateUserName = (): boolean => {
+  const validateEmail = (): boolean => {
     let message = "";
-    if (loginInputs.userName.length === 0) {
-      message = "Nazwa użytkownika nie może być pusta";
+    if (!emailRgx.test(loginInputs.email)) {
+      message = "Email jest nieprawidłowy";
     }
 
     setErrorLoginInputs(prev => ({
       ...prev,
-      userNameMessage: message
+      emailMessage: message
     }));
 
     return message.length === 0;
@@ -72,6 +73,7 @@ const useLoginForm = () => {
   };
 
   const submitLogin = (e: React.FormEvent) => {
+
     e.preventDefault();
 
     setIsLiveValidation(true);
@@ -79,13 +81,13 @@ const useLoginForm = () => {
     let canSubmit = true;
 
     // Validate email AND password
-    if (!validateUserName() || !validatePassword()) {
+    if (!validateEmail() || !validatePassword()) {
       canSubmit = false;
     }
 
     // Checking if we can submit the login
     if (canSubmit) {
-      loginUser(loginInputs.userName, loginInputs.password);
+      loginUser(loginInputs.email, loginInputs.password);
     }
   };
 

@@ -17,7 +17,6 @@ const initialState: ILoginState = {
     accessToken: "",
     user: {
       id: "",
-      username: "",
       firstName: "",
       lastName: "",
       email: ""
@@ -48,7 +47,6 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
         accessToken: "",
         user: {
           id: "",
-          username: "",
           firstName: "",
           lastName: "",
           email: ""

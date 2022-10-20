@@ -1,12 +1,11 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // styles
 import styles from "./login-form.module.scss";
 
 // SVGS
-//@ts-ignore
-import {ReactComponent as SVGLoginImage} from "../../../assets/svg/stock-logo.svg";
+import SVGLoginImage from "../../../assets/svg/stock-logo.svg";
 
 // components
 import InputField from "../../../components/ui/input-field/input-field.component";
@@ -17,7 +16,7 @@ import LoadingModal from "../../../modals/loading-modal/loading-modal.component"
 import useLoginForm from "./login-form.hook";
 import Button from "../../../components/ui/button/button.component";
 
-const LoginForm:React.FC = () => {
+const LoginForm:React.FC= () => {
   const {loginInputs, errorLoginInputs, handleInputsChange, submitLogin, loadingLogin, errorLogin} = useLoginForm();
 
   return (
@@ -27,9 +26,10 @@ const LoginForm:React.FC = () => {
       noValidate
     >
       <div className={styles.leftSite}>
-        <div className={styles.loginImage}>
-          <SVGLoginImage/>
-        </div>
+        <img
+          src={SVGLoginImage}
+          className={styles.loginImage}
+        />
         <div className={styles.description}>
           <p className={styles.descriptionText}>
             Twórz i rozwiązuj testy
@@ -48,14 +48,14 @@ const LoginForm:React.FC = () => {
         <div className={styles.inputForm}>
           <div className={styles.input}>
             <InputField
-              type="text"
-              label="Nazwa użytkownika"
-              placeholder="Nazwa użytkownika"
-              name="userName"
-              value={loginInputs.userName}
+              type="email"
+              label="Email"
+              placeholder="Email"
+              name="email"
+              value={loginInputs.email}
               handleChange={handleInputsChange}
-              isError={errorLoginInputs.userNameMessage !== ""}
-              errorMessage={errorLoginInputs.userNameMessage}
+              isError={errorLoginInputs.emailMessage !== ""}
+              errorMessage={errorLoginInputs.emailMessage}
             />
           </div>
           <div className={styles.input}>

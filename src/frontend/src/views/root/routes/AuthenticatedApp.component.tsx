@@ -28,7 +28,7 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       {/*Main menu*/}
       <Route
         exact
-        path="/akcje"
+        path="/"
         component={() => (
             //<ViewStudentMainMenu appVersion={appVersion} />
             <div>akcje dla zalogowanego użytkownika</div>
@@ -37,9 +37,12 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       />
       <Route
         exact
-        path="/"
+        path="/logowanie"
         component={() => (
-          <Redirect to="/akcje" />
+          // <>
+          //   {document.location.href="/"}
+          // </>
+          <Redirect to="/" />
         )
         }
       />

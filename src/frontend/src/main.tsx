@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 
 // Root component
 import Root from './views/root/Root';
 
 // router
-import {BrowserRouter as Router} from "react-router-dom";
+import {Router} from "react-router-dom";
+import history from "./functions/history";
 
 // redux
 import {Provider} from 'react-redux';
@@ -18,18 +19,19 @@ import {HelmetProvider} from "react-helmet-async";
 // window size provider
 import WindowSizeProvider from "./providers/window-size-provider.component";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <HelmetProvider>
           <WindowSizeProvider>
-            <Router>
+            <Router history={history}>
               <Root />
             </Router>
           </WindowSizeProvider>
         </HelmetProvider>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );

@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 // views
-// import ViewLogin from "../../login/login-content.component";
+import ViewLogin from "../../login/login.component";
 // import ViewRegister from "../../register/register-content.component";
 
 // interfaces
@@ -25,7 +25,7 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
       {/*Login view - main view*/}
       <Route
         exact
-        path="/akcje"
+        path="/"
         component={() =>
           <div>akcje dla niezalogowanego użytkownika</div>
         }
@@ -40,17 +40,16 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
       />
       <Route
         exact
-        path="/"
+        path="/logowanie"
         component={() =>
-          // <ViewLogin appVersion={appVersion} />
-          <div>logowanie</div>
+          <ViewLogin appVersion={appVersion} />
         }
       />
       {/*Other routes*/}
       <Route
         path="*"
         component={() =>
-          <Redirect to="/" />
+          <Redirect to="/logowanie" />
         }
       />
     </Switch>
