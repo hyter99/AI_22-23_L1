@@ -11,7 +11,8 @@ model BuyOffer {
   buyOfferId            Int           @id
   userId                Int
   stockId               Int
-  unitBuyPrice          Decimal       @db.Decimal(16, 2)
+  unitBuyPrice          Int
+  unitBuyPriceDecimal   Int
   quantity              Int
   created               DateTime      @db.Timestamptz(6)
   status                Int           @default(0)
@@ -31,7 +32,8 @@ model SellOffer {
   sellOfferId            Int           @id
   userId                 Int
   userStockId            Int
-  unitSellPrice          Decimal       @db.Decimal(16, 2)
+  unitSellPrice          Int
+  unitSellPriceDecimal   Int
   quantity               Int
   created                DateTime      @db.Timestamptz(6)
   status                 Int           @default(0)
@@ -43,7 +45,8 @@ model Stock {
   stockId                  Int                 @id
   companyId                Int
   quantity                 Int
-  price                    Decimal             @db.Decimal(16, 2)
+  price                    Int
+  priceDecimal             Int
   StockToCompany           Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
   StockToBuyOffer          BuyOffer[]
   StockToStockPriceHistory StockPriceHistory[]
@@ -53,7 +56,8 @@ model Stock {
 model StockPriceHistory {
   stockPriceHistoryId      Int      @id
   stockId                  Int
-  price                    Decimal  @db.Decimal(16, 2)
+  price                    Int
+  priceDecimal             Int
   changeDate               DateTime @db.Timestamptz(6)
   StockPriceHistoryToStock Stock    @relation(fields: [stockId], references: [stockId], onDelete: NoAction, onUpdate: NoAction, map: "Stock")
 }
@@ -78,7 +82,8 @@ model User {
   password                String        @db.VarChar
   name                    String        @db.VarChar
   surname                 String        @db.VarChar
-  balance                 Decimal       @default(0.00) @db.Decimal(16, 2)
+  balance                 Int
+  balanceDecimal          Int
   BuyOffer                BuyOffer[]
   SellOffer               SellOffer[]
   UserToTransactionBuyer  Transaction[] @relation("TransactionToBuyer")
