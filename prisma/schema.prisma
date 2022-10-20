@@ -11,8 +11,7 @@ model BuyOffer {
   buyOfferId            Int           @id
   userId                Int
   stockId               Int
-  unitBuyPrice          Int
-  unitBuyPriceDecimal   Int
+  unitBuyPriceCents     Int
   quantity              Int
   created               DateTime      @db.Timestamptz(6)
   status                Int           @default(0)
@@ -32,8 +31,7 @@ model SellOffer {
   sellOfferId            Int           @id
   userId                 Int
   userStockId            Int
-  unitSellPrice          Int
-  unitSellPriceDecimal   Int
+  unitSellPriceCents     Int
   quantity               Int
   created                DateTime      @db.Timestamptz(6)
   status                 Int           @default(0)
@@ -45,8 +43,7 @@ model Stock {
   stockId                  Int                 @id
   companyId                Int
   quantity                 Int
-  price                    Int
-  priceDecimal             Int
+  priceCents               Int
   StockToCompany           Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
   StockToBuyOffer          BuyOffer[]
   StockToStockPriceHistory StockPriceHistory[]
@@ -56,8 +53,7 @@ model Stock {
 model StockPriceHistory {
   stockPriceHistoryId      Int      @id
   stockId                  Int
-  price                    Int
-  priceDecimal             Int
+  priceCents               Int
   changeDate               DateTime @db.Timestamptz(6)
   StockPriceHistoryToStock Stock    @relation(fields: [stockId], references: [stockId], onDelete: NoAction, onUpdate: NoAction, map: "Stock")
 }
@@ -82,8 +78,7 @@ model User {
   password                String        @db.VarChar
   name                    String        @db.VarChar
   surname                 String        @db.VarChar
-  balance                 Int
-  balanceDecimal          Int
+  balanceCents            Int
   BuyOffer                BuyOffer[]
   SellOffer               SellOffer[]
   UserToTransactionBuyer  Transaction[] @relation("TransactionToBuyer")

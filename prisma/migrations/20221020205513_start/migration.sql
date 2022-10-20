@@ -3,7 +3,7 @@ CREATE TABLE "BuyOffer" (
     "buyOfferId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "stockId" INTEGER NOT NULL,
-    "unitBuyPrice" DECIMAL(16,2) NOT NULL,
+    "unitBuyPriceCents" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "created" TIMESTAMPTZ(6) NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 0,
@@ -25,7 +25,7 @@ CREATE TABLE "SellOffer" (
     "sellOfferId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
     "userStockId" INTEGER NOT NULL,
-    "unitSellPrice" DECIMAL(16,2) NOT NULL,
+    "unitSellPriceCents" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "created" TIMESTAMPTZ(6) NOT NULL,
     "status" INTEGER NOT NULL DEFAULT 0,
@@ -38,7 +38,7 @@ CREATE TABLE "Stock" (
     "stockId" INTEGER NOT NULL,
     "companyId" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "price" DECIMAL(16,2) NOT NULL,
+    "priceCents" INTEGER NOT NULL,
 
     CONSTRAINT "Stock_pkey" PRIMARY KEY ("stockId")
 );
@@ -47,7 +47,7 @@ CREATE TABLE "Stock" (
 CREATE TABLE "StockPriceHistory" (
     "stockPriceHistoryId" INTEGER NOT NULL,
     "stockId" INTEGER NOT NULL,
-    "price" DECIMAL(16,2) NOT NULL,
+    "priceCents" INTEGER NOT NULL,
     "changeDate" TIMESTAMPTZ(6) NOT NULL,
 
     CONSTRAINT "StockPriceHistory_pkey" PRIMARY KEY ("stockPriceHistoryId")
@@ -73,7 +73,7 @@ CREATE TABLE "User" (
     "password" VARCHAR NOT NULL,
     "name" VARCHAR NOT NULL,
     "surname" VARCHAR NOT NULL,
-    "balance" DECIMAL(16,2) NOT NULL DEFAULT 0.00,
+    "balanceCents" INTEGER NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("userId")
 );
