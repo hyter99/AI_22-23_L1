@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model buyOffer {
+  buyOffer_id    Int           @id
+  user_id        Int
+  stock_id       Int
+  unit_buy_price Decimal       @db.Decimal(16, 2)
+  quantity       Int
+  created        DateTime      @db.Timestamptz(6)
+  status         Int           @default(0)
+  stock          stock         @relation(fields: [stock_id], references: [stock_id], onDelete: Cascade, map: "stock")
+  user           user          @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user")
+  transaction    transaction[]
+}
+
+model company {
+  company_id  Int     @id
+  name        String  @db.VarChar
+  description String?
+  stock       stock[]
+}
+
+model sellOffer {
+  sellOffer_id    Int           @id
+  user_id         Int
+  user_stock_id   Int
+  unit_sell_price Decimal       @db.Decimal(16, 2)
+  quantity        Int
+  created         DateTime      @db.Timestamptz(6)
+  status          Int           @default(0)
+  user            user          @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user")
+  transaction     transaction[]
+}
+
+model stock {
+  stock_id          Int                 @id
+  company_id        Int
+  quantity          Int
+  price             Decimal             @db.Decimal(16, 2)
+  company           company             @relation(fields: [company_id], references: [company_id], onDelete: Cascade, onUpdate: NoAction, map: "company")
+  buyOffer          buyOffer[]
+  stockPriceHistory stockPriceHistory[]
+  userStock         userStock?
+}
+
+model stockPriceHistory {
+  historyPrice_id Int      @id
+  stock_id        Int
+  price           Decimal  @db.Decimal(16, 2)
+  changeDate      DateTime @db.Timestamptz(6)
+  stock           stock    @relation(fields: [stock_id], references: [stock_id], onDelete: NoAction, onUpdate: NoAction, map: "stock")
+}
+
+model transaction {
+  transaction_id                   Int       @id
+  buyOffer_id                      Int
+  sellOffer_id                     Int
+  status                           Int       @default(0)
+  date                             DateTime  @db.Timestamptz(6)
+  seller_id                        Int
+  buyer_id                         Int
+  buyOffer                         buyOffer  @relation(fields: [buyOffer_id], references: [buyOffer_id], onDelete: Cascade, map: "buyOffer")
+  user_transaction_buyer_idTouser  user      @relation("transaction_buyer_idTouser", fields: [buyer_id], references: [user_id], onDelete: Cascade, map: "buyer")
+  sellOffer                        sellOffer @relation(fields: [sellOffer_id], references: [sellOffer_id], onDelete: Cascade, map: "sellOffer")
+  user_transaction_seller_idTouser user      @relation("transaction_seller_idTouser", fields: [seller_id], references: [user_id], onDelete: Cascade, map: "seller")
+}
+
+model user {
+  user_id                                 Int           @id
+  email                                   String        @db.VarChar
+  password                                String        @db.VarChar
+  name                                    String        @db.VarChar
+  surname                                 String        @db.VarChar
+  balance                                 Decimal       @default(0.00) @db.Decimal(16, 2)
+  buyOffer                                buyOffer[]
+  sellOffer                               sellOffer[]
+  transaction_transaction_buyer_idTouser  transaction[] @relation("transaction_buyer_idTouser")
+  transaction_transaction_seller_idTouser transaction[] @relation("transaction_seller_idTouser")
+  userStock                               userStock[]
+}
+
+model userStock {
+  user_stock_id  Int   @id
+  user_id        Int
+  stock_quantity Int
+  stock          stock @relation(fields: [user_stock_id], references: [stock_id], onDelete: NoAction, onUpdate: NoAction, map: "stock")
+  user           user  @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user")
+}
