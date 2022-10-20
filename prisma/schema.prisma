@@ -7,89 +7,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model buyOffer {
-  buyOffer_id    Int           @id
-  user_id        Int
-  stock_id       Int
-  unit_buy_price Decimal       @db.Decimal(16, 2)
-  quantity       Int
-  created        DateTime      @db.Timestamptz(6)
-  status         Int           @default(0)
-  stock          stock         @relation(fields: [stock_id], references: [stock_id], onDelete: Cascade, map: "stock")
-  user           user          @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user")
-  transaction    transaction[]
+model BuyOffer {
+  buyOfferId            Int           @id
+  userId                Int
+  stockId               Int
+  unitBuyPrice          Decimal       @db.Decimal(16, 2)
+  quantity              Int
+  created               DateTime      @db.Timestamptz(6)
+  status                Int           @default(0)
+  BuyOfferToStock       Stock         @relation(fields: [stockId], references: [stockId], onDelete: Cascade, map: "Stock")
+  BuyOfferToUser        User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  BuyOfferToTransaction Transaction[]
 }
 
-model company {
-  company_id  Int     @id
-  name        String  @db.VarChar
-  description String?
-  stock       stock[]
+model Company {
+  companyId      Int     @id
+  name           String  @db.VarChar
+  description    String?
+  CompanyToStock Stock[]
 }
 
-model sellOffer {
-  sellOffer_id    Int           @id
-  user_id         Int
-  user_stock_id   Int
-  unit_sell_price Decimal       @db.Decimal(16, 2)
-  quantity        Int
-  created         DateTime      @db.Timestamptz(6)
-  status          Int           @default(0)
-  user            user          @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user")
-  transaction     transaction[]
+model SellOffer {
+  sellOfferId            Int           @id
+  userId                 Int
+  userStockId            Int
+  unitSellPrice          Decimal       @db.Decimal(16, 2)
+  quantity               Int
+  created                DateTime      @db.Timestamptz(6)
+  status                 Int           @default(0)
+  SellOfferToUser        User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  SellOfferToTransaction Transaction[]
 }
 
-model stock {
-  stock_id          Int                 @id
-  company_id        Int
-  quantity          Int
-  price             Decimal             @db.Decimal(16, 2)
-  company           company             @relation(fields: [company_id], references: [company_id], onDelete: Cascade, onUpdate: NoAction, map: "company")
-  buyOffer          buyOffer[]
-  stockPriceHistory stockPriceHistory[]
-  userStock         userStock?
+model Stock {
+  stockId                  Int                 @id
+  companyId                Int
+  quantity                 Int
+  price                    Decimal             @db.Decimal(16, 2)
+  StockToCompany           Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
+  StockToBuyOffer          BuyOffer[]
+  StockToStockPriceHistory StockPriceHistory[]
+  StockToUserStock         UserStock?
 }
 
-model stockPriceHistory {
-  historyPrice_id Int      @id
-  stock_id        Int
-  price           Decimal  @db.Decimal(16, 2)
-  changeDate      DateTime @db.Timestamptz(6)
-  stock           stock    @relation(fields: [stock_id], references: [stock_id], onDelete: NoAction, onUpdate: NoAction, map: "stock")
+model StockPriceHistory {
+  stockPriceHistoryId      Int      @id
+  stockId                  Int
+  price                    Decimal  @db.Decimal(16, 2)
+  changeDate               DateTime @db.Timestamptz(6)
+  StockPriceHistoryToStock Stock    @relation(fields: [stockId], references: [stockId], onDelete: NoAction, onUpdate: NoAction, map: "Stock")
 }
 
-model transaction {
-  transaction_id                   Int       @id
-  buyOffer_id                      Int
-  sellOffer_id                     Int
-  status                           Int       @default(0)
-  date                             DateTime  @db.Timestamptz(6)
-  seller_id                        Int
-  buyer_id                         Int
-  buyOffer                         buyOffer  @relation(fields: [buyOffer_id], references: [buyOffer_id], onDelete: Cascade, map: "buyOffer")
-  user_transaction_buyer_idTouser  user      @relation("transaction_buyer_idTouser", fields: [buyer_id], references: [user_id], onDelete: Cascade, map: "buyer")
-  sellOffer                        sellOffer @relation(fields: [sellOffer_id], references: [sellOffer_id], onDelete: Cascade, map: "sellOffer")
-  user_transaction_seller_idTouser user      @relation("transaction_seller_idTouser", fields: [seller_id], references: [user_id], onDelete: Cascade, map: "seller")
+model Transaction {
+  transactionId          Int       @id
+  buyOfferId             Int
+  sellOfferId            Int
+  status                 Int       @default(0)
+  date                   DateTime  @db.Timestamptz(6)
+  sellerId               Int
+  buyerId                Int
+  TransactionToBuyOffer  BuyOffer  @relation(fields: [buyOfferId], references: [buyOfferId], onDelete: Cascade, map: "BuyOffer")
+  TransactionToBuyer     User      @relation("TransactionToBuyer", fields: [buyerId], references: [userId], onDelete: Cascade, map: "Buyer")
+  TransactionToSellOffer SellOffer @relation(fields: [sellOfferId], references: [sellOfferId], onDelete: Cascade, map: "SellOffer")
+  TransactionToSeller    User      @relation("TransactionToSeller", fields: [sellerId], references: [userId], onDelete: Cascade, map: "Seller")
 }
 
-model user {
-  user_id                                 Int           @id
-  email                                   String        @db.VarChar
-  password                                String        @db.VarChar
-  name                                    String        @db.VarChar
-  surname                                 String        @db.VarChar
-  balance                                 Decimal       @default(0.00) @db.Decimal(16, 2)
-  buyOffer                                buyOffer[]
-  sellOffer                               sellOffer[]
-  transaction_transaction_buyer_idTouser  transaction[] @relation("transaction_buyer_idTouser")
-  transaction_transaction_seller_idTouser transaction[] @relation("transaction_seller_idTouser")
-  userStock                               userStock[]
+model User {
+  userId                  Int           @id
+  email                   String        @db.VarChar
+  password                String        @db.VarChar
+  name                    String        @db.VarChar
+  surname                 String        @db.VarChar
+  balance                 Decimal       @default(0.00) @db.Decimal(16, 2)
+  BuyOffer                BuyOffer[]
+  SellOffer               SellOffer[]
+  UserToTransactionBuyer  Transaction[] @relation("TransactionToBuyer")
+  UserToTransactionSeller Transaction[] @relation("TransactionToSeller")
+  UserToUserStock         UserStock[]
 }
 
-model userStock {
-  user_stock_id  Int   @id
-  user_id        Int
-  stock_quantity Int
-  stock          stock @relation(fields: [user_stock_id], references: [stock_id], onDelete: NoAction, onUpdate: NoAction, map: "stock")
-  user           user  @relation(fields: [user_id], references: [user_id], onDelete: Cascade, map: "user")
+model UserStock {
+  userStockId      Int   @id
+  userId           Int
+  stockQuantity    Int
+  UserStockToStock Stock @relation(fields: [userStockId], references: [stockId], onDelete: NoAction, onUpdate: NoAction, map: "Stock")
+  UserStockToUser  User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
 }
