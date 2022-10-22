@@ -23,46 +23,41 @@ const useLoginForm = () => {
     setLoading(false);
   },[]);
 
-  // Live validating - userName
+  // Validate data, when the live validation is on (after first attempt to log in)
   useEffect(() => {
     if (isLiveValidation) {
-      validateEmail();
+      validateData();
     }
-  },[loginInputs.email]);
+  },[loginInputs]);
 
-  // Live validating - password
-  useEffect(() => {
-    if (isLiveValidation) {
-      validatePassword();
-    }
-  },[loginInputs.password]);
+ const validateData = () => {
+    let isError = false;
 
-  const validateEmail = (): boolean => {
-    let message = "";
+    // Check email (should match the emailRgx)
+    let emailErrorMessage = "";
     if (!emailRgx.test(loginInputs.email)) {
-      message = "Email jest nieprawidłowy";
+      isError = true;
+      emailErrorMessage = "Email jest nieprawidłowy";
     }
 
     setErrorLoginInputs(prev => ({
       ...prev,
-      emailMessage: message
+      emailMessage: emailErrorMessage
     }));
 
-    return message.length === 0;
-  };
-
-  const validatePassword = (): boolean => {
-    let message = "";
+    // Check password (min_length=1)
+    let passwordErrorMessage = "";
     if (loginInputs.password.length === 0) {
-      message = "Hasło nie może być puste";
+      isError = true;
+      passwordErrorMessage = "Hasło nie może być puste";
     }
 
     setErrorLoginInputs(prev => ({
       ...prev,
-      passwordMessage: message
+      passwordMessage: passwordErrorMessage
     }));
 
-    return message.length === 0;
+    return !isError;
   };
 
   const handleInputsChange = (name: string, value: string) => {
@@ -73,20 +68,11 @@ const useLoginForm = () => {
   };
 
   const submitLogin = (e: React.FormEvent) => {
-
     e.preventDefault();
-
     setIsLiveValidation(true);
-    // Validate the inputs
-    let canSubmit = true;
-
-    // Validate email AND password
-    if (!validateEmail() || !validatePassword()) {
-      canSubmit = false;
-    }
 
     // Checking if we can submit the login
-    if (canSubmit) {
+    if (validateData()) {
       loginUser(loginInputs.email, loginInputs.password);
     }
   };

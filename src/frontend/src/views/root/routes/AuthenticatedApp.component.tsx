@@ -37,7 +37,7 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       />
       <Route
         exact
-        path="/logowanie"
+        path={["/logowanie", "/rejestracja"]}
         component={() => (
           // <>
           //   {document.location.href="/"}

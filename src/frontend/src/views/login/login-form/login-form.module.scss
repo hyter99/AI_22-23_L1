@@ -1,106 +1,48 @@
 @import "src/frontend/src/styles/variables";
 
 .loginForm {
-  width: 800px;
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
-  padding: 30px 20px;
   background-color: $colorDarkGray2;
+  color: $colorWhite;
+  font-style: normal;
+  padding: 20px 20px;
+  position: relative; //added here 'position: relative' for loading modal to be on whole element
 
-  .leftSite {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: $colorSemiDarkPurple;
-    padding: 20px 10px;
-
-    .loginImage {
-      width: 100px;
-      height: 100px;
-      margin-right: 10px;
-    }
-
-    .description {
-      width: 180px;
-
-      p.descriptionText {
-        font-weight: 400;
-        font-size: 15px;
-        font-style: normal;
-        color: $colorWhite;
-
-        b {
-          font-weight: 700;
-        }
-      }
-    }
-  }
-
-  .rightSite {
+  .middleSite {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    background-color: $colorWhite;
-    padding: 30px 50px;
-    position: relative;
+    background-color: transparent;
+    padding-top: 40px;
+    //position: relative;
 
-    .header {
+    .input {
       width: 100%;
-      height: auto;
-      margin-bottom: 40px;
+      margin-bottom: 10px;
 
-      .headerText {
-        font-weight: 700;
-        font-size: 25px;
-        color: $colorBlack;
-        font-style: normal;
-      }
-
-      .subHeaderText {
-        font-weight: 400;
-        font-size: 20px;
-        color: $colorBlack;
-        font-style: normal;
-      }
-    }
-
-    .inputForm {
-      width: 100%;
-      height: auto;
-      padding-left: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-
-      .input {
-        width: 100%;
-        margin-bottom: 10px;
-
-        &:last-child {
-          margin-bottom: 23px;
-        }
+      &:last-child {
+        margin-bottom: 23px;
       }
     }
 
     .submitButtonForm {
       width: 100%;
-      height: 33px;
+      height: 45px;
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 12px;
 
       .buttonWrap {
-        width: 193px;
+        width: 260px;
         height: 100%;
       }
     }
@@ -115,18 +57,17 @@
     }
 
     .additionalInfo {
+      font-weight: 700;
+      font-size: 25px;
+
       p {
-        font-weight: 600;
-        font-size: 15px;
         font-style: normal;
-        color: $colorBlack;
+        color: $colorWhite;
       }
 
       a {
-        font-weight: 600;
-        font-size: 15px;
         font-style: normal;
-        color: $colorDarkPurple;
+        color: $colorLighterGray2;
         padding-left: 5px;
 
         &:hover {
@@ -134,5 +75,12 @@
         }
       }
     }
+  }
+}
+
+@media all and (min-width: 800px) {
+  .loginForm {
+    width: 680px;
+    padding: 40px 50px;
   }
 }

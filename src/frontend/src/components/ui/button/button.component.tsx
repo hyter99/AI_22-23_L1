@@ -7,18 +7,27 @@ import styles from "./button.module.scss";
 interface IButton {
   type: "submit" | "button";
   title: string;
-  backgroundColor: "purple" | "lightPurple" | "black" | "red";
+  backgroundColor: "purple" | "lightPurple" | "black" | "red" | "darkerGray";
   fontColor: "white";
   handleClick?: () => void;
   disabled?: boolean;
   noBorderRadius?: boolean;
   defaultCursor?: boolean;
+  bigFont?: boolean;
 }
 
 const Button: React.FC<IButton> = ({
-    type, title, backgroundColor, fontColor, handleClick, disabled, noBorderRadius, defaultCursor
+    type,
+    title,
+    backgroundColor,
+    fontColor,
+    handleClick,
+    disabled,
+    noBorderRadius,
+    defaultCursor,
+    bigFont
   }) => {
-  const stylesBackgroundColor = backgroundColor === "lightPurple" ? styles.backgroundColorLightPurple : backgroundColor === "purple" ? styles.backgroundColorPurple : backgroundColor === "red" ? styles.backgroundColorRed : styles.backgroundColorBlack;
+  const stylesBackgroundColor = backgroundColor === "lightPurple" ? styles.backgroundColorLightPurple : backgroundColor === "purple" ? styles.backgroundColorPurple : backgroundColor === "red" ? styles.backgroundColorRed : backgroundColor === "darkerGray" ? styles.backgroundColorDarkerGray : styles.backgroundColorBlack;
   const stylesFontColor = fontColor === "white" ? styles.fontColorWhite : styles.fontColorWhite;
   const hoverColors =
     fontColor === "white" ?
@@ -28,6 +37,8 @@ const Button: React.FC<IButton> = ({
           styles.hoverColorsPurple
       : backgroundColor === "red" ?
         styles.hoverColorsRed
+      : backgroundColor === "darkerGray" ?
+        styles.hoverColorsDarkerGray
       :
         styles.hoverColorsBlack
     :
@@ -45,6 +56,7 @@ const Button: React.FC<IButton> = ({
           ${disabled ? styles.disabledColors : ""}
           ${noBorderRadius ? styles.noBorderRadius : ""}
           ${defaultCursor ? styles.defaultCursor : ""}
+          ${bigFont ? styles.bigFont : ""}
         `}
         type={type}
         onClick={() => handleClick && handleClick()}

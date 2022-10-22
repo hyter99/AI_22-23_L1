@@ -1,0 +1,24 @@
+@import "src/frontend/src/styles/variables";
+
+.headerContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+
+  .title {
+    background-color: transparent;
+    font-size: 55px;
+    font-weight: 700;
+  }
+}
+
+@media all and (min-width: 800px) {
+  .headerContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}

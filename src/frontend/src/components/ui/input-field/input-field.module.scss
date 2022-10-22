@@ -8,41 +8,45 @@
 
   .label {
     width: 100%;
-    height: 20px;
+    height: auto;
     margin-bottom: 3px;
     padding-left: 2px;
+    color: $colorBlack;
+
+    &.whiteLabel {
+      color: $colorWhite;
+    }
 
     p {
-      color: $colorBlack;
       font-weight: 700;
       font-style: normal;
-      font-size: 15px;
+      font-size: 20px;
     }
   }
 
   .input {
     width: 100%;
-    height: 33px;
+    height: auto;
     background-color: $colorGray;
-    border: 1px solid $colorDarkGray;
+    border: 2px solid transparent;
     border-radius: 10px;
-    color: $colorSolidDarkGray;
+    color: $colorDarkGray2;
     font-family: 'Nunito', sans-serif;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 700;
     font-style: normal;
     padding: 7px 9px;
 
     &::placeholder {
-      color: $colorDarkerGray;
-      font-size: 13px;
-      font-weight: 400;
+      color: $colorLightGray2;
+      font-size: 14px;
+      font-weight: 700;
       font-style: normal;
     }
 
     &:focus {
       outline: none;
-      border-color: $colorLightPurple;
+      border-color: $colorDarkPurple;
     }
 
     &:focus-visible {
