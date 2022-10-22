@@ -1,6 +1,6 @@
 @import "src/frontend/src/styles/variables";
 
-.loginForm {
+.registerForm {
   width: 100%;
   height: auto;
   display: flex;
@@ -23,14 +23,21 @@
     align-items: center;
     background-color: transparent;
     padding-top: 40px;
-    //position: relative;
 
     .input {
       width: 100%;
 
-      &:last-child {
-        margin-bottom: 23px;
+      &.checkbox {
+        padding-bottom: 15px;
       }
+    }
+
+    .inline {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
     }
 
     .submitButtonForm {
@@ -39,7 +46,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 5px;
 
       .buttonWrap {
         width: 260px;
@@ -47,39 +54,55 @@
       }
     }
 
-    .loginErrorWrap {
+    .registerErrorWrap {
       width: 100%;
-      height: 20px;
+      height: 40px;
+      margin-bottom: 5px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
     }
 
     .additionalInfo {
+      width: 100%;
+      height: auto;
+      padding: 0 30px;
+      color: $colorWhite;
       font-weight: 700;
       font-size: 25px;
-      font-style: normal;
 
       p {
-        color: $colorWhite;
-      }
+        text-align: center;
 
-      a {
-        color: $colorLighterGray2;
-        padding-left: 5px;
+        a {
+          color: $colorLighterGray2;
+          padding-left: 5px;
 
-        &:hover {
-          text-decoration: underline;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
   }
 }
 
-@media all and (min-width: 800px) {
-  .loginForm {
+@media(min-width: 800px) {
+  .registerForm {
     width: 680px;
     padding: 40px 50px;
+
+    .middleSite {
+
+      .inline {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .input {
+          width: 47%;
+        }
+      }
+    }
   }
 }

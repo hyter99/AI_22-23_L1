@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 // views
 import ViewLogin from "../../login/login.component";
-// import ViewRegister from "../../register/register-content.component";
+import ViewRegister from "../../register/register-content.component";
 
 // interfaces
 interface IUnauthenticatedApp {
@@ -34,8 +34,7 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
         exact
         path="/rejestracja"
         component={() =>
-          // <ViewLogin appVersion={appVersion} />
-          <div>rejestracja</div>
+          <ViewRegister appVersion={appVersion} />
         }
       />
       <Route

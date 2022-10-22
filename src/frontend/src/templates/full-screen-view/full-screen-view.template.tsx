@@ -1,7 +1,7 @@
 // This template hasn't got menu and it's 100% with and 100vh height
 
 import React, { ReactNode } from "react";
-import {RouteComponentProps, withRouter} from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import {Helmet} from "react-helmet-async";
 
 // styles
@@ -19,7 +19,6 @@ const TemplateFullScreenView: React.FC<ITemplateFullScreenView> = ({
      viewTitle,
      appVersion
    }) => {
-
   return (
     <>
       <Helmet>

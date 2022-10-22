@@ -24,6 +24,10 @@
     background-color: $colorRed;
   }
 
+  &.width100 {
+    width: 100%;
+  }
+
   a {
     color: $colorLemonGreen;
     padding-left: 6px;

@@ -9,12 +9,24 @@ interface IMessageBox {
   link?: ReactElement;
   wide?: boolean;
   isError?: boolean;
+  width100?: boolean;
 }
 
-const MessageBox: React.FC<IMessageBox> = ({message, link, wide, isError}) => {
+const MessageBox: React.FC<IMessageBox> = ({
+  message,
+  link,
+  wide,
+  isError,
+  width100
+}) => {
 
   return (
-    <div className={`${styles.messageBox} ${wide ? styles.wide : ""} ${isError ? styles.colorRed : styles.colorGreen}`}>
+    <div className={`
+      ${styles.messageBox}
+      ${wide ? styles.wide : ""}
+      ${isError ? styles.colorRed : styles.colorGreen}
+      ${width100 ? styles.width100 : ""}
+    `}>
       <p>{message}{link ? link : ""}</p>
     </div>
   )

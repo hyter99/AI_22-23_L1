@@ -22,7 +22,7 @@
     .logo {
       width: 75px;
       height: 75px;
-      filter: invert(99%) sepia(100%) saturate(0%) hue-rotate(124deg) brightness(107%) contrast(100%); //from: https://codepen.io/sosuke/pen/Pjoqqp ;color #FFFFFF
+      filter: invert(100%) sepia(0%) saturate(1251%) hue-rotate(212deg) brightness(104%) contrast(70%); //from: https://codepen.io/sosuke/pen/Pjoqqp ;color #FFFFFF
 
       &.smallLogo {
         width: 35px;
@@ -33,7 +33,7 @@
     .text {
       font-weight: 700;
       font-size: 55px;
-      color: $colorWhite;
+      color: $colorSilver2;
 
       &.smallText {
         font-size: 40px;
@@ -44,7 +44,7 @@
   .pad {
     width: 100%;
     height: 5px;
-    background-color: $colorWhite;
+    background-color: $colorSilver2;
     border-radius: 3px;
   }
 }

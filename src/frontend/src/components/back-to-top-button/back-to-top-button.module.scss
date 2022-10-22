@@ -1,0 +1,42 @@
+@import "src/frontend/src/styles/variables";
+
+.buttonWrap {
+  width: 35px;
+  height: 35px;
+  position: fixed;
+  bottom: 30px;
+  right: 10px;
+  background-color: $colorDarkGray;
+  border-radius: 50%;
+  overflow: hidden;
+  visibility: hidden;
+  transform: translateX(50px);
+  transition: transform ease-in-out 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &.isShowed {
+    transform: translateX(0);
+  }
+
+  i {
+    color: $colorWhite;
+    font-size: 20px;
+    transform: rotateZ(180deg);
+    transition: color ease-in-out 0.3s;
+  }
+
+  &:hover {
+    i {
+      color: $colorBlack;
+    }
+  }
+}
+
+@media all and (min-width: 950px) {
+  .buttonWrap {
+    visibility: visible;
+  }
+}

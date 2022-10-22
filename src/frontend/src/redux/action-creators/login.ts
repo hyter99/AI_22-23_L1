@@ -8,28 +8,31 @@ import {AdminLogin} from "../data-types/login";
 
 export const loginUser = (email: string, password: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
+    /*Comment when live*/
+    const loginResults: AdminLogin = {
+      accessToken: "abc",
+      user: {
+        id: "a",
+        firstName: "Maciej",
+        lastName: "H",
+        email: "test@gmail.com"
+      }
+    };
 
-      const loginResults: AdminLogin = {
-        accessToken: "abc",
-        user: {
-          id: "a",
-          firstName: "Maciej",
-          lastName: "H",
-          email: "test@gmail.com"
-        }
-      };
+    dispatch({
+      type: ActionType.USER_LOGIN_SUCCESS,
+      payload: loginResults
+    });
 
-      dispatch({
-        type: ActionType.USER_LOGIN_SUCCESS,
-        payload: loginResults
-      });
+    /*Uncomment when live*/
 
     // dispatch({
     //   type: ActionType.USER_LOGIN_REQUEST
     // });
 
     // try {
-    //   const {data} = await axios.post(`${process.env.REACT_APP_BACKED_URL}/api/auth/signin`, {
+    //   @ts-ignore
+    //   const {data} = await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/signin`, {
     //       email: email,
     //       password: password
     //     },{
@@ -63,7 +66,8 @@ export const loginUser = (email: string, password: string) => {
 
 export const logoutUser = (userId: string, accessToken: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
-    await axios.post(`${process.env.REACT_APP_BACKED_URL}/api/auth/logout`, {
+    // @ts-ignore
+    await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/logout`, {
       userId: userId,
       token: accessToken
     },{

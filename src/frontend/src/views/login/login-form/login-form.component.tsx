@@ -68,6 +68,7 @@ const LoginForm:React.FC= () => {
               <MessageBox
                 message={errorLogin}
                 isError
+                width100
               />
             :
               null
@@ -77,7 +78,7 @@ const LoginForm:React.FC= () => {
           <p>
             Nie masz jeszcze konta?
             <Link to="/rejestracja">
-              Zarejestruj się!
+              Zarejestruj się.
             </Link>
           </p>
         </div>
