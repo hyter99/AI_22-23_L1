@@ -8,11 +8,11 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async register(registerDto: RegisterDto) {
+  register(registerDto: RegisterDto) {
     const salt = genSaltSync();
     const hashedPassword = hashSync(registerDto.password, salt);
 
-    const data = await this.prisma.user.create({
+    return this.prisma.user.create({
       data: {
         name: registerDto.name,
         surname: registerDto.surname,
@@ -21,10 +21,9 @@ export class AuthService {
         passwordSalt: salt,
         balanceCents: 0,
       },
+      select: {
+        userId: true,
+      },
     });
-
-    return {
-      userId: data.userId,
-    };
   }
 }
