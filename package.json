@@ -28,6 +28,7 @@
     "@nestjs/core": "^9.1.4",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^9.1.4",
+    "@nestjs/serve-static": "^3.0.0",
     "@prisma/client": "^4.4.0",
     "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.1.0",
