@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { genSaltSync, hashSync } from 'bcrypt';
+
 import { PrismaService } from '../database/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 
@@ -7,17 +8,23 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthService {
   constructor(private readonly prisma: PrismaService) {}
 
-  register(registerDto: RegisterDto) {
+  async register(registerDto: RegisterDto) {
     const salt = genSaltSync();
     const hashedPassword = hashSync(registerDto.password, salt);
 
-    return this.prisma.user.create({
+    const data = await this.prisma.user.create({
       data: {
-        name: registerDto.login,
+        name: registerDto.name,
+        surname: registerDto.surname,
         email: registerDto.email,
         password: hashedPassword,
-        salt,
+        passwordSalt: salt,
+        balanceCents: 0,
       },
     });
+
+    return {
+      userId: data.userId,
+    };
   }
 }

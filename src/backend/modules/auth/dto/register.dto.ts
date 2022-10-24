@@ -6,7 +6,12 @@ export class RegisterDto {
   @MaxLength(255)
   @IsString()
   @IsNotEmpty()
-  login!: string;
+  name!: string;
+
+  @MaxLength(255)
+  @IsString()
+  @IsNotEmpty()
+  surname!: string;
 
   @Unique('user', 'email')
   @MaxLength(255)
