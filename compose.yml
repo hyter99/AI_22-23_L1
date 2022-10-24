@@ -9,10 +9,10 @@ services:
             target: 5173
           - published: 3000
             target: 3000
-        environment:
-            DATABASE_URL: postgres://postgres:postgres@db:5432
+        env_file:
+          - .env
         depends_on:
-            - "db"
+          - db
         command: "npm run start:fulldev"
     db:
         image: postgres:15.0
@@ -23,11 +23,13 @@ services:
           - type: volume
             source: postgres-data
             target: /var/lib/postgresql/data
-        environment:
-            POSTGRES_PASSWORD: postgres
+        env_file:
+          - .env
 
 networks:
     main-network:
 
 volumes:
     postgres-data:
+    source-dir:
+
