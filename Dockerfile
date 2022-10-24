@@ -3,8 +3,6 @@
 ###################################################
 FROM node:16.18.0-bullseye-slim as build
 
-#ENV NODE_ENV=production
-
 # Build under unprivileged user
 USER node
 
@@ -28,6 +26,9 @@ COPY --chown=node . .
 
 # Run the build task
 RUN npm run build
+
+# Delete unused development dependencies
+RUN npm prune --production
 
 ###################################################
 #                      Deploy                     #
