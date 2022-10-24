@@ -1,0 +1,75 @@
+@import "src/frontend/src/styles/variables";
+
+.textAreaWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    width: 100%;
+    height: 20px;
+    margin-bottom: 3px;
+    padding-left: 2px;
+
+    p {
+      color: $colorBlack;
+      font-weight: 700;
+      font-style: normal;
+      font-size: 15px;
+    }
+  }
+
+  .textArea {
+    width: 100%;
+    height: 146px;
+    background-color: $colorGray;
+    border: 1px solid $colorDarkGray;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    color: $colorSolidDarkGray;
+    font-size: 13px;
+    font-weight: 700;
+    font-style: normal;
+    padding: 7px 9px;
+    resize: none;
+    overflow-x: hidden;
+
+    &::placeholder {
+      color: $colorDarkerGray;
+      font-size: 13px;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $colorLightPurple;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &.errorTextArea {
+      background-color: $colorLightRed;
+      border-color: $colorRed;
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .errorMessage {
+    height: 20px;
+    padding-left: 2px;
+
+    p {
+      color: $colorRed;
+      font-size: 13px;
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+}

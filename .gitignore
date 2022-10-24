@@ -1,6 +1,11 @@
+# environment
+.env
+
 # compiled output
 /dist
 /node_modules
+/.prettierignore
+/.vite
 
 # Logs
 logs

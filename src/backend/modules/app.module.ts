@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Global, Module } from '@nestjs/common';
+import { UniqueConstraint } from '../decorators/unique.decorator';
+import { AuthModule } from './auth/auth.module';
+import { PrismaService } from './database/prisma.service';
+
+@Global()
+@Module({
+  providers: [PrismaService],
+  exports: [PrismaService],
+})
+export class PrismaModule {}
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
-})
+  imports: [PrismaModule, AuthModule],
+  providers: [UniqueConstraint],
 export class AppModule {}
