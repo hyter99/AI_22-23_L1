@@ -1,19 +1,16 @@
 services:
     app:
         build: .
-        image: stock:dev
+        image: stock:0.1
         networks:
             - main-network
         ports:
-          - published: 5173
-            target: 5173
           - published: 3000
             target: 3000
         env_file:
           - .env
         depends_on:
           - db
-        command: "npm run start:fulldev"
     db:
         image: postgres:15.0
         restart: unless-stopped
