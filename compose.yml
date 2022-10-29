@@ -20,6 +20,9 @@ services:
           - type: volume
             source: postgres-data
             target: /var/lib/postgresql/data
+        ports:
+          - published: 5432
+            target: 5432
         env_file:
           - .env
 
