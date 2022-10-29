@@ -1,2 +1,5 @@
-Wstępny projekt UI:
+Pierwsza wersja projektu:
 https://www.figma.com/file/w0RVPJCG8pWVLd4OfvwvQf/gie%C5%82da_projekt?node-id=0%3A1
+
+Druga wersja projektu:
+https://www.figma.com/file/Onr3OaozQbyOZwa8Y22LzJ/gie%C5%82da_projekt_v2-(Copy)?node-id=2%3A50
