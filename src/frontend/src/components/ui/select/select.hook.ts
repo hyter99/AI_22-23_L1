@@ -4,7 +4,7 @@ import {useState, useEffect, useRef} from "react";
 import {IOption} from "./select.types";
 
 // hooks
-import useOnClickOutside from "../../../hooks/useOnClickOutside.hook";
+import useOnClickOutside from "../../../hooks/useOnClickOutside";
 
 const useSelect = (value: string, options: IOption[]) => {
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);

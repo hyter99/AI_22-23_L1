@@ -5,21 +5,10 @@ module.exports = {
     tsconfigRootDir : __dirname, 
     sourceType: 'module',
   },
-  plugins: [
-    '@typescript-eslint/eslint-plugin',
-    "import",
-    "simple-import-sort",
-    "react",
-    "react-hooks",
-  ],
+  plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:prettier/recommended',
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
   ],
   root: true,
   env: {
@@ -33,9 +22,11 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
-    "simple-import-sort/imports": "warn",
-    "simple-import-sort/exports": "warn",
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    "simple-import-sort/imports": "off",
+    "simple-import-sort/exports": "off",
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off",
+    "react/react-in-jsx-scope": "off"
   },
 };

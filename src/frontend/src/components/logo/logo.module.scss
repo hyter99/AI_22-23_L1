@@ -1,0 +1,58 @@
+@import "src/frontend/src/styles/variables";
+
+.container {
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .inline {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 10px;
+
+    &.smallPadding {
+      padding-bottom: 7px;
+    }
+
+    .logo {
+      width: 75px;
+      height: 75px;
+      filter: invert(100%) sepia(0%) saturate(1251%) hue-rotate(212deg) brightness(104%) contrast(70%); //from: https://codepen.io/sosuke/pen/Pjoqqp ;color #FFFFFF
+
+      &.smallLogo {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    .text {
+      display: flex;
+
+      p {
+        height: 65px;
+        font-weight: 700;
+        font-size: 55px;
+        color: $colorSilver2;
+      }
+
+      &.smallText {
+        p {
+          height: 35px;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+
+  .pad {
+    width: 100%;
+    height: 5px;
+    background-color: $colorSilver2;
+    border-radius: 3px;
+  }
+}

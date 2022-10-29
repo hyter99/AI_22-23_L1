@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 // views
 import ViewError from "../../error/error.component";
+import ViewStocks from "../../stocks/stocks.component";
 
 // interfaces
 interface IAuthenticatedApp {
@@ -30,9 +31,19 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
         exact
         path="/"
         component={() => (
-            //<ViewStudentMainMenu appVersion={appVersion} />
-          <div>placeholder x</div>
-          )
+          <ViewStocks
+            appVersion={appVersion}
+            isLogged={true}
+          />
+        )
+        }
+      />
+      <Route
+        exact
+        path={["/logowanie", "/rejestracja"]}
+        component={() => (
+          <Redirect to="/" />
+        )
         }
       />
       {/*Other routes*/}

@@ -6,7 +6,7 @@
   position: relative;
   padding-left: 37px;
   cursor: pointer;
-  color: $colorBlack;
+  color: $colorWhite;
   font-weight: 400;
   font-style: normal;
   font-size: 18px;
@@ -14,6 +14,10 @@
 
   &.disabledContainer {
     cursor: not-allowed;
+  }
+
+  &.error {
+    color: $colorRed;
   }
 }
 
@@ -38,25 +42,25 @@
   height: 23px;
   width: 23px;
   background-color: $colorWhite;
-  border: 2px solid $colorBlack;
+  border: 2px solid $colorSemiDarkerGray2;
 
   &.disabledColors {
     border-color: $colorSolidDarkGray;
   }
 }
 
-/* On mouse-over, add a dark purple border color */
+/* On mouse-over, add a black border color */
 .container:hover input ~ .checkmark {
-  border-color: $colorDarkPurple;
+  border-color: $colorBlack;
 
   &.disabledColors {
     border-color: $colorSolidDarkGray;
   }
 }
 
-/* When the checkbox is checked, add a dark purple background */
+/* When the checkbox is checked, add a dark gray background */
 .container input:checked ~ .checkmark {
-  background-color: $colorDarkPurple;
+  background-color: $colorSemiDarkerGray2;
 
   &.disabledColors {
     background-color: $colorSolidDarkGray;

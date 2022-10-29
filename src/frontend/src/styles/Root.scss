@@ -1,9 +1,9 @@
-/* TO DO - import the fonts */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 @import "src/frontend/src/styles/variables.scss";
 
 // -- Global settings --
 html {
-  font-family: sans-serif;
+  font-family: 'Nunito', sans-serif; //Available font weights: 300,400,600,700
 }
 
 body {
@@ -37,8 +37,8 @@ p {
 
 // loader
 .loader {
-  border: 11px solid #f3f3f3; /* Light grey */
-  border-top: 11px solid $colorDarkPurple; /* Purple */
+  border: 11px solid #f3f3f3; /* Dark white */
+  border-top: 11px solid $colorLightGray2; /* Light gray */
   border-radius: 50%;
   width: 90px;
   height: 90px;
@@ -70,4 +70,15 @@ p {
     background-color: $colorLighterPurple;
     border-radius: 100px;
   }
+}
+
+// background image of the site
+.backgroundImage {
+  height: 100%;
+  width: 100%;
+  background-image: url("../assets/images/background-image.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

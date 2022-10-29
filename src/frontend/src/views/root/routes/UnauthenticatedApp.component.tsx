@@ -2,8 +2,9 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 // views
-// import ViewLogin from "../../login/login-content.component";
-// import ViewRegister from "../../register/register-content.component";
+import ViewLogin from "../../login/login.component";
+import ViewRegister from "../../register/register-content.component";
+import ViewStocks from "../../stocks/stocks.component";
 
 // interfaces
 interface IUnauthenticatedApp {
@@ -14,28 +15,36 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
 
   return (
     <Switch>
-      {/*Register*/}
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path="/rejestracja"*/}
-      {/*  component={() =>*/}
-      {/*    <ViewRegister appVersion={appVersion} />*/}
-      {/*  }*/}
-      {/*/>*/}
-      {/*Login view - main view*/}
+      {/*Main routes*/}
       <Route
         exact
         path="/"
         component={() =>
-          // <ViewLogin appVersion={appVersion} />
-          <div>placeholder</div>
+          <ViewStocks
+            appVersion={appVersion}
+            isLogged={false}
+          />
+        }
+      />
+      <Route
+        exact
+        path="/rejestracja"
+        component={() =>
+          <ViewRegister appVersion={appVersion} />
+        }
+      />
+      <Route
+        exact
+        path="/logowanie"
+        component={() =>
+          <ViewLogin appVersion={appVersion} />
         }
       />
       {/*Other routes*/}
       <Route
         path="*"
         component={() =>
-          <Redirect to="/" />
+          <Redirect to="/logowanie" />
         }
       />
     </Switch>

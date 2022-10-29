@@ -1,0 +1,39 @@
+@import "src/frontend/src/styles/variables";
+
+.messageBox {
+  width: 280px;
+  border-radius: 15px;
+
+  p {
+    color: $colorWhite;
+    font-size: 15px;
+    font-weight: 600;
+    font-style: normal;
+    text-align: center;
+  }
+
+  &.wide {
+    width: 100%;
+  }
+
+  &.colorGreen {
+    background-color: $colorGreen;
+  }
+
+  &.colorRed {
+    background-color: $colorRed;
+  }
+
+  &.width100 {
+    width: 100%;
+  }
+
+  a {
+    color: $colorLemonGreen;
+    padding-left: 6px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -9,6 +9,7 @@ interface IInputField {
   name: string;
   value: string;
   label?: string;
+  labelColor: "white" | "black";
   placeholder: string;
   isError?: boolean;
   errorMessage?: string;
@@ -17,14 +18,23 @@ interface IInputField {
 }
 
 const InputField: React.FC<IInputField> = ({
-    type, name, value, label, placeholder, isError, errorMessage, handleChange, disabled
+    type,
+    name,
+    value,
+    label,
+    labelColor,
+    placeholder,
+    isError,
+    errorMessage,
+    handleChange,
+    disabled
   }) => {
 
   return (
     <div className={styles.inputField}>
       {
         label ?
-          <div className={styles.label}>
+          <div className={`${styles.label} ${labelColor === "white" ? styles.whiteLabel : ""}`}>
             <p>{label}</p>
           </div>
         :

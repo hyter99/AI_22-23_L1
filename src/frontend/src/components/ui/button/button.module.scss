@@ -16,6 +16,10 @@
     font-style: normal;
     font-size: 14px;
 
+    &.bigFont {
+      font-size: 23px;
+    }
+
     &[disabled] {
       cursor: not-allowed;
     }
@@ -30,6 +34,10 @@
 
     &.backgroundColorRed {
       background-color: $colorRed;
+    }
+
+    &.backgroundColorDarkerGray {
+      background-color: $colorDarkerGray2;
     }
 
     &.backgroundColorBlack {
@@ -56,6 +64,12 @@
       &:hover {
         color: $colorBlack;
         background-color: $colorLightRed;
+      }
+    }
+
+    &.hoverColorsDarkerGray {
+      &:hover {
+        background-color: $colorSemiDarkerGray2;
       }
     }
 
