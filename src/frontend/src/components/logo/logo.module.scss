@@ -12,7 +12,7 @@
   .inline {
     display: flex;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: center;
     padding-bottom: 10px;
 
     &.smallPadding {
@@ -31,12 +31,20 @@
     }
 
     .text {
-      font-weight: 700;
-      font-size: 55px;
-      color: $colorSilver2;
+      display: flex;
+
+      p {
+        height: 65px;
+        font-weight: 700;
+        font-size: 55px;
+        color: $colorSilver2;
+      }
 
       &.smallText {
-        font-size: 40px;
+        p {
+          height: 35px;
+          font-size: 30px;
+        }
       }
     }
   }

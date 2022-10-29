@@ -8,7 +8,7 @@ import {AdminLogin} from "../data-types/login";
 
 export const loginUser = (email: string, password: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
-    /*Comment when live*/
+    /* COMMENT WHILE LOGIN ISN'T DONE IN BACKEND API */
     const loginResults: AdminLogin = {
       accessToken: "abc",
       user: {
@@ -24,8 +24,7 @@ export const loginUser = (email: string, password: string) => {
       payload: loginResults
     });
 
-    /*Uncomment when live*/
-
+    /* UNCOMMENT WHILE LOGIN IS DONE IN BACKEND API */
     // dispatch({
     //   type: ActionType.USER_LOGIN_REQUEST
     // });
@@ -66,15 +65,16 @@ export const loginUser = (email: string, password: string) => {
 
 export const logoutUser = (userId: string, accessToken: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
+    /* UNCOMMENT WHILE LOGOUT IS DONE IN BACKEND API */
     // @ts-ignore
-    await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/logout`, {
-      userId: userId,
-      token: accessToken
-    },{
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    // await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/logout`, {
+    //   userId: userId,
+    //   token: accessToken
+    // },{
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // });
 
     dispatch({
       type: ActionType.USER_LOGOUT

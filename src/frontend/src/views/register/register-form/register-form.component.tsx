@@ -129,7 +129,7 @@ const RegisterForm: React.FC = () => {
             isSuccessRegister ?
               <MessageBox
                 message="Pomyślnie zarejestrowano konto"
-                link={<Link to="/">Zaloguj się</Link>}
+                link={<Link to="/logowanie">Zaloguj się</Link>}
                 wide
               />
             : errorMessageRegister !== "" ?

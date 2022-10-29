@@ -21,7 +21,7 @@ const Logo:React.FC<ILogo> = ({size}) => {
           className={`${styles.logo} ${size === "small" ? styles.smallLogo : ""}`}
         />
         <div className={`noSelect ${styles.text} ${size === "small" ? styles.smallText : ""}`}>
-          Giełda
+          <p>Giełda</p>
         </div>
       </div>
       <div className={styles.pad}/>
