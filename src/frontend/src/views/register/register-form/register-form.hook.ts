@@ -159,7 +159,7 @@ const useRegisterForm = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          firstname: registerInputs.firstName,
+          login: registerInputs.firstName,
           lastname: registerInputs.lastName,
           email: registerInputs.email,
           password: registerInputs.password
