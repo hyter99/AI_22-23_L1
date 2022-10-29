@@ -15,7 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 60px;
+    padding: 30px 0;
   }
 
   .content {
@@ -25,6 +25,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    overflow-y: auto;
   }
 
   .navLinksContainer {
@@ -64,6 +65,7 @@
 
   .copyrightWrapper {
     width: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,5 +73,6 @@
     font-size: 15px;
     color: $colorWhite;
     padding-bottom: 12px;
+    margin-top: 10px;
   }
 }

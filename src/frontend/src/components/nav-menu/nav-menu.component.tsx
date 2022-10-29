@@ -32,7 +32,7 @@ const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
       <div className={styles.content}>
         <div className={styles.navLinksContainer}>
           {
-            selectedNavItems.map((item, index) => (
+            selectedNavItems.map(item => (
               item.isLink ?
                 <NavLink
                   key={item.id}
