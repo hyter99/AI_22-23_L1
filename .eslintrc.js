@@ -23,5 +23,10 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-empty-interface': 'off'
+    '@typescript-eslint/ban-ts-comment': 'off',
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
   },
 };
