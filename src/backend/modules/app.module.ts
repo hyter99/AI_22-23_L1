@@ -16,6 +16,6 @@ import { PrismaModule } from './database/prisma.module';
     PrismaModule,
     AuthModule,
   ],
-  providers: [UniqueConstraint],
+  providers: [UniqueConstraint, ExistsConstraint],
 })
 export class AppModule {}
