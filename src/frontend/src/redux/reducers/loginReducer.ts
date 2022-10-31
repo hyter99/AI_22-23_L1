@@ -1,12 +1,12 @@
-import {ActionType} from "../action-types/login";
-import {LoginActions} from "../actions/login";
-import {AdminLogin} from "../data-types/login";
+import { ActionType } from "../action-types/login";
+import { LoginActions } from "../actions/login";
+import { ILogin } from "../data-types/login";
 
 // interfaces
 interface ILoginState {
   loading: boolean;
   error: string | null;
-  loginData: AdminLogin;
+  loginData: ILogin;
 }
 
 // initial state
@@ -19,7 +19,8 @@ const initialState: ILoginState = {
       id: "",
       firstName: "",
       lastName: "",
-      email: ""
+      email: "",
+      balanceCents: 0
     }
   }
 };
@@ -49,7 +50,8 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
           id: "",
           firstName: "",
           lastName: "",
-          email: ""
+          email: "",
+          balanceCents: 0
         }
       };
       return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}}};
@@ -61,6 +63,21 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
     case ActionType.USER_LOGIN_SET_LOADING:
       state.loading = action.payload;
       return {...state};
+
+    case ActionType.USER_SET_BALANCE_CENTS:
+      state.loginData.user.balanceCents = action.payload;
+      return {...state, loginData: {...state.loginData, user: {...state.loginData.user}}}
+
+    case ActionType.USER_SET_NEW_DATA:
+      state.loading = false;
+      state.error = null;
+      state.loginData.user = {
+        ...state.loginData.user,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email
+      };
+      return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}}};
 
     default:
       return state;

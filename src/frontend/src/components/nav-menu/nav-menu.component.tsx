@@ -10,6 +10,9 @@ import { NavLink } from "react-router-dom";
 // data
 import { AuthenticatedNavItems, UnauthenticatedNavItems } from "./nav-menu.data";
 
+// functions
+import { CentsToString } from "../../functions/cents-to-string";
+
 // redux
 import { useActions } from "../../hooks/useActions";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
@@ -21,7 +24,7 @@ interface INavMenu {
 
 const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
   const selectedNavItems = isLogged ? AuthenticatedNavItems : UnauthenticatedNavItems;
-  const {user: {id: userId}, accessToken} = useTypedSelector(state => state.login.loginData);
+  const {balanceCents, firstName, lastName} = useTypedSelector(state => state.login.loginData.user);
   const {logoutUser} = useActions();
 
   return (
@@ -46,15 +49,32 @@ const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
                 <div
                   key={item.id}
                   className={`${styles.navItem}`}
-                  onClick={() => logoutUser(userId, accessToken)}
+                  onClick={() => logoutUser()}
                 >
                   {item.name}
                 </div>
             ))
           }
         </div>
-        <div className={styles.copyrightWrapper}>
-          <p>Copyright &#169; L1</p>
+        <div className={styles.footerContainer}>
+          {
+            isLogged ?
+              <div className={styles.infoWrapper}>
+                <div className={styles.row}>
+                  <p className={styles.name}>Zalogowany jako:</p>
+                  <p className={styles.value}>{firstName} {lastName}</p>
+                </div>
+                <div className={styles.row}>
+                  <p className={styles.name}>Stan konta:</p>
+                  <p className={styles.value}>{CentsToString(balanceCents)}</p>
+                </div>
+              </div>
+            :
+              null
+          }
+          <div className={styles.copyrightWrapper}>
+            <p>Copyright &#169; L1</p>
+          </div>
         </div>
       </div>
     </div>

@@ -4,5 +4,7 @@ export enum ActionType {
   USER_LOGIN_FAIL = "user_login_fail",
   USER_LOGOUT = "user_logout",
   USER_LOGIN_SET_ERROR = "user_login_set_error",
-  USER_LOGIN_SET_LOADING = "user_login_set_loading"
+  USER_LOGIN_SET_LOADING = "user_login_set_loading",
+  USER_SET_BALANCE_CENTS = "user_set_balance_cents",
+  USER_SET_NEW_DATA = "user_set_new_data"
 }

@@ -8,6 +8,7 @@ import {initialRegisterInputs, initialErrorRegisterInputs} from "./register-form
 
 // functions
 import {doesStringContainOneOrMoreUpperCaseLetter, doesStringContainOneOrMoreNumber} from "../../../functions/string-contain-checking";
+import { TranslateRegisterErrorMessage } from "./register-form.functions";
 
 const useRegisterForm = () => {
   const [registerInputs, setRegisterInputs] = useState<IRegisterInputs>(initialRegisterInputs);
@@ -173,7 +174,7 @@ const useRegisterForm = () => {
         }
         else {
           const resData = await response.json();
-          setErrorMessageRegister(resData.message);
+          setErrorMessageRegister(TranslateRegisterErrorMessage(resData.message));
         }
       })
       .catch(err => {

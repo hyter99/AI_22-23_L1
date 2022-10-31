@@ -1,5 +1,5 @@
 import { ActionType } from "../action-types/login";
-import { AdminLogin } from "../data-types/login";
+import { ILogin, INewUserData } from "../data-types/login";
 
 interface UserLoginRequestAction {
   type: ActionType.USER_LOGIN_REQUEST;
@@ -7,7 +7,7 @@ interface UserLoginRequestAction {
 
 interface UserLoginSuccessAction {
   type: ActionType.USER_LOGIN_SUCCESS;
-  payload: AdminLogin;
+  payload: ILogin;
 }
 
 interface UserLoginFailAction {
@@ -29,4 +29,22 @@ interface SetLoadingAction {
   payload: boolean;
 }
 
-export type LoginActions = UserLoginRequestAction | UserLoginSuccessAction | UserLoginFailAction | UserLogoutAction | SetErrorAction | SetLoadingAction;
+interface SetBalanceCentsAction {
+  type: ActionType.USER_SET_BALANCE_CENTS;
+  payload: number;
+}
+
+interface SetNewDataAction {
+  type: ActionType.USER_SET_NEW_DATA;
+  payload: INewUserData;
+}
+
+export type LoginActions =
+  UserLoginRequestAction |
+  UserLoginSuccessAction |
+  UserLoginFailAction |
+  UserLogoutAction |
+  SetErrorAction |
+  SetLoadingAction |
+  SetBalanceCentsAction |
+  SetNewDataAction;
