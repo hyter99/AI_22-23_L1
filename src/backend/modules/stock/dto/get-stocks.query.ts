@@ -5,6 +5,10 @@ export class GetStocksQuery {
   @IsOptional()
   page?: string;
 
+  @IsNumberString()
+  @IsOptional()
+  take?: string;
+
   @IsString()
   @IsOptional()
   companyName?: string;

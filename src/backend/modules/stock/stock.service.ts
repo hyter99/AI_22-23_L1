@@ -8,9 +8,11 @@ export class StockService {
   constructor(private readonly prisma: PrismaService) {}
 
   getMany(query: GetStocksQuery) {
+    const take = query.take ? parseInt(query.take) : 10;
+
     return this.prisma.stock.findMany({
-      skip: query.page ? parseInt(query.page) * 10 : undefined,
-      take: 10,
+      skip: query.page ? parseInt(query.page) * take : undefined,
+      take: take,
       orderBy: {
         [query.orderBy ?? 'stockId']: query.orderType ?? 'desc',
       },
