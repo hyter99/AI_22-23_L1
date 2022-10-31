@@ -6,11 +6,10 @@ import {
   registerDecorator,
   ValidationOptions,
 } from 'class-validator';
-
 import { PrismaService } from '../modules/database/prisma.service';
 import type { Model, ModelKey } from '../types';
 
-export const Unique = <T extends Model>(
+export const Exists = <T extends Model>(
   target: T,
   property: ModelKey<T>,
   validationOptions?: ValidationOptions,
@@ -21,14 +20,14 @@ export const Unique = <T extends Model>(
       propertyName,
       options: validationOptions,
       constraints: [target, property],
-      validator: UniqueConstraint,
+      validator: ExistsConstraint,
     });
   };
 };
 
-@ValidatorConstraint({ name: 'Unique', async: true })
+@ValidatorConstraint({ name: 'Exists', async: true })
 @Injectable()
-export class UniqueConstraint<T extends Model>
+export class ExistsConstraint<T extends Model>
   implements ValidatorConstraintInterface
 {
   constructor(private readonly prisma: PrismaService) {}
@@ -43,19 +42,19 @@ export class UniqueConstraint<T extends Model>
       );
 
       if (entry) {
-        return false;
+        return true;
       }
     } catch (e) {
       console.error(e);
       return false;
     }
 
-    return true;
+    return false;
   }
 
   defaultMessage(args: ValidationArguments) {
     const [module, uniqueKey] = args.constraints as [Model, ModelKey<Model>];
 
-    return `${module}.${uniqueKey} is not unique`;
+    return `${module}.${uniqueKey} with value ${args.value} does not exists`;
   }
 }
