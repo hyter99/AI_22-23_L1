@@ -7,6 +7,10 @@ import {LoginActions} from "../actions/login";
 import {ILogin, INewUserData} from "../data-types/login";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
+/* Remember! */
+/* Axios throws an exception to the 'catch' block if it recognizes ANY error in request */
+/* Fetch throws it to the catch block only if it can't reach the backend API (e.g. when the URL is wrong)
+    - otherwise we have to check the 'response.status' code to know if it's a problem with request */
 export const loginUser = (email: string, password: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
     /* UNCOMMENT WHEN LOGIN ISN'T DONE IN BACKEND API */
@@ -57,7 +61,8 @@ export const loginUser = (email: string, password: string) => {
         payload: loginResults
       });
     } catch (err: any) {
-      // console.log("Błąd logowania:", err.message);
+      /* can read err data from backend API via: 'err.response.data' - it has corresponding 'message' field */
+      //console.log("Błąd logowania:", err.response.data.message);
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
         payload: "Niepoprawne dane logowania"
