@@ -7,6 +7,7 @@ import { UniqueConstraint } from '../decorators/unique.decorator';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './database/prisma.module';
 import { OfferModule } from './offer/offer.module';
+import { ProfileModule } from './profile/profile.module';
 import { StockModule } from './stock/stock.module';
 
 @Module({
@@ -19,6 +20,7 @@ import { StockModule } from './stock/stock.module';
     AuthModule,
     OfferModule,
     StockModule,
+    ProfileModule,
   ],
   providers: [UniqueConstraint, ExistsConstraint],
 })
