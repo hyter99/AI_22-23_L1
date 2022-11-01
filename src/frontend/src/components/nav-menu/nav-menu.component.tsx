@@ -48,7 +48,7 @@ const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
               :
                 <div
                   key={item.id}
-                  className={`${styles.navItem}`}
+                  className={`noSelect ${styles.navItem}`}
                   onClick={() => logoutUser()}
                 >
                   {item.name}

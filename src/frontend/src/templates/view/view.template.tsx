@@ -10,6 +10,9 @@ import styles from "./view.module.scss";
 // components
 import NavMenu from "../../components/nav-menu/nav-menu.component";
 
+// hook
+import useView from "./view.hook";
+
 // interface
 interface ITemplateView extends RouteComponentProps<any> {
     children: ReactNode;
@@ -24,6 +27,7 @@ const TemplateView: React.FC<ITemplateView> = ({
     appVersion,
     isLogged
   }) => {
+  useView(isLogged);
 
   return (
     <>
