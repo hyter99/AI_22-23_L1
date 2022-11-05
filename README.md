@@ -15,8 +15,8 @@ As part of the Internet Applications laboratories, a web application was created
 *[Here](https://docs.nestjs.com/recipes/prisma) you can find more info about NestJS and prisma.*
 
 **Front-end technologies:**
-- React - [more info](https://vitejs.dev)
-- Vite - [more info](https://pl.reactjs.org)
+- React - [more info](https://pl.reactjs.org)
+- Vite - [more info](https://vitejs.dev)
 
 ## Wiki
 
