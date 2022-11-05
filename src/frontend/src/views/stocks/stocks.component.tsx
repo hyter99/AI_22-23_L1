@@ -21,6 +21,7 @@ const ViewStocks:React.FC<IViewStocks> = ({appVersion, isLogged}) => {
       isLogged={isLogged}
     >
       {"Akcje"}
+      {/* TO DO - prepare actions view */}
     </TemplateView>
   );
 };

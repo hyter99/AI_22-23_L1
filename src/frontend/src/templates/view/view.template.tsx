@@ -19,13 +19,15 @@ interface ITemplateView extends RouteComponentProps<any> {
     viewTitle: string;
     appVersion: string;
     isLogged?: boolean;
+  isFullScreen?: boolean;
 }
 
 const TemplateView: React.FC<ITemplateView> = ({
     children,
     viewTitle,
     appVersion,
-    isLogged
+    isLogged,
+    isFullScreen
   }) => {
   useView(isLogged);
 
@@ -34,8 +36,10 @@ const TemplateView: React.FC<ITemplateView> = ({
       <Helmet>
         <title>{viewTitle} {appVersion}</title>
       </Helmet>
-      <div className={styles.app}>
-        <NavMenu isLogged={isLogged}/>
+      <div className={`${styles.app} ${isFullScreen ? styles.fullScreen : ""}`}>
+        <div className={`${styles.navMenuWrapper}`}>
+          <NavMenu isLogged={isLogged}/>
+        </div>
         <div className={`backgroundImage ${styles.appContent}`}>
           {children}
         </div>
