@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/hyter99/AI_22-23_L1/blob/develop/src/frontend/src/assets/svg/logo.svg" width="400" alt="Stock market simulator" />
+  <img src="https://github.com/hyter99/AI_22-23_L1/blob/develop/src/frontend/src/assets/svg/logo.svg" width="1400" alt="Stock market simulator" />
 </p>
 
 ## Description
