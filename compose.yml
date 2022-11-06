@@ -1,12 +1,14 @@
 services:
     app:
         build: .
-        image: stock:0.1
+        image: ai2223l1/stock:latest
         networks:
             - main-network
         ports:
-          - published: 3000
+          - host_ip: localhost
+            published: 3000
             target: 3000
+            protocol: tcp
         env_file:
           - .env
         depends_on:
@@ -21,8 +23,10 @@ services:
             source: postgres-data
             target: /var/lib/postgresql/data
         ports:
-          - published: 5432
+          - host_ip: localhost
+            published: 5432
             target: 5432
+            protocol: tcp
         env_file:
           - .env
 
