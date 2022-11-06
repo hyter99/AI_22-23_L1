@@ -54,6 +54,7 @@ export class AuthService {
       surname: userbyEmail.surname,
       email: userbyEmail.email,
       token: token,
+      accountBalance: userbyEmail.balanceCents,
     };
   }
 
