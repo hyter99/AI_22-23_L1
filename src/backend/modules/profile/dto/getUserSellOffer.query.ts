@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
-import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsInt, IsOptional } from "class-validator";
 import { OrderByForUserSellOffer } from "../enum/orderByForUserSellOffer.enum";
-import { Pagination } from "./pagination.query";
+import { Pagination } from "../../../queries/pagination.query";
 
 export class GetUserSellOfferQuery extends Pagination {
   @IsEnum(OrderByForUserSellOffer)

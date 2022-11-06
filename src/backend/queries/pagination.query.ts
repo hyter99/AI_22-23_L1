@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional } from 'class-validator';
-import { Order } from '../enum/orderType.enum';
+import { Order } from '../enums/orderType.enum';
 
 export class Pagination {
   @Type(() => Number)
