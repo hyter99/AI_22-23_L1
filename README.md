@@ -1,4 +1,4 @@
-<p align="center" padding-bottom:1000px>
+<p align="center">
   <img src="https://github.com/hyter99/AI_22-23_L1/blob/develop/src/frontend/src/assets/svg/logo.svg" width="800" alt="Stock market simulator"/>
 </p>
 
