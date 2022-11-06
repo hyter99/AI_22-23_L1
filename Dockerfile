@@ -28,7 +28,7 @@ COPY --chown=node . .
 RUN npm run build
 
 # Delete unused development dependencies
-RUN npm prune --production
+RUN npm prune --omit=dev
 
 ###################################################
 #                      Deploy                     #
