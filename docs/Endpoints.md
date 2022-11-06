@@ -1,0 +1,296 @@
+## Zarządzanie kontem użytkownika
+
+- **Logowanie**
+  - URI: /auth/login/
+  - Metoda: POST
+  - Ograniczenia dostępu: *brak*
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - login: string - nazwa użytkownika
+    - password: string - hasło do konta
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 403 Forbidden (błędne dane logowania)
+  - Zawartość JSON w odpowiedzi 200 OK: nd.
+
+- **Rejestracja**
+  - URI: /auth/register/
+  - Metoda: POST
+  - Ograniczenia dostępu: *brak*
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - login: string - nazwa użytkownika
+    - password: string - hasło do konta
+    - passwordConfirm: string - powtórzone hasło
+    - email: string - unikalny email
+    - name: string - email
+    - surname: string - nazwisko
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 400 Bad Request - Błąd walidacji danych
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - userId: number
+    - token: string
+
+- **Resetowanie hasła**
+  - URI: /auth/reset-password/
+  - Metoda: POST
+  - Ograniczenia dostępu: nd.
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - email: string - adres e-email przypisany do konta
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK: nd.
+
+- **Zmiana hasła**
+  - URI: /auth/change-password/
+  - Metoda: POST
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - oldPassword: string - obecne hasło użytkownika
+    - newPassword: string - nowe hasło
+    - newPasswordConfirm: string - potwierdzenie nowego hasła
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 400 Bad Request - błędy walidacji
+  - Zawartość JSON w odpowiedzi 200 OK: nd.
+
+## Profil użytkowwnika:
+
+- **Pobranie podstawowych danych profilu**
+  - URI: /profile/me
+  - Metoda: GET
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - email: string - adres e-email przypisany do konta
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - login: string
+    - email: string
+    - name: string
+    - surname: string
+    - balanceCents: number - stan konta w centach
+
+- **Pobranie informacji o balansie konta użytkownika**
+  - URI: /profile/wallet
+  - Metoda: GET
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: nd.
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - balanceCents: number - stan konta w centach
+
+- **Pobranie akcji należących do użytkownika**
+  - URI: /profile/stock
+  - Metoda: GET
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: URL
+  - Parametry zapytania:
+    - page: number | undefined
+    - take: number | undefined
+    - orderBy: string | undefined
+    - orderType: 'asc' | 'desc' | undefined
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - userStockId: number - identyfikator encji UserStock
+    - stockId: number - identyfikator akcji
+    - company:
+      - id: number - identyfikator spółki akcyjnej
+      - name: string - nazwa spółki akcyjnej
+      - description: string - opis spółki akcyjnej
+    - stockQuantity: number - liczba akcji na giełdzie
+    - stockPriceCents: number - koszt pojedynczej akcji w centach
+    - userStockQuantity: number - liczba akcji posiadanych przez użytkownika
+
+- **Pobranie zleceń sprzedaży złożonych przez danego użytkownika**
+  - URI: /profile/sell-offers
+  - Metoda: GET
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: URL
+  - Parametry zapytania:
+    - page: number | undefined
+    - take: number | undefined
+    - companyName: string | undefined
+    - status: number | undefined - filtrowanie po statusie zlecenia
+    - orderBy: string | undefined
+    - orderType: 'asc' | 'desc' | undefined
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - offerId: number - identyfikator zlecenia
+    - stockId: number - identyfikator akcji
+    - company:
+      - id: number - identyfikator spółki akcyjnej
+      - name: string - nazwa spółki akcyjnej
+      - description: string - opis spółki akcyjnej
+    - unitPriceCents: number - oferowana jednostkowa cena kupna lub sprzedaży (w zależności od wybranego rodzaju zlecenia)
+    - quantity: number - liczba akcji na giełdzie
+    - created: string - timestamp utworzenia transakcji
+    - status: number - liczba określająca stan zlecenia (trwające, zakończone, przedawnione, anulowane)
+
+- **Pobranie zleceń kupna złożonych przez danego użytkownika**
+  - URI: /profile/buy-offers
+  - Metoda: GET
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: URL
+  - Parametry zapytania:
+    - page: number | undefined
+    - take: number | undefined
+    - companyName: string | undefined
+    - status: number | undefined - filtrowanie po statusie zlecenia
+    - orderBy: string | undefined
+    - orderType: 'asc' | 'desc' | undefined
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - offerId: number - identyfikator zlecenia
+    - stockId: number - identyfikator akcji
+    - company:
+      - id: number - identyfikator spółki akcyjnej
+      - name: string - nazwa spółki akcyjnej
+      - description: string - opis spółki akcyjnej
+    - unitPriceCents: number - oferowana jednostkowa cena kupna lub sprzedaży (w zależności od wybranego rodzaju zlecenia)
+    - quantity: number - liczba akcji na giełdzie
+    - created: string - timestamp utworzenia transakcji
+    - status: number - liczba określająca stan zlecenia (trwające, zakończone, przedawnione, anulowane)
+
+- **Pobranie wszystkich transakcji, w których uczestniczył użytkownik**
+  - URI: /profile/transactions
+  - Metoda: GET
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: URL
+  - Parametry zapytania:
+    - page: number | undefined
+    - take: number | undefined
+    - companyName: string | undefined
+    - stockId: number | undefined
+    - beginDate: string | undefined - wybranie transakcji zawartych po tej dacie
+    - endDate: string | undefined - wybranie transakcji zawartych przed tą dacie
+    - orderBy: string | undefined
+    - orderType: 'asc' | 'desc' | undefined
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - sellerId: number - identyfikator sprzedającego
+    - buyerId: number - identyfikator kupującego
+    - stockId: number - identyfikator akcji
+    - company:
+      - id: number - identyfikator spółki akcyjnej
+      - name: string - nazwa spółki akcyjnej
+      - description: string - opis spółki akcyjnej
+    - unitPriceCents: number - oferowana jednostkowa cena kupna lub sprzedaży (w zależności od wybranego rodzaju zlecenia)
+    - quantity: number - liczba akcji na giełdzie
+    - created: string - timestamp utworzenia transakcji
+    - status: number - liczba określająca stan zlecenia (trwające, zakończone, przedawnione, anulowane)
+
+- **Uzupełnienie środków w wirtualnym portfelu**
+  - URI: /profile/add-wallet
+  - Metoda: POST
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - amountCents: number
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 400 Bad Request - niepoprawna wartość kwoty
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - balanceCents: number - stan konta po doładowaniu
+
+- **Modyfikacja danych w profilu**
+  - URI: /profile
+  - Metoda: PATCH
+  - Ograniczenia dostępu: zalogowany użytkownik
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - name: string | undefined
+    - surname: string | undefined
+    - email: string | undefined
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 400 Bad Request - Błąd walidacji
+  - Zawartość JSON w odpowiedzi 200 OK: nd.
+
+## Giełda
+
+- **Pobranie wszystkich akcji w obiegu**
+  - URI: /stock
+  - Metoda: GET
+  - Ograniczenia dostępu: *brak*
+  - Miejsce parametrów zapytania: URL
+  - Parametry zapytania:
+    - page: number | undefined
+    - take: number | undefined
+    - companyName: string | undefined
+    - orderBy: string | undefined
+    - orderType: 'asc' | 'desc' | undefined
+  - Możliwe odpowiedzi:
+    - 200 OK
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - stockId: number - identyfikator akcji
+    - company:
+      - id: number - identyfikator spółki akcyjnej
+      - name: string - nazwa spółki akcyjnej
+      - description: string - opis spółki akcyjnej
+    - quantity: number - liczba akcji na giełdzie
+    - priceCents: number - koszt akcji w centach
+
+- **Pobranie szczegółów wybranej akcji**
+  - URI: /stock/:stockId
+  - Metoda: GET
+  - Ograniczenia dostępu: *brak*
+  - Miejsce parametrów zapytania: URL
+  - Parametry zapytania:
+    - historyBeginDate: string | undefined - wybieranie historycznych cen po tej dacie
+    - historyEndDate: string | undefined - wybieranie historycznych cen przed tą datą
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 404 Not Found - Akcja nie istrnije
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - stockId: number - identyfikator akcji
+    - company:
+      - id: number - identyfikator spółki akcyjnej
+      - name: string - nazwa spółki akcyjnej
+      - description: string - opis spółki akcyjnej
+    - quantity: number - liczba akcji na giełdzie
+    - priceCents: number - koszt akcji w centach
+    - stockPriceHistory - historia jednostkowej ceny akcji
+      - priceCents: number - hisoryczna cena jednostkowa w cenmtach
+      - changed: string - data zmiany ceny
+
+- **Utworzenia zlecenia sprzedaży**
+  - URI: /make-sell-offer
+  - Metoda: POST
+  - Ograniczenia dostępu: Użytkownik jest zalogowany
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - stockId: number - identyfikator akcji
+    - quantity: number - liczba akcji do sprzedania
+    - unitPriceCents: number - oferowana cena jednostkowa w centach
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 400 Bad Request - Błąd walidacji danych
+    - 410 Gone - Akcja zostąła usunięta
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - offerId: number - identyfikator zlecenia
+
+- **Utworzenia zlecenia kupna**
+  - URI: /make-buy-offer
+  - Metoda: POST
+  - Ograniczenia dostępu: Użytkownik jest zalogowany
+  - Miejsce parametrów zapytania: JSON
+  - Parametry zapytania:
+    - stockId: number - identyfikator akcji
+    - quantity: number - liczba akcji do sprzedania
+    - unitPriceCents: number - oferowana cena jednostkowa w centach
+  - Możliwe odpowiedzi:
+    - 200 OK
+    - 400 Bad Request - Błąd walidacji danych
+    - 410 Gone - Akcja zostąła usunięta
+  - Zawartość JSON w odpowiedzi 200 OK:
+    - offerId: number - identyfikator zlecenia
