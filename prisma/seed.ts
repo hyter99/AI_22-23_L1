@@ -6,6 +6,7 @@ import {
   Stock,
   BuyOffer,
   SellOffer,
+  CompanyStockPriceHistory
 } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 import { genSalt, hash } from 'bcrypt';
@@ -14,7 +15,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Simple seeding - use only in development
-  // seeded tables: User, Company, UserStock, Stock, BuyOffer, SellOffer
+  // seeded tables: User, Company, UserStock, Stock, BuyOffer, SellOffer, CompanyPriceHistory
   // -> npx prisma migrate rest
 
   // seed params
@@ -24,6 +25,7 @@ async function main() {
   const amountOfStockOffers = 500;
   const amountOfBuyOffers = 50;
   const amountOfSellOffers = 100;
+  const amountOfHistoricalStockPricingChanges = 50;
   const maxOfferCents = 100000;
 
   // BACK-END
@@ -37,6 +39,7 @@ async function main() {
   const stockOffers: Stock[] = [];
   const buyOffers: BuyOffer[] = [];
   const sellOffers: SellOffer[] = [];
+  const companyStockPriceHistories: CompanyStockPriceHistory[] = [];
 
   //=========== User seeding =================
   for (let i = 1; i <= amountOfUsers; i++) {
@@ -177,6 +180,27 @@ async function main() {
     sellOffers.push(sellOffer);
   }
 
+  //=========== Company Stock Price history seeding =================
+  let companyStockPriceHistoryCounter = 1;
+
+  for (let i = 1; i <= amountOfCompanies; i++) {
+    for(let j = 1; j <= amountOfHistoricalStockPricingChanges; j++) {
+      const companyStockPrice = faker.datatype.number(maxOfferCents);
+      const companyStockPriceChangeDate = faker.date.recent(30);
+
+      const companyStockPriceHistory: CompanyStockPriceHistory = {
+        companyStockPriceHistoryId: companyStockPriceHistoryCounter,
+        companyId: i,
+        priceCents: companyStockPrice,
+        changeDate: companyStockPriceChangeDate,
+      };
+
+      companyStockPriceHistoryCounter++;
+      companyStockPriceHistories.push(companyStockPriceHistory);
+    }
+  }
+  
+
   // Finally, DB push
   const addUsers = async () => await prisma.user.createMany({ data: users });
 
@@ -195,12 +219,17 @@ async function main() {
   const addBuyOffers = async () =>
     await prisma.buyOffer.createMany({ data: buyOffers });
 
+  const addCompanyStockPriceHistories = async () =>
+    await prisma.companyStockPriceHistory.createMany({ data: companyStockPriceHistories });
+
   await addUsers();
   await addCompanies();
   await addUserStocks();
   await addStockOffers();
   await addBuyOffers();
   await addSellOffers();
+  await addCompanyStockPriceHistories();
+
 }
 
 main()

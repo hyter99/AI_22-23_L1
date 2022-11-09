@@ -20,11 +20,12 @@ model BuyOffer {
 }
 
 model Company {
-  companyId      Int     @id @default(autoincrement())
-  name           String  @db.VarChar
-  description    String?
-  CompanyToStock Stock[]
-  CompanyToUserStock UserStock[]
+  companyId                          Int     @id @default(autoincrement())
+  name                               String  @db.VarChar
+  description                        String?
+  CompanyToStock                     Stock[]
+  CompanyToUserStock                 UserStock[]
+  CompanyToCompanyStockPriceHistory  CompanyStockPriceHistory[]
 }
 
 model SellOffer {
@@ -46,16 +47,16 @@ model Stock {
   priceCents               Int
   userId                   Int
   StockToCompany           Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  StockToStockPriceHistory StockPriceHistory[]
+  //StockToStockPriceHistory StockPriceHistory[]
   StockToUser  User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
 }
 
-model StockPriceHistory {
-  stockPriceHistoryId      Int      @id @default(autoincrement())
-  stockId                  Int
-  priceCents               Int
-  changeDate               DateTime @db.Timestamptz(6) @default(now())
-  StockPriceHistoryToStock Stock    @relation(fields: [stockId], references: [stockId], onDelete: NoAction, onUpdate: NoAction, map: "Stock")
+model CompanyStockPriceHistory {
+  companyStockPriceHistoryId        Int        @id @default(autoincrement())
+  companyId                         Int
+  priceCents                        Int
+  changeDate                        DateTime   @db.Timestamptz(6) @default(now())
+  CompanyStockPriceHistoryToCompany Company    @relation(fields: [companyId], references: [companyId], onDelete: NoAction, onUpdate: NoAction, map: "Company")
 }
 
 model Transaction {
@@ -76,7 +77,7 @@ model User {
   userId                  Int           @id @default(autoincrement())
   email                   String        @db.VarChar @unique
   password                String        @db.VarChar
-  passwordSalt			  String		@db.VarChar
+  passwordSalt			      String		    @db.VarChar
   name                    String        @db.VarChar
   surname                 String        @db.VarChar
   balanceCents            Int
