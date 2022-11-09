@@ -1,6 +1,7 @@
 services:
     app:
         image: ai2223l1/stock:latest
+        restart: unless-stopped
         networks:
             - main-network
         ports:
@@ -26,6 +27,7 @@ services:
           - .env
     watchtower:
         image: containrrr/watchtower
+        restart: unless-stopped
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
         environment:
