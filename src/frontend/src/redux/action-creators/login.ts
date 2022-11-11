@@ -20,7 +20,8 @@ export const loginUser = (email: string, password: string) => {
     //     id: "a",
     //     firstName: "Maciej",
     //     lastName: "H",
-    //     email: "test@gmail.com"
+    //     email: "test@gmail.com",
+    //     balanceCents: 0
     //   }
     // };
     //
@@ -28,6 +29,7 @@ export const loginUser = (email: string, password: string) => {
     //   type: ActionType.USER_LOGIN_SUCCESS,
     //   payload: loginResults
     // });
+    /* END */
 
     /* UNCOMMENT WHILE LOGIN IS DONE IN BACKEND API */
     dispatch({
@@ -68,6 +70,7 @@ export const loginUser = (email: string, password: string) => {
         payload: "Niepoprawne dane logowania"
       });
     }
+    /* END */
   }
 };
 
