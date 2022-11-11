@@ -34,25 +34,23 @@ export class ProfileService {
       },
       where: {
         userId,
-        UserStockToStock: {
-          StockToCompany: {
-            name: getUserStockQuery.companyName,
-          },
+        Company: {
+          name: getUserStockQuery.companyName,
         },
       },
       select: {
         userStockId: true,
         stockQuantity: true,
-        UserStockToStock: {
+        Company: {
           select: {
-            stockId: true,
             companyId: true,
-            quantity: true,
-            priceCents: true,
-            StockToCompany: {
+            name: true,
+            description: true,
+            Stock: {
               select: {
-                name: true,
-                description: true,
+                stockId: true,
+                quantity: true,
+                priceCents: true,
               },
             },
           },
@@ -99,8 +97,8 @@ export class ProfileService {
       where: {
         userId,
         status: getUserSellOfferQuery.status,
-        BuyOfferToStock: {
-          StockToCompany: {
+        Stock: {
+          Company: {
             name: getUserSellOfferQuery.companyName,
           },
         },
@@ -112,10 +110,10 @@ export class ProfileService {
         quantity: true,
         created: true,
         status: true,
-        BuyOfferToStock: {
+        Stock: {
           select: {
             companyId: true,
-            StockToCompany: {
+            Company: {
               select: {
                 name: true,
               },

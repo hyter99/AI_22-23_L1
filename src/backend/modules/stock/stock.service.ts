@@ -8,22 +8,22 @@ export class StockService {
   constructor(private readonly prisma: PrismaService) {}
 
   getMany(query: GetStocksQuery) {
-    const take = query.take ? parseInt(query.take) : 10;
+    const take = query.take ? query.take : 10;
 
     return this.prisma.stock.findMany({
-      skip: query.page ? parseInt(query.page) * take : undefined,
+      skip: query.skip,
       take: take,
       orderBy: {
         [query.orderBy ?? 'stockId']: query.orderType ?? 'desc',
       },
       where: {
-        StockToCompany: {
+        Company: {
           name: query.companyName,
         },
       },
       select: {
         stockId: true,
-        StockToCompany: {
+        Company: {
           select: {
             companyId: true,
             name: true,
@@ -43,21 +43,22 @@ export class StockService {
       },
       select: {
         stockId: true,
-        StockToCompany: {
+        Company: {
           select: {
             companyId: true,
             name: true,
             description: true,
+            StockPriceHistory: {
+              select: {
+                companyStockPriceHistoryId: true,
+                changeDate: true,
+                priceCents: true,
+              },
+            },
           },
         },
         quantity: true,
         priceCents: true,
-        StockToStockPriceHistory: {
-          select: {
-            changeDate: true,
-            priceCents: true,
-          },
-        },
       },
     });
   }
