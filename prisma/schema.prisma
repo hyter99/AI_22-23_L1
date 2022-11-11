@@ -15,18 +15,18 @@ model BuyOffer {
   quantity              Int
   created               DateTime      @db.Timestamptz(6) @default(now())
   status                Int           @default(0)
-  BuyOfferToUser        User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  BuyOfferToTransaction Transaction[]
-  BuyOfferToUserStock   Stock     @relation(fields: [stockId], references: [stockId], onDelete: Cascade, map: "BuyOffer")
+  User                  User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  Transaction           Transaction[]
+  Stock                 Stock     @relation(fields: [stockId], references: [stockId], onDelete: Cascade, map: "BuyOffer")
 }
 
 model Company {
   companyId                          Int     @id @default(autoincrement())
   name                               String  @db.VarChar
   description                        String?
-  CompanyToStock                     Stock[]
-  CompanyToUserStock                 UserStock[]
-  CompanyToCompanyStockPriceHistory  CompanyStockPriceHistory[]
+  Stock                              Stock[]
+  UserStock                          UserStock[]
+  StockPriceHistory                  CompanyStockPriceHistory[]
 }
 
 model SellOffer {
@@ -37,9 +37,9 @@ model SellOffer {
   quantity               Int
   created                DateTime      @db.Timestamptz(6) @default(now())
   status                 Int           @default(0)
-  SellOfferToUser        User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  SellOfferToTransaction Transaction[]
-  SellOfferToUserStock   UserStock     @relation(fields: [userStockId], references: [userStockId], onDelete: Cascade, map: "UserStock")
+  User                   User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  Transaction            Transaction[]
+  UserStock              UserStock     @relation(fields: [userStockId], references: [userStockId], onDelete: Cascade, map: "UserStock")
 }
 
 model Stock {
@@ -48,9 +48,9 @@ model Stock {
   quantity                 Int
   priceCents               Int
   userId                   Int
-  StockToCompany           Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  StockToUser  User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  StockToBuyOffer BuyOffer[]
+  Company                  Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
+  User                     User                @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  BuyOffer                 BuyOffer[]
 }
 
 model CompanyStockPriceHistory {
@@ -58,7 +58,7 @@ model CompanyStockPriceHistory {
   companyId                         Int
   priceCents                        Int
   changeDate                        DateTime   @db.Timestamptz(6) @default(now())
-  CompanyStockPriceHistoryToCompany Company    @relation(fields: [companyId], references: [companyId], onDelete: NoAction, onUpdate: NoAction, map: "Company")
+  Company                           Company    @relation(fields: [companyId], references: [companyId], onDelete: NoAction, onUpdate: NoAction, map: "Company")
 }
 
 model Transaction {
@@ -69,10 +69,10 @@ model Transaction {
   date                   DateTime  @db.Timestamptz(6) @default(now())
   sellerId               Int
   buyerId                Int
-  TransactionToBuyOffer  BuyOffer  @relation(fields: [buyOfferId], references: [buyOfferId], onDelete: Cascade, map: "BuyOffer")
-  TransactionToBuyer     User      @relation("TransactionToBuyer", fields: [buyerId], references: [userId], onDelete: Cascade, map: "Buyer")
-  TransactionToSellOffer SellOffer @relation(fields: [sellOfferId], references: [sellOfferId], onDelete: Cascade, map: "SellOffer")
-  TransactionToSeller    User      @relation("TransactionToSeller", fields: [sellerId], references: [userId], onDelete: Cascade, map: "Seller")
+  BuyOffer               BuyOffer  @relation(fields: [buyOfferId], references: [buyOfferId], onDelete: Cascade, map: "BuyOffer")
+  Buyer                  User      @relation("TransactionToBuyer", fields: [buyerId], references: [userId], onDelete: Cascade, map: "Buyer")
+  SellOffer              SellOffer @relation(fields: [sellOfferId], references: [sellOfferId], onDelete: Cascade, map: "SellOffer")
+  Seller                 User      @relation("TransactionToSeller", fields: [sellerId], references: [userId], onDelete: Cascade, map: "Seller")
 }
 
 model User {
@@ -85,10 +85,10 @@ model User {
   balanceCents            Int
   BuyOffer                BuyOffer[]
   SellOffer               SellOffer[]
-  UserToTransactionBuyer  Transaction[] @relation("TransactionToBuyer")
-  UserToTransactionSeller Transaction[] @relation("TransactionToSeller")
-  UserToUserStock         UserStock[]
-  UserToStock             Stock[]
+  TransactionBuyer        Transaction[] @relation("TransactionToBuyer")
+  TransactionSeller       Transaction[] @relation("TransactionToSeller")
+  UserStock               UserStock[]
+  Stock                   Stock[]
 }
 
 model UserStock {
@@ -96,7 +96,7 @@ model UserStock {
   userId           Int
   stockQuantity    Int
   companyId        Int
-  UserStockToUser  User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  UserStockToCompany Company @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  UserStockToSellOffer SellOffer[]
+  User             User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  Company          Company @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
+  SellOffer        SellOffer[]
 }
