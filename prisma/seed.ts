@@ -63,7 +63,7 @@ async function main() {
     const companyName = faker.company.name();
     const companyDescription = faker.company.catchPhrase();
 
-    const company: Prisma.CompanyCreateInput = {
+    const company: Prisma.CompanyUncheckedCreateInput = {
       name: companyName,
       description: companyDescription,
     };
@@ -81,7 +81,7 @@ async function main() {
         max: amountOfCompanies,
       });
 
-      const userStock: Prisma.UserStockCreateInput = {
+      const userStock: Prisma.UserStockUncheckedCreateInput = {
         userId: userId,
         stockQuantity: userStockQuantity,
         companyId: userCompanyId,
@@ -101,7 +101,7 @@ async function main() {
     const userStockPriceCents = faker.datatype.number(maxOfferCents);
     const userId = faker.datatype.number({ min: 1, max: amountOfUsers });
 
-    const stockOffer: Prisma.StockCreateInput = {
+    const stockOffer: Prisma.StockUncheckedCreateInput = {
       companyId: userCompanyId,
       quantity: userStockQuantity,
       priceCents: userStockPriceCents,
@@ -126,7 +126,7 @@ async function main() {
     const userBuyOfferCreatedAt = faker.date.recent();
     const userBuyOfferStatus = faker.datatype.number(statusCountBuyOffer);
 
-    const buyOffer: Prisma.BuyOfferCreateInput = {
+    const buyOffer: Prisma.BuyOfferUncheckedCreateInput = {
       userId: userId,
       stockId: userStockId,
       unitBuyPriceCents: userUnitBuyPrice,
@@ -153,7 +153,7 @@ async function main() {
     const userSellOfferCreatedAt = faker.date.recent();
     const userSellOfferStatus = faker.datatype.number(statusCountSellOffer);
 
-    const sellOffer: Prisma.SellOfferCreateInput = {
+    const sellOffer: Prisma.SellOfferUncheckedCreateInput = {
       userId: userId,
       userStockId: userStockId,
       unitSellPriceCents: userUnitSellPriceCents,
@@ -171,7 +171,7 @@ async function main() {
       const companyStockPrice = faker.datatype.number(maxOfferCents);
       const companyStockPriceChangeDate = faker.date.recent(30);
 
-      const companyStockPriceHistory: Prisma.CompanyStockPriceHistoryCreateInput = {
+      const companyStockPriceHistory: Prisma.CompanyStockPriceHistoryUncheckedCreateInput = {
         companyId: i,
         priceCents: companyStockPrice,
         changeDate: companyStockPriceChangeDate,
