@@ -1,12 +1,6 @@
 import {
   PrismaClient,
-  User,
-  Company,
-  UserStock,
-  Stock,
-  BuyOffer,
-  SellOffer,
-  CompanyStockPriceHistory
+  Prisma
 } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 import { genSalt, hash } from 'bcrypt';
@@ -33,13 +27,13 @@ async function main() {
   const statusCountBuyOffer = 3;
   const statusCountSellOffer = 3;
 
-  const users: User[] = [];
-  const companies: Company[] = [];
-  const userStocks: UserStock[] = [];
-  const stockOffers: Stock[] = [];
-  const buyOffers: BuyOffer[] = [];
-  const sellOffers: SellOffer[] = [];
-  const companyStockPriceHistories: CompanyStockPriceHistory[] = [];
+  const users: Prisma.UserCreateManyInput[] = [];
+  const companies: Prisma.CompanyCreateManyInput[] = [];
+  const userStocks: Prisma.UserStockCreateManyInput[] = [];
+  const stockOffers: Prisma.StockCreateManyInput[] = [];
+  const buyOffers: Prisma.BuyOfferCreateManyInput[] = [];
+  const sellOffers: Prisma.SellOfferCreateManyInput[] = [];
+  const companyStockPriceHistories: Prisma.CompanyStockPriceHistoryCreateManyInput[] = [];
 
   //=========== User seeding =================
   for (let i = 1; i <= amountOfUsers; i++) {
@@ -52,8 +46,7 @@ async function main() {
     const userEmail = faker.internet.email(userName, userSurname);
     const userBalanceCents = faker.datatype.number({ min: 1000, max: 100000 });
 
-    const user: User = {
-      userId: i,
+    const user: Prisma.UserCreateInput = {
       email: userEmail,
       password: hashedPassword,
       passwordSalt: salt,
@@ -70,8 +63,7 @@ async function main() {
     const companyName = faker.company.name();
     const companyDescription = faker.company.catchPhrase();
 
-    const company: Company = {
-      companyId: i,
+    const company: Prisma.CompanyCreateInput = {
       name: companyName,
       description: companyDescription,
     };
@@ -80,8 +72,6 @@ async function main() {
   }
 
   //=========== User stocks seeding =================
-  let userStockIdCounter = 1;
-
   for (let i = 1; i <= amountOfUsers; i++) {
     for (let j = 1; j <= amountOfUserStocks; j++) {
       const userId = faker.datatype.number({ min: 1, max: amountOfUsers });
@@ -91,14 +81,12 @@ async function main() {
         max: amountOfCompanies,
       });
 
-      const userStock: UserStock = {
-        userStockId: userStockIdCounter,
+      const userStock: Prisma.UserStockCreateInput = {
         userId: userId,
         stockQuantity: userStockQuantity,
         companyId: userCompanyId,
       };
 
-      userStockIdCounter++;
       userStocks.push(userStock);
     }
   }
@@ -113,8 +101,7 @@ async function main() {
     const userStockPriceCents = faker.datatype.number(maxOfferCents);
     const userId = faker.datatype.number({ min: 1, max: amountOfUsers });
 
-    const stockOffer: Stock = {
-      stockId: i,
+    const stockOffer: Prisma.StockCreateInput = {
       companyId: userCompanyId,
       quantity: userStockQuantity,
       priceCents: userStockPriceCents,
@@ -139,8 +126,7 @@ async function main() {
     const userBuyOfferCreatedAt = faker.date.recent();
     const userBuyOfferStatus = faker.datatype.number(statusCountBuyOffer);
 
-    const buyOffer: BuyOffer = {
-      buyOfferId: i,
+    const buyOffer: Prisma.BuyOfferCreateInput = {
       userId: userId,
       stockId: userStockId,
       unitBuyPriceCents: userUnitBuyPrice,
@@ -157,7 +143,7 @@ async function main() {
     const userId = faker.datatype.number({ min: 1, max: amountOfUsers });
     const userStockId = faker.datatype.number({
       min: 1,
-      max: userStockIdCounter,
+      max: amountOfUserStocks*amountOfUsers,
     });
     const userUnitSellPriceCents = faker.datatype.number({
       min: 1,
@@ -167,8 +153,7 @@ async function main() {
     const userSellOfferCreatedAt = faker.date.recent();
     const userSellOfferStatus = faker.datatype.number(statusCountSellOffer);
 
-    const sellOffer: SellOffer = {
-      sellOfferId: i,
+    const sellOffer: Prisma.SellOfferCreateInput = {
       userId: userId,
       userStockId: userStockId,
       unitSellPriceCents: userUnitSellPriceCents,
@@ -181,21 +166,17 @@ async function main() {
   }
 
   //=========== Company Stock Price history seeding =================
-  let companyStockPriceHistoryCounter = 1;
-
   for (let i = 1; i <= amountOfCompanies; i++) {
     for(let j = 1; j <= amountOfHistoricalStockPricingChanges; j++) {
       const companyStockPrice = faker.datatype.number(maxOfferCents);
       const companyStockPriceChangeDate = faker.date.recent(30);
 
-      const companyStockPriceHistory: CompanyStockPriceHistory = {
-        companyStockPriceHistoryId: companyStockPriceHistoryCounter,
+      const companyStockPriceHistory: Prisma.CompanyStockPriceHistoryCreateInput = {
         companyId: i,
         priceCents: companyStockPrice,
         changeDate: companyStockPriceChangeDate,
       };
 
-      companyStockPriceHistoryCounter++;
       companyStockPriceHistories.push(companyStockPriceHistory);
     }
   }

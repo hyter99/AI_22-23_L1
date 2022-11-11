@@ -47,7 +47,6 @@ model Stock {
   priceCents               Int
   userId                   Int
   StockToCompany           Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  //StockToStockPriceHistory StockPriceHistory[]
   StockToUser  User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
 }
 
