@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { PrismaService } from '../database/prisma.service';
 import { GetStocksQuery } from './dto/get-stocks.query';
@@ -37,29 +37,36 @@ export class StockService {
   }
 
   getOne(stockId: number) {
-    return this.prisma.stock.findFirst({
-      where: {
-        stockId: stockId,
-      },
-      select: {
-        stockId: true,
-        Company: {
-          select: {
-            companyId: true,
-            name: true,
-            description: true,
-            StockPriceHistory: {
-              select: {
-                companyStockPriceHistoryId: true,
-                changeDate: true,
-                priceCents: true,
+    return this.prisma.stock
+      .findFirstOrThrow({
+        where: {
+          stockId: stockId,
+        },
+        select: {
+          stockId: true,
+          Company: {
+            select: {
+              companyId: true,
+              name: true,
+              description: true,
+              StockPriceHistory: {
+                select: {
+                  companyStockPriceHistoryId: true,
+                  changeDate: true,
+                  priceCents: true,
+                },
+                orderBy: {
+                  changeDate: 'asc',
+                },
               },
             },
           },
+          quantity: true,
+          priceCents: true,
         },
-        quantity: true,
-        priceCents: true,
-      },
-    });
+      })
+      .catch(() => {
+        throw new NotFoundException(`Stcok with id ${stockId} not found`);
+      });
   }
 }
