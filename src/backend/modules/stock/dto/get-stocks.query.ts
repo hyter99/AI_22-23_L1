@@ -1,23 +1,13 @@
-import { IsNumberString, IsOptional, IsString } from 'class-validator';
+import { IsIn, IsOptional, IsString } from 'class-validator';
+import { Pagination } from '../../../queries/pagination.query';
 
-export class GetStocksQuery {
-  @IsNumberString()
-  @IsOptional()
-  page?: string;
-
-  @IsNumberString()
-  @IsOptional()
-  take?: string;
-
+export class GetStocksQuery extends Pagination {
   @IsString()
   @IsOptional()
   companyName?: string;
 
+  @IsIn(['stockid', 'companyId', 'priceCents', 'quantity'])
   @IsString()
   @IsOptional()
   orderBy?: 'stockid' | 'companyId' | 'priceCents' | 'quantity';
-
-  @IsString()
-  @IsOptional()
-  orderType?: 'asc' | 'desc';
 }
