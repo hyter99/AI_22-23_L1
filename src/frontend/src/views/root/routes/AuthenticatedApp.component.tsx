@@ -49,7 +49,7 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       />
       <Route
         exact
-        path="/details/:id"
+        path="/szczegoly-akcji/:id"
         component={() => (
           <ViewDetailsStock
             appVersion={appVersion}
