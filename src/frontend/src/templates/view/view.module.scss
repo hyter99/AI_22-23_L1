@@ -1,16 +1,28 @@
 @import "src/frontend/src/styles/variables";
 
 .app {
-  height: 100vh;
   width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
 
+  .navMenuWrapper {
+    width: auto;
+    height: 100%;
+  }
+
   .appContent {
     width: calc(100% - 230px); //TO DO - change width to suit with nav-menu
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
+  }
+
+  // The full screen view
+  &.fullScreen {
+    .appContent {
+      overflow-y: hidden;
+    }
   }
 }

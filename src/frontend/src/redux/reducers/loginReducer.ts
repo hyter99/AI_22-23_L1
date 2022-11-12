@@ -6,6 +6,7 @@ import { ILogin } from "../data-types/login";
 interface ILoginState {
   loading: boolean;
   error: string | null;
+  success: string | null;
   loginData: ILogin;
 }
 
@@ -13,6 +14,7 @@ interface ILoginState {
 const initialState: ILoginState = {
   loading: false,
   error: null,
+  success: null,
   loginData: {
     accessToken: "",
     user: {
@@ -30,17 +32,20 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
     case ActionType.USER_LOGIN_REQUEST:
       state.loading = true;
       state.error = null;
+      state.success = null; //added
       return { ...state };
 
     case ActionType.USER_LOGIN_SUCCESS:
       state.loading = false;
       state.error = null;
+      state.success = null; //added: could be some message from action.payload, but it is erased after login - so the set doesn't matter
       state.loginData = action.payload;
       return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}}};
 
     case ActionType.USER_LOGIN_FAIL:
       state.loading = false;
       state.error = action.payload;
+      state.success = null; //added
       return { ...state };
 
     case ActionType.USER_LOGOUT:
@@ -60,22 +65,36 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
       state.error = action.payload;
       return { ...state };
 
+    case ActionType.USER_LOGIN_SET_SUCCESS:
+      state.success = action.payload;
+      return { ...state };
+
     case ActionType.USER_LOGIN_SET_LOADING:
       state.loading = action.payload;
       return {...state};
 
+    case ActionType.USER_LOGIN_RESET_STATUS:
+      state.loading = false;
+      state.error = null;
+      state.success = null;
+      return {...state};
+
     case ActionType.USER_SET_BALANCE_CENTS:
-      state.loginData.user.balanceCents = action.payload;
+      state.loginData.user.balanceCents = action.payload.newAmount;
+      state.loading = false;
+      state.error = null;
+      state.success = action.payload.successMessage; //added
       return {...state, loginData: {...state.loginData, user: {...state.loginData.user}}}
 
     case ActionType.USER_SET_NEW_DATA:
       state.loading = false;
       state.error = null;
+      state.success = action.payload.successMessage; //added
       state.loginData.user = {
         ...state.loginData.user,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        email: action.payload.email
+        firstName: action.payload.userData.firstName,
+        lastName: action.payload.userData.lastName,
+        email: action.payload.userData.email
       };
       return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}}};
 
