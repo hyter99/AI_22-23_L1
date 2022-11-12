@@ -14,13 +14,12 @@ const useLoginForm = () => {
   const [loginInputs, setLoginInputs] = useState<ILoginInputs>(initialLoginInputs);
   const [errorLoginInputs, setErrorLoginInputs] = useState<IErrorLoginInputs>(initialErrorLoginInputs);
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
-  const {loginUser, setLoginErrorMessage, setLoading} = useActions();
+  const {loginUser, resetStatus} = useActions();
   const {loading: loadingLogin, error: errorLogin} = useTypedSelector(state => state.login);
   const emailRgx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   useEffect(() => {
-    setLoginErrorMessage(null);
-    setLoading(false);
+    resetStatus();
   },[]);
 
   // Validate data, when the live validation is on (after first attempt to log in)
