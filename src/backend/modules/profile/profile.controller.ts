@@ -4,7 +4,6 @@ import {
   Req,
   UseGuards,
   Query,
-  ValidationPipe,
   Patch,
   Body,
   Post,
@@ -31,14 +30,7 @@ export class ProfileConstroller {
   @Get('/stock')
   getUserStock(
     @Req() request: RequestWithUser,
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-        forbidNonWhitelisted: true,
-      }),
-    )
-    getUserStockQuery: GetUserStockQuery,
+    @Query() getUserStockQuery: GetUserStockQuery,
   ) {
     return this.profileService.getUserStock(
       request.user.userId,
@@ -54,14 +46,7 @@ export class ProfileConstroller {
   @Get('/sell-offers')
   getUserSellOffers(
     @Req() request: RequestWithUser,
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-        forbidNonWhitelisted: true,
-      }),
-    )
-    getUserSellOfferQuery: GetUserSellOfferQuery,
+    @Query() getUserSellOfferQuery: GetUserSellOfferQuery,
   ) {
     return this.profileService.getUserSellOffers(
       request.user.userId,
@@ -72,14 +57,7 @@ export class ProfileConstroller {
   @Get('/buy-offers')
   getUserBuyOffers(
     @Req() request: RequestWithUser,
-    @Query(
-      new ValidationPipe({
-        transform: true,
-        transformOptions: { enableImplicitConversion: true },
-        forbidNonWhitelisted: true,
-      }),
-    )
-    getUserSellOfferQuery: GetUserBuyOfferQuery,
+    @Query() getUserSellOfferQuery: GetUserBuyOfferQuery,
   ) {
     return this.profileService.getUserBuyOffers(
       request.user.userId,
