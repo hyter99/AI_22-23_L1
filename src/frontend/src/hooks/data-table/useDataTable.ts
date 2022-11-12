@@ -8,7 +8,7 @@ import { initialStocksInputFields, initialDataModals } from "./useDataTable.data
 
 function useDataTable<T>(selectedDataType: ISelectedDataType) {
   const [data, setData] = useState<T[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<IStocksInputFields>(initialStocksInputFields);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -43,7 +43,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
 
   const fetchData = (isStart?: boolean) => {
     // Get and change the page
-    const pageToFetch = isStart ? 0 : currentPage+1;
+    const pageToFetch = isStart ? 1 : currentPage+1;
     setCurrentPage(pageToFetch);
 
     // Prepare url
@@ -158,6 +158,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     isLoading,
     dataModals,
     selectedItemIdx,
+    currentPage,
     handleInputChange,
     handleDataModalChange,
     toggleOrderBy,
