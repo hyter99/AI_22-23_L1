@@ -3,7 +3,7 @@ export type ISelectedDataType = "stockActions" | "myStockActions" | "mySellOffer
 // data types to show
 export interface IStockAction {
   stockId: number;
-  StockToCompany: {
+  Company: {
     companyId: number;
     name: string;
     description: string;

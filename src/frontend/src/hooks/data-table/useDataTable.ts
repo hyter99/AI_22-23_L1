@@ -75,10 +75,10 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
               dataToAppend = resData.map((item: any) => ({
                 stockId: item.stockId,
                 quantity: item.quantity,
-                StockToCompany: {
-                  companyId: item.StockToCompany.quantity,
-                  name: item.StockToCompany.name,
-                  description: item.StockToCompany.description
+                Company: {
+                  companyId: item.Company.quantity,
+                  name: item.Company.name,
+                  description: item.Company.description
                 },
                 priceCents: item.priceCents
               } as IStockAction)) as T[];

@@ -132,7 +132,7 @@ const ViewStocks:React.FC<IViewStocks> = ({appVersion, isLogged}) => {
                           key={item.stockId}
                         >
                           <td>{`${index+1}.`}</td>
-                          <td>{item.StockToCompany.name}</td>
+                          <td>{item.Company.name}</td>
                           <td>{item.quantity}</td>
                           <td>{`${CentsToString(item.priceCents)} PLN`}</td>
                           <td className={styles.tdButton}>
