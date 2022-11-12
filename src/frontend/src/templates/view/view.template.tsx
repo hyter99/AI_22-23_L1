@@ -1,6 +1,6 @@
 // This template has menu
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import {RouteComponentProps, withRouter} from "react-router";
 import {Helmet} from "react-helmet-async";
 
@@ -9,12 +9,15 @@ import styles from "./view.module.scss";
 
 // components
 import NavMenu from "../../components/nav-menu/nav-menu.component";
+import MobileMenu from "../../components/mobile-menu/mobile-menu.component";
 
 // hook
 import useView from "./view.hook";
 
+// context
+import { IsMobileViewContext } from "../../providers/is-mobile-view-provide.component";
 
-// interface
+// interfaces
 interface ITemplateView extends RouteComponentProps<any> {
   children: ReactNode;
   viewTitle: string;
@@ -30,16 +33,30 @@ const TemplateView: React.FC<ITemplateView> = ({
     isLogged,
     isFullScreen
   }) => {
-  useView(isLogged);
-
+  const {} = useView(isLogged);
+  const {isMobileView} = useContext(IsMobileViewContext);
+  
   return (
     <>
       <Helmet>
         <title>{viewTitle} {appVersion}</title>
       </Helmet>
-      <div className={`${styles.app} ${isFullScreen ? styles.fullScreen : ""}`}>
+      <div className={`
+        ${styles.app}
+        ${isFullScreen ? styles.fullScreen : ""}
+        ${isMobileView ? styles.mobileMenuView : ""}
+      `}>
         <div className={`${styles.navMenuWrapper}`}>
-          <NavMenu isLogged={isLogged}/>
+        {
+          !isMobileView ?
+            <NavMenu
+              isLogged={isLogged}
+            />
+          :
+            <MobileMenu
+              isLogged={isLogged}
+            />
+        }
         </div>
         <div
           id="scrollableDiv"

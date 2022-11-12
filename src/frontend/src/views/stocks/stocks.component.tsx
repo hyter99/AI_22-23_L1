@@ -1,4 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+
+// styles
+import styles from "./stocks.module.scss";
+
+// SVGs
+import SVGArrowDownV2 from "../../assets/svg/arrow_down_v2.svg";
 
 // templates
 import TemplateView from "../../templates/view/view.template";
@@ -19,11 +25,8 @@ import { CentsToString } from "../../functions/cents-to-string";
 // data
 import { stockTableHeaders } from "./stocks.data";
 
-// styles
-import styles from "./stocks.module.scss";
-
-//SVGs
-import SVGArrowDownV2 from "../../assets/svg/arrow_down_v2.svg";
+// context
+import { IsMobileViewContext } from "../../providers/is-mobile-view-provide.component";
 
 // interfaces
 interface IViewStocks {
@@ -46,6 +49,7 @@ const ViewStocks:React.FC<IViewStocks> = ({appVersion, isLogged}) => {
     dataModals,
     isEndOfData
   } = useDataTable<IStockAction>("stockActions");
+  const {isMobileView} = useContext(IsMobileViewContext);
 
   return (
     <TemplateView
@@ -61,6 +65,7 @@ const ViewStocks:React.FC<IViewStocks> = ({appVersion, isLogged}) => {
             value={searchInput.searchField}
             handleChange={handleInputChange}
             onSearchClick={onSearchClick}
+            isPaddingInsideLeft={isMobileView}
           />
         </div>
         <div className={styles.stocksTableWrapper}>

@@ -19,10 +19,16 @@
     overflow-y: scroll;
   }
 
+  &.mobileMenuView {
+    .appContent {
+      width: 100%;
+    }
+  }
+  
   // The full screen view
   &.fullScreen {
     .appContent {
-      overflow-y: hidden;
+      overflow-y: auto;
     }
   }
 }

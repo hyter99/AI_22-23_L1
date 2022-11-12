@@ -66,7 +66,7 @@ const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
                 </div>
                 <div className={styles.row}>
                   <p className={styles.name}>Stan konta:</p>
-                  <p className={styles.value}>{CentsToString(balanceCents)}</p>
+                  <p className={styles.value}>{`${CentsToString(balanceCents)} PLN`}</p>
                 </div>
               </div>
             :

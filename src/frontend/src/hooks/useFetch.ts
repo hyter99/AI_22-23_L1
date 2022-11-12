@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-// const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/`;
-const API_URL = 'http://localhost:3000/api/';
+//@ts-ignore
+const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/`;
+//const API_URL = 'http://localhost:3000/api/';
 
 export function useFetch<T>(url: string) {
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +51,6 @@ export function useFetch<T>(url: string) {
   return {
     data,
     isLoading,
-    isError,
+    isError
   };
 }

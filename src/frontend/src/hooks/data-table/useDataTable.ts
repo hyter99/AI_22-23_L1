@@ -96,11 +96,12 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
         else {
           console.log("error:", resData);
         }
-        setIsLoading(false);
       })
       .catch(err => {
-        setIsLoading(false);
         console.log("fatal error:", err);
+      })
+      .finally( () => {
+        setIsLoading(false);
       });
   };
 

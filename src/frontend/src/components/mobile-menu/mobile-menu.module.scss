@@ -1,0 +1,44 @@
+@import "src/frontend/src/styles/variables";
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: $colorDarkGray2;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  padding-top: 50px;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform ease-in-out 0.25s;
+
+  &.opened {
+    transform: translateX(0);
+  }
+}
+
+.imgWrapper {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: $colorDarkerGray2;
+  border-radius: 50%;
+  z-index: 101;
+  
+  img {
+    width: 24px;
+    height: 24px;
+    filter: invert(100%) sepia(0%) saturate(1251%) hue-rotate(212deg) brightness(104%) contrast(70%);
+  }
+}

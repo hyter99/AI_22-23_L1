@@ -168,7 +168,6 @@ const useRegisterForm = () => {
         })
       })
       .then(async response => {
-        setIsLoadingRegister(false);
         if (response.ok) {
           setIsSuccessRegister(true);
         }
@@ -178,8 +177,10 @@ const useRegisterForm = () => {
         }
       })
       .catch(err => {
-        setIsLoadingRegister(false);
         setErrorMessageRegister("Wystąpił nieoczekiwany błąd podczas rejestracji");
+      })
+      .finally(() => {
+        setIsLoadingRegister(false);
       });
     }
   };

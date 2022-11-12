@@ -16,17 +16,6 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
   return (
     <Switch>
       {/*TO DO - Other paths*/}
-      {/*<Route*/}
-      {/*  exact*/}
-      {/*  path="/pytania/edytuj/:id"*/}
-      {/*  component={() => (*/}
-      {/*    isUserType("teacher", userRoles) ?*/}
-      {/*      <ViewAddNewQuestion appVersion={appVersion} isQuestionEdit/>*/}
-      {/*    ://STUDENT*/}
-      {/*      <Redirect to="/" />*/}
-      {/*  )*/}
-      {/*  }*/}
-      {/*/>*/}
       {/*Main menu*/}
       <Route
         exact

@@ -13,6 +13,7 @@ interface ISearchBar {
   placeholder: string;
   handleChange: (name: string, value:string) => void;
   onSearchClick: () => void;
+  isPaddingInsideLeft?: boolean;
 }
 
 const SearchBar: React.FC<ISearchBar> = ({
@@ -20,13 +21,17 @@ const SearchBar: React.FC<ISearchBar> = ({
     value,
     handleChange,
     placeholder,
-    onSearchClick
+    onSearchClick,
+    isPaddingInsideLeft
   }) => {
 
   return (
     <div className={styles.wrapper}>
       <input
-        className={`${styles.input}`}
+        className={`
+          ${styles.input}
+          ${isPaddingInsideLeft ? styles.paddingLeft : ""}
+        `}
         type="text"
         name={name}
         value={value}

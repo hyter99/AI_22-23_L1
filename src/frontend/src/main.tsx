@@ -16,8 +16,9 @@ import {store, persistor} from "./redux";
 // helmet provider
 import {HelmetProvider} from "react-helmet-async";
 
-// window size provider
+// providers
 import WindowSizeProvider from "./providers/window-size-provider.component";
+import IsMobileViewProvider from "./providers/is-mobile-view-provide.component";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,9 +26,11 @@ ReactDOM.render(
       <PersistGate loading={null} persistor={persistor}>
         <HelmetProvider>
           <WindowSizeProvider>
-            <Router history={history}>
-              <Root />
-            </Router>
+            <IsMobileViewProvider>
+              <Router history={history}>
+                <Root />
+              </Router>
+            </IsMobileViewProvider>
           </WindowSizeProvider>
         </HelmetProvider>
       </PersistGate>

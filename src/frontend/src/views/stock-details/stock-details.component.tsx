@@ -1,9 +1,17 @@
+import React from "react";
+import { useParams } from 'react-router';
+
+// styles
 import styles from './stock-details.module.scss';
 
+// templates
 import TemplateView from '../../templates/view/view.template';
-import { useParams } from 'react-router';
-import type { StockController } from '../../../../backend/modules/stock/stock.controller';
-import { useFetch } from '../../hooks/useFetch';
+
+// hooks
+import useStockDetails from "./stock-details.hook";
+
+// components
+import Button from "../../components/ui/button/button.component";
 import {
   CartesianGrid,
   Line,
@@ -14,38 +22,30 @@ import {
   YAxis,
 } from 'recharts';
 
-type StockGetOne = Awaited<
-  ReturnType<typeof StockController['prototype']['getOne']>
->;
+// interfaces
+interface IViewStockDetails {
+  appVersion: string;
+  isLogged?: boolean;
+}
 
-const priceFormatter = new Intl.NumberFormat('pl-PL', {
-  style: 'currency',
-  currency: 'PLN',
-});
-
-const ViewStockDetails: React.FC<{ appVersion: string; isLogged?: boolean }> = (
-  props,
+const ViewStockDetails: React.FC<IViewStockDetails> = (
+  props
 ) => {
   const { id = '' } = useParams<{ id: string }>();
-
-  const stockFetch = useFetch<StockGetOne>(`stocks/${id}`);
-
-  const mappedData = stockFetch.data?.Company.StockPriceHistory.map((item) => {
-    return {
-      label: item.changeDate,
-      value: item.priceCents,
-    };
-  });
-
-  const handleBuyButtonClick = () => {
-    // TODO: show modal
-  };
+  const {
+    priceFormatter,
+    stockFetch,
+    mappedData,
+    isBuyModalOpened,
+    setIsBuyModalOpened
+  } = useStockDetails(id);
 
   return (
     <TemplateView
       appVersion={props.appVersion}
-      viewTitle="Szczegóły akcji X"
+      viewTitle={`Szczegóły akcji: ${stockFetch.data?.Company.name}`}
       isLogged={props.isLogged}
+      isFullScreen
     >
       <div className={styles.backdrop}>
         <div className={styles.panel}>
@@ -73,24 +73,24 @@ const ViewStockDetails: React.FC<{ appVersion: string; isLogged?: boolean }> = (
                 : 'Brak ofert'}
             </span>
           </div>
-          <div id="stock-buy-button" className={styles.buyButton}>
-            <button
-              id="stock-buy-button"
-              className={styles.button}
-              onClick={handleBuyButtonClick}
-            >
-              Kup
-            </button>
+          <div id="stock-buy-button" className={styles.buyButtonWrap}>
+            <Button
+              type="button"
+              title="Kup"
+              backgroundColor="darkerGray"
+              fontColor="white"
+              handleClick={() => setIsBuyModalOpened(true)}
+            />
           </div>
           <div id="stock-history" className={styles.stockHistory}>
             <div className={styles.label}>
               Historia zmian ceny jednostkowej:
             </div>
-            <ResponsiveContainer width="100%">
+            <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={mappedData}
                 margin={{
-                  top: 5,
+                  top: 15,
                   right: 5,
                   left: 30,
                   bottom: 5,
@@ -139,6 +139,13 @@ const ViewStockDetails: React.FC<{ appVersion: string; isLogged?: boolean }> = (
             </ResponsiveContainer>
           </div>
         </div>
+        {
+          isBuyModalOpened ?
+            <></>
+            // TODO: create buy modal and fill it with mapped 'fetchData.data' object
+          :
+            null
+        }
       </div>
     </TemplateView>
   );

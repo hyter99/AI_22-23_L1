@@ -20,6 +20,10 @@
     font-weight: 700;
     font-style: normal;
     padding: 7px 40px 7px 9px;
+    
+    &.paddingLeft {
+      padding-left: 50px;
+    }
 
     &::placeholder {
       color: $colorLightGray2;

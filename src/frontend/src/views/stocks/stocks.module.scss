@@ -9,6 +9,7 @@
     top: 0;
     width: 100%;
     height: auto;
+    z-index: 99;
   }
 
   .stocksTableWrapper {
@@ -70,8 +71,6 @@
               filter: invert(23%) sepia(100%) saturate(1901%) hue-rotate(353deg) brightness(93%) contrast(86%);
             }
           }
-
-
         }
       }
 
