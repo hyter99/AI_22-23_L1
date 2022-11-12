@@ -9,6 +9,7 @@ import { PrismaModule } from './database/prisma.module';
 import { OfferModule } from './offer/offer.module';
 import { ProfileModule } from './profile/profile.module';
 import { StockModule } from './stock/stock.module';
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { StockModule } from './stock/stock.module';
     OfferModule,
     StockModule,
     ProfileModule,
+    ConfigModule.forRoot(),
   ],
   providers: [UniqueConstraint, ExistsConstraint],
 })
