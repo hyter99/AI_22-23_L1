@@ -18,15 +18,15 @@ export class ProfileConstroller{
     return this.profileService.getUserProfile(request.user.userId);
   }
 
-  @Get("/stock")
-  getUserStock(@Req() request: RequestWithUser,
-    @Query(new ValidationPipe({
-      transform: true,
-      transformOptions: {enableImplicitConversion: true},
-      forbidNonWhitelisted: true
-    })) getUserStockQuery: GetUserStockQuery) {
-    return this.profileService.getUserStock(request.user.userId, getUserStockQuery);
-  }
+  // @Get("/stock")
+  // getUserStock(@Req() request: RequestWithUser,
+  //   @Query(new ValidationPipe({
+  //     transform: true,
+  //     transformOptions: {enableImplicitConversion: true},
+  //     forbidNonWhitelisted: true
+  //   })) getUserStockQuery: GetUserStockQuery) {
+  //   return this.profileService.getUserStock(request.user.userId, getUserStockQuery);
+  // }
 
   @Get('/sell-offers')
   getUserSellOffers(@Req() request: RequestWithUser,
@@ -38,15 +38,15 @@ export class ProfileConstroller{
     return this.profileService.getUserSellOffers(request.user.userId, getUserSellOfferQuery)
   }
 
-  @Get('/buy-offers')
-  getUserBuyOffers(@Req() request: RequestWithUser,
-    @Query(new ValidationPipe({
-      transform: true,
-      transformOptions: {enableImplicitConversion: true},
-      forbidNonWhitelisted: true
-    })) getUserSellOfferQuery: GetUserBuyOfferQuery) {
-    return this.profileService.getUserBuyOffers(request.user.userId, getUserSellOfferQuery)
-  }
+  // @Get('/buy-offers')
+  // getUserBuyOffers(@Req() request: RequestWithUser,
+  //   @Query(new ValidationPipe({
+  //     transform: true,
+  //     transformOptions: {enableImplicitConversion: true},
+  //     forbidNonWhitelisted: true
+  //   })) getUserSellOfferQuery: GetUserBuyOfferQuery) {
+  //   return this.profileService.getUserBuyOffers(request.user.userId, getUserSellOfferQuery)
+  // }
 
   @Patch('')
   updateUserAccount(@Req() request: RequestWithUser, @Body() updateUserDto: UpdateUserDto) {

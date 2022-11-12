@@ -1,14 +1,20 @@
 import React from "react";
-import {animateScroll as scroll} from "react-scroll";
-
 // styles
 import styles from "./back-to-top-button.module.scss";
+
+//SVGs
+import SVGArrowDownV2 from "../../assets/svg/arrow_down_v2.svg";
 
 // hooks
 import useBackToTopButton from "./back-to-top-button.hook";
 
-const BackToTopButton: React.FC = () => {
-  const {isShowed} = useBackToTopButton();
+// interfaces
+interface IBackToTopButton {
+  elementId: string;
+}
+
+const BackToTopButton: React.FC<IBackToTopButton> = ({elementId}) => {
+  const {isShowed, currElement} = useBackToTopButton(elementId);
 
   return (
     <div
@@ -16,13 +22,15 @@ const BackToTopButton: React.FC = () => {
             ${styles.buttonWrap}
             ${isShowed ? styles.isShowed : ""}
          `}
-      onClick={() => scroll.scrollToTop({
-        duration: 500
-      })}
+      onClick={() => {
+        if (currElement) {
+          currElement.scrollTop = 0;
+        }
+      }}
       title="Idź do góry"
     >
       <img
-        src="../../assets/svg/arrow_down_v2.svg"
+        src={SVGArrowDownV2}
         alt="down-arrow"
       />
     </div>

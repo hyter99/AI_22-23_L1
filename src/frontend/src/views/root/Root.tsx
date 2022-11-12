@@ -18,9 +18,13 @@ const Root: React.FC = () => {
     <>
       {
         isUserLoggedIn ?
-          <AuthenticatedApp appVersion={appVersion} />
+          <AuthenticatedApp
+            appVersion={appVersion}
+          />
         :
-          <UnauthenticatedApp appVersion={appVersion} />
+          <UnauthenticatedApp
+            appVersion={appVersion}
+          />
       }
     </>
   );

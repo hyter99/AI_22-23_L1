@@ -25,41 +25,41 @@ export class ProfileService{
     })
   }
 
-  getUserStock(userId: number, getUserStockQuery: GetUserStockQuery) {
-    return this.prisma.userStock.findMany({
-      take: getUserStockQuery.take,
-      skip: getUserStockQuery.skip,
-      orderBy: {
-        [getUserStockQuery.orderBy]: getUserStockQuery.orderType
-      },
-      where: {
-        userId,
-        UserStockToStock: {
-          StockToCompany: {
-            name: getUserStockQuery.companyName
-          }
-        }
-      },
-      select: {
-        userStockId: true,
-        stockQuantity: true,
-        UserStockToStock: {
-          select: {
-            stockId: true,
-            companyId: true,
-            quantity: true,
-            priceCents: true,
-            StockToCompany: {
-              select: {
-                name: true,
-                description: true,
-              }
-            }
-          }
-        }
-      },
-    })
-  }
+  // getUserStock(userId: number, getUserStockQuery: GetUserStockQuery) {
+  //   return this.prisma.userStock.findMany({
+  //     take: getUserStockQuery.take,
+  //     skip: getUserStockQuery.skip,
+  //     orderBy: {
+  //       [getUserStockQuery.orderBy]: getUserStockQuery.orderType
+  //     },
+  //     where: {
+  //       userId,
+  //       UserStockToStock: {
+  //         StockToCompany: {
+  //           name: getUserStockQuery.companyName
+  //         }
+  //       }
+  //     },
+  //     select: {
+  //       userStockId: true,
+  //       stockQuantity: true,
+  //       UserStockToStock: {
+  //         select: {
+  //           stockId: true,
+  //           companyId: true,
+  //           quantity: true,
+  //           priceCents: true,
+  //           StockToCompany: {
+  //             select: {
+  //               name: true,
+  //               description: true,
+  //             }
+  //           }
+  //         }
+  //       }
+  //     },
+  //   })
+  // }
 
   getUserSellOffers(userId: number, getUserSellOfferQuery: GetUserSellOfferQuery) {
     return this.prisma.sellOffer.findMany({
@@ -83,42 +83,42 @@ export class ProfileService{
     })
   }
 
-  getUserBuyOffers(userId: number, getUserSellOfferQuery: GetUserBuyOfferQuery) {
-    return this.prisma.buyOffer.findMany({
-      take: getUserSellOfferQuery.take,
-      skip: getUserSellOfferQuery.skip,
-      orderBy: {
-        [getUserSellOfferQuery.orderBy]: getUserSellOfferQuery.orderType
-      },
-      where: {
-        userId,
-        status: getUserSellOfferQuery.status,
-        BuyOfferToStock: {
-          StockToCompany: {
-            name: getUserSellOfferQuery.companyName
-          }
-        }
-      },
-      select: {
-        buyOfferId: true,
-        stockId: true,
-        unitBuyPriceCents: true,
-        quantity: true,
-        created: true,
-        status: true,
-        BuyOfferToStock: {
-          select: {
-            companyId: true,
-            StockToCompany: {
-              select: {
-                name: true,
-              }
-            }
-          }
-        }
-      }
-    })
-  }
+  // getUserBuyOffers(userId: number, getUserSellOfferQuery: GetUserBuyOfferQuery) {
+  //   return this.prisma.buyOffer.findMany({
+  //     take: getUserSellOfferQuery.take,
+  //     skip: getUserSellOfferQuery.skip,
+  //     orderBy: {
+  //       [getUserSellOfferQuery.orderBy]: getUserSellOfferQuery.orderType
+  //     },
+  //     where: {
+  //       userId,
+  //       status: getUserSellOfferQuery.status,
+  //       BuyOfferToStock: {
+  //         StockToCompany: {
+  //           name: getUserSellOfferQuery.companyName
+  //         }
+  //       }
+  //     },
+  //     select: {
+  //       buyOfferId: true,
+  //       stockId: true,
+  //       unitBuyPriceCents: true,
+  //       quantity: true,
+  //       created: true,
+  //       status: true,
+  //       BuyOfferToStock: {
+  //         select: {
+  //           companyId: true,
+  //           StockToCompany: {
+  //             select: {
+  //               name: true,
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   })
+  // }
 
   updateUserAccount(userId: number, updateUserDto: UpdateUserDto) {
     return this.prisma.user.update({

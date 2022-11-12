@@ -7,6 +7,10 @@ import {LoginActions} from "../actions/login";
 import {ILogin, INewUserData} from "../data-types/login";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 
+/* Remember! */
+/* Axios throws an exception to the 'catch' block if it recognizes ANY error in request */
+/* Fetch throws it to the catch block only if it can't reach the backend API (e.g. when the URL is wrong)
+    - otherwise we have to check the 'response.status' code to know if it's a problem with request */
 export const loginUser = (email: string, password: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
     /* UNCOMMENT WHEN LOGIN ISN'T DONE IN BACKEND API */
@@ -16,7 +20,8 @@ export const loginUser = (email: string, password: string) => {
     //     id: "a",
     //     firstName: "Maciej",
     //     lastName: "H",
-    //     email: "test@gmail.com"
+    //     email: "test@gmail.com",
+    //     balanceCents: 0
     //   }
     // };
     //
@@ -24,6 +29,7 @@ export const loginUser = (email: string, password: string) => {
     //   type: ActionType.USER_LOGIN_SUCCESS,
     //   payload: loginResults
     // });
+    /* END */
 
     /* UNCOMMENT WHILE LOGIN IS DONE IN BACKEND API */
     dispatch({
@@ -57,12 +63,14 @@ export const loginUser = (email: string, password: string) => {
         payload: loginResults
       });
     } catch (err: any) {
-      // console.log("Błąd logowania:", err.message);
+      /* can read err data from backend API via: 'err.response.data' - it has corresponding 'message' field */
+      //console.log("Błąd logowania:", err.response.data.message);
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
         payload: "Niepoprawne dane logowania"
       });
     }
+    /* END */
   }
 };
 
@@ -94,6 +102,15 @@ export const setLoginErrorMessage = (state: string | null) => {
   }
 };
 
+export const setSuccessMessage = (state: string | null) => {
+  return async (dispatch: Dispatch<LoginActions>) => {
+    dispatch({
+      type: ActionType.USER_LOGIN_SET_SUCCESS,
+      payload: state
+    });
+  }
+};
+
 export const setLoading = (state: boolean) => {
   return async (dispatch: Dispatch<LoginActions>) => {
     dispatch({
@@ -103,12 +120,24 @@ export const setLoading = (state: boolean) => {
   }
 };
 
+export const resetStatus = () => {
+  return async (dispatch: Dispatch<LoginActions>) => {
+    dispatch({
+      type: ActionType.USER_LOGIN_RESET_STATUS
+    });
+  }
+};
+
 export const getBalanceCents = () => {
   return async (dispatch: Dispatch<LoginActions>) => {
     const {accessToken} = useTypedSelector(state => state.login.loginData);
     try {
+      dispatch({
+        type: ActionType.USER_LOGIN_REQUEST
+      });
+
       // @ts-ignore
-      const {data} = await axios.get(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, {
+      const {data} = await axios.get(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, { // to change
         headers: {
           // maybe bearer?
           'Content-Type': 'application/json'
@@ -117,12 +146,49 @@ export const getBalanceCents = () => {
 
       dispatch({
         type: ActionType.USER_SET_BALANCE_CENTS,
-        payload: data.balanceCents ? data.balanceCents : 0
+        payload: {
+          successMessage: "",
+          newAmount: data.balanceCents ? data.balanceCents : 0 // to change (without condition checking)
+        }
       });
     } catch (err) {
       dispatch({
+        type: ActionType.USER_LOGIN_FAIL,
+        payload: "Nie udało się pobrać informacji o środkach"
+      });
+    }
+  };
+};
+
+export const setBalanceCents = (newAmount: number) => {
+  return async (dispatch: Dispatch<LoginActions>) => {
+    const {accessToken} = useTypedSelector(state => state.login.loginData);
+    try {
+      dispatch({
+        type: ActionType.USER_LOGIN_REQUEST
+      });
+
+      // @ts-ignore
+      const {data} = await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, {
+        amount: newAmount //to change
+      },{
+        headers: {
+          // maybe bearer?
+          'Content-Type': 'application/json'
+        }
+      });
+
+      dispatch({
         type: ActionType.USER_SET_BALANCE_CENTS,
-        payload: 0
+        payload: {
+          successMessage: "",
+          newAmount: data.balanceCents ? data.balanceCents : newAmount // to change (without condition checking)
+        }
+      });
+    } catch (err) {
+      dispatch({
+        type: ActionType.USER_LOGIN_FAIL,
+        payload: "Nie udało się dodać środków do konta"
       });
     }
   };
@@ -156,10 +222,13 @@ export const setUserData = (newFirstName: string, newLastName: string, newEmail:
 
       dispatch({
         type: ActionType.USER_SET_NEW_DATA,
-        payload: newUserData
+        payload: {
+          successMessage: "Poprawnie zmieniono dane",
+          userData: newUserData
+        }
       });
     } catch (err: any) {
-      const mess: string = err.message ? err.message : "Nowe dane są niepoprawne";
+      const mess: string = err.message ? err.message : "Nowe dane są niepoprawne"; //err.response.data.message
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
         payload: mess

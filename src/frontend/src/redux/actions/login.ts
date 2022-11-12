@@ -24,19 +24,34 @@ interface SetErrorAction {
   payload: string | null;
 }
 
+interface SetSuccessAction {
+  type: ActionType.USER_LOGIN_SET_SUCCESS;
+  payload: string | null;
+}
+
 interface SetLoadingAction {
   type: ActionType.USER_LOGIN_SET_LOADING;
   payload: boolean;
 }
 
-interface SetBalanceCentsAction {
-  type: ActionType.USER_SET_BALANCE_CENTS;
-  payload: number;
+interface ResetStatusAction {
+  type: ActionType.USER_LOGIN_RESET_STATUS;
 }
 
-interface SetNewDataAction {
+interface SetBalanceCentsAction {
+  type: ActionType.USER_SET_BALANCE_CENTS;
+  payload: {
+    successMessage: string;
+    newAmount: number;
+  };
+}
+
+interface SetNewUserDataAction {
   type: ActionType.USER_SET_NEW_DATA;
-  payload: INewUserData;
+  payload: {
+    successMessage: string;
+    userData: INewUserData
+  };
 }
 
 export type LoginActions =
@@ -45,6 +60,8 @@ export type LoginActions =
   UserLoginFailAction |
   UserLogoutAction |
   SetErrorAction |
+  SetSuccessAction |
   SetLoadingAction |
+  ResetStatusAction |
   SetBalanceCentsAction |
-  SetNewDataAction;
+  SetNewUserDataAction;
