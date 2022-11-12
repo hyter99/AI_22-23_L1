@@ -13,12 +13,13 @@ import NavMenu from "../../components/nav-menu/nav-menu.component";
 // hook
 import useView from "./view.hook";
 
+
 // interface
 interface ITemplateView extends RouteComponentProps<any> {
-    children: ReactNode;
-    viewTitle: string;
-    appVersion: string;
-    isLogged?: boolean;
+  children: ReactNode;
+  viewTitle: string;
+  appVersion: string;
+  isLogged?: boolean;
   isFullScreen?: boolean;
 }
 
@@ -40,7 +41,10 @@ const TemplateView: React.FC<ITemplateView> = ({
         <div className={`${styles.navMenuWrapper}`}>
           <NavMenu isLogged={isLogged}/>
         </div>
-        <div className={`backgroundImage ${styles.appContent}`}>
+        <div
+          id="scrollableDiv"
+          className={`backgroundImage ${styles.appContent}`}
+        >
           {children}
         </div>
       </div>

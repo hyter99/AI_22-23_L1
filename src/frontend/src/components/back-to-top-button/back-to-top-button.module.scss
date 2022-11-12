@@ -5,12 +5,12 @@
   height: 35px;
   position: fixed;
   bottom: 30px;
-  right: 10px;
-  background-color: $colorDarkGray;
+  right: 30px;
+  background-color: $colorDarkGray2;
   border-radius: 50%;
   overflow: hidden;
   visibility: hidden;
-  transform: translateX(50px);
+  transform: translateX(70px);
   transition: transform ease-in-out 0.5s;
   display: flex;
   justify-content: center;
@@ -21,16 +21,17 @@
     transform: translateX(0);
   }
 
-  i {
-    color: $colorWhite;
-    font-size: 20px;
+  img {
+    width: 20px;
+    height: 20px;
+    filter: invert(99%) sepia(91%) saturate(30%) hue-rotate(306deg) brightness(108%) contrast(100%);
     transform: rotateZ(180deg);
-    transition: color ease-in-out 0.3s;
+    transition: filter ease-in-out 0.3s;
   }
 
   &:hover {
-    i {
-      color: $colorBlack;
+    img {
+      filter: none;
     }
   }
 }

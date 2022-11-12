@@ -1,0 +1,49 @@
+@import "src/frontend/src/styles/variables";
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: $colorDarkGray2;
+  padding: 6px;
+  border-radius: 10px;
+
+  .input {
+    width: 100%;
+    height: auto;
+    background-color: $colorGray;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: $colorDarkGray2;
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: normal;
+    padding: 7px 40px 7px 9px;
+
+    &::placeholder {
+      color: $colorLightGray2;
+      font-size: 14px;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $colorDarkPurple;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .magnifier {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
