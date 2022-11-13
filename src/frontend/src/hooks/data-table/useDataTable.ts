@@ -7,23 +7,24 @@ import { ISelectedDataType, IStockAction, IStocksInputFields, IDataModals, ISear
 import { initialStocksInputFields, initialDataModals } from "./useDataTable.data";
 
 function useDataTable<T>(selectedDataType: ISelectedDataType) {
+  const FIRST_PAGE_NUM = 1;
+  const ELEMENTS_PER_PAGE = 20;
+  const ADDITION_URL: string =
+    selectedDataType === "stockActions" ? "stocks"
+    : selectedDataType === "myStockActions" ? "profile/stock"
+    : selectedDataType === "mySellOffers" ? "profile/sell-offers"
+    : "profile/buy-offers";
+  //@ts-ignore
+  const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/` + ADDITION_URL;
+  
   const [data, setData] = useState<T[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(FIRST_PAGE_NUM);
   const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<IStocksInputFields>(initialStocksInputFields);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [dataModals, setDataModals] = useState<IDataModals>(initialDataModals);
   const [selectedItemIdx, setSelectedItemIdx] = useState<number>(-1);
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
-
-  const ELEMENTS_PER_PAGE = 20;
-  const additionUrl: string =
-    selectedDataType === "stockActions" ? "stocks"
-    : selectedDataType === "myStockActions" ? "profile/stock"
-    : selectedDataType === "mySellOffers" ? "profile/sell-offers"
-    : "profile/buy-offers";
-  //@ts-ignore
-  const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/` + additionUrl;
 
   useEffect(() => {
     fetchData(true);
@@ -43,7 +44,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
 
   const fetchData = (isStart?: boolean) => {
     // Get and change the page
-    const pageToFetch = isStart ? 1 : currentPage+1;
+    const pageToFetch = isStart ? FIRST_PAGE_NUM : currentPage+1;
     setCurrentPage(pageToFetch);
 
     // Prepare url
