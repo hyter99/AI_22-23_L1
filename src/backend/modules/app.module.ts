@@ -3,6 +3,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ExistsConstraint } from '../decorators/exists.decorator';
 
+import { appConfigSchema } from '../schemas/app.config.schema'
+
 import { UniqueConstraint } from '../decorators/unique.decorator';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './database/prisma.module';
@@ -22,7 +24,9 @@ import { ConfigModule } from "@nestjs/config";
     OfferModule,
     StockModule,
     ProfileModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      validate: appConfigSchema.parse,
+    }),
   ],
   providers: [UniqueConstraint, ExistsConstraint],
 })
