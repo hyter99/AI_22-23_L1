@@ -25,12 +25,18 @@ export const AuthenticatedNavItems: INavItem[] = [
 export const UnauthenticatedNavItems: INavItem[] = [
   {
     id: 1,
+    name: "Akcje",
+    url: "/",
+    isLink: true
+  },
+  {
+    id: 2,
     name: "Logowanie",
     url: "/logowanie",
     isLink: true
   },
   {
-    id: 2,
+    id: 3,
     name: "Rejestracja",
     url: "/rejestracja",
     isLink: true

@@ -11,6 +11,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  
+  &.bgTransparent {
+    background-color: transparent;
+  }
 
   .message {
     display: flex;

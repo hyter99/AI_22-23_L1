@@ -1,4 +1,4 @@
-import { ISearchOrderBy } from "../../hooks/data-table/useDataTable.types";
+import { ISearchOrderBy } from "../../../hooks/data-table/useDataTable.types";
 
 export interface IStockTableHeader {
   id: number;

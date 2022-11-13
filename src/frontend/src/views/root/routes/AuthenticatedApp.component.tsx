@@ -15,8 +15,8 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
 
   return (
     <Switch>
-      {/*TO DO - Other paths*/}
-      {/*Main menu*/}
+      {/*TODO - Other paths*/}
+      {/*Main routes*/}
       <Route
         exact
         path="/"
@@ -30,20 +30,19 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       />
       <Route
         exact
-        path={["/logowanie", "/rejestracja"]}
-        component={() => (
-          <Redirect to="/" />
-        )
-        }
-      />
-      <Route
-        exact
         path="/szczegoly-akcji/:id"
         component={() => (
           <ViewDetailsStock
             appVersion={appVersion}
             isLogged={true}
           />
+        )}
+      />
+      <Route
+        exact
+        path={["/logowanie", "/rejestracja"]}
+        component={() => (
+          <Redirect to="/" />
         )}
       />
       {/*Other routes*/}

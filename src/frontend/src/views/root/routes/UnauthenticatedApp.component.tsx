@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import ViewLogin from "../../login/login.component";
 import ViewRegister from "../../register/register-content.component";
 import ViewStocks from "../../stocks/stocks.component";
+import ViewDetailsStock from "../../stock-details/stock-details.component";
 
 // interfaces
 interface IUnauthenticatedApp {
@@ -25,6 +26,16 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
             isLogged={false}
           />
         }
+      />
+      <Route
+        exact
+        path="/szczegoly-akcji/:id"
+        component={() => (
+          <ViewDetailsStock
+            appVersion={appVersion}
+            isLogged={false}
+          />
+        )}
       />
       <Route
         exact

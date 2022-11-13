@@ -1,4 +1,4 @@
-import { IStockTableHeader } from "./stocks.types";
+import { IStockTableHeader } from "./stocks-table.types";
 
 export const stockTableHeaders: IStockTableHeader[] = [
   {

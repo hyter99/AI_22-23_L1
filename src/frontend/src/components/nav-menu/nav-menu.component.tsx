@@ -42,6 +42,7 @@ const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
                   className={styles.navItem}
                   activeClassName={styles.active}
                   to={item.url}
+                  exact
                 >
                   {item.name}
                 </NavLink>
