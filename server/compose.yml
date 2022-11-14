@@ -1,18 +1,19 @@
 services:
     app:
-        build: .
         image: ai2223l1/stock:latest
+        restart: unless-stopped
         networks:
             - main-network
         ports:
-          - host_ip: localhost
-            published: 3000
+          - published: 3000
             target: 3000
             protocol: tcp
         env_file:
           - .env
         depends_on:
           - db
+        labels:
+            com.centurylinklabs.watchtower.enable: true
     db:
         image: postgres:15.0
         restart: unless-stopped
@@ -22,13 +23,19 @@ services:
           - type: volume
             source: postgres-data
             target: /var/lib/postgresql/data
-        ports:
-          - host_ip: localhost
-            published: 5432
-            target: 5432
-            protocol: tcp
         env_file:
           - .env
+    watchtower:
+        image: containrrr/watchtower
+        restart: unless-stopped
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+          - TZ=Europe/Warsaw
+          - WATCHTOWER_POLL_INTERVAL=30
+          - WATCHTOWER_CLEANUP=true
+          - WATCHTOWER_LABEL_ENABLE=true
+#         - WATCHTOWER_SCHEDUE="0 3 * * 4"  # Poll every Friday at 3:00 AM
 
 networks:
     main-network:
