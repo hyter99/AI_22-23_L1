@@ -5,21 +5,21 @@ import { Link } from "react-router-dom";
 import styles from "./stocks-table.module.scss";
 
 // SVGs
-import SVGArrowDownV2 from "../../../assets/svg/arrow_down_v2.svg";
+import SVGArrowDownV2 from "../../../../assets/svg/arrow_down_v2.svg";
 
 // components
 import InfiniteScroll from "react-infinite-scroll-component";
-import LoadingModal from "../../../modals/loading-modal/loading-modal.component";
-import Button from "../../../components/ui/button/button.component";
+import LoadingModal from "../../../../modals/loading-modal/loading-modal.component";
+import Button from "../../../../components/ui/button/button.component";
 
 // functions
-import { CentsToString } from "../../../functions/cents-to-string";
+import { CentsToString } from "../../../../functions/cents-to-string";
 
 // data
 import {stockTableHeaders} from "./stocks-table.data";
 
 // interfaces
-import { ISearchOrderBy, IStockAction, IStocksInputFields } from "../../../hooks/data-table/useDataTable.types";
+import { ISearchOrderBy, IStockAction, IStocksInputFields } from "../../../../hooks/data-table/useDataTable.types";
 interface IStocksTable {
   data: IStockAction[];
   searchInput: IStocksInputFields;

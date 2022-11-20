@@ -45,7 +45,7 @@ const ViewStockDetails: React.FC<IViewStockDetails> = (
   return (
     <TemplateView
       appVersion={props.appVersion}
-      viewTitle={`Szczegóły akcji: ${stockFetch.data?.Company.name}`}
+      viewTitle={`Szczegóły akcji id ${id}`}
       isLogged={props.isLogged}
       isFullScreen
     >

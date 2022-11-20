@@ -25,7 +25,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
   const [dataModals, setDataModals] = useState<IDataModals>(initialDataModals);
   const [selectedItemIdx, setSelectedItemIdx] = useState<number>(-1);
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
-
+  
   useEffect(() => {
     fetchData(true);
     setIsFirstRender(false);

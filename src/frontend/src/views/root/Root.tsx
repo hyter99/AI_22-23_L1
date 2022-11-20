@@ -13,7 +13,7 @@ import UnauthenticatedApp from "./routes/UnauthenticatedApp.component";
 const Root: React.FC = () => {
   const {isUserLoggedIn} = useRoot();
   const appVersion = "- symulator giełdy";
-
+  
   return (
     <>
       {

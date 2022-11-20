@@ -12,7 +12,7 @@ interface IAuthenticatedApp {
 }
 
 const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
-
+  
   return (
     <Switch>
       {/*TODO - Other paths*/}

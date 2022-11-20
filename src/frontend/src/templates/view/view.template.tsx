@@ -33,7 +33,7 @@ const TemplateView: React.FC<ITemplateView> = ({
     isLogged,
     isFullScreen
   }) => {
-  const {} = useView(isLogged);
+  useView(viewTitle, isLogged);
   const {isMobileView} = useContext(IsMobileViewContext);
   
   return (
