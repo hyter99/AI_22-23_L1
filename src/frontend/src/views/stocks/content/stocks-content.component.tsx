@@ -5,7 +5,7 @@ import styles from "./stocks-content.module.scss";
 
 // components
 import SearchBar from "../../../components/search-bar/search-bar.component";
-import StocksTable from "./stocks-table/stocks-table.component";
+import StocksTable from "../../../components/stocks-table/stocks-table.component";
 import BackToTopButton from "../../../components/back-to-top-button/back-to-top-button.component";
 
 // templates
@@ -17,6 +17,8 @@ import useDataTable from "../../../hooks/data-table/useDataTable";
 // interfaces
 import { IStockAction } from "../../../hooks/data-table/useDataTable.types";
 import { IsMobileViewContext } from "../../../providers/is-mobile-view-provide.component";
+import StocksHeaderContent from "./header/stocks-header-content.component";
+import StocksBodyContent from "./body/stocks-body-content.component";
 interface IStocksContent {
   isLogged?: boolean;
 }
@@ -52,13 +54,22 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
         </div>
         <StocksTable
           data={data}
-          searchInput={searchInput}
-          isLogged={isLogged}
           isLoading={isLoading}
           fetchData={fetchData}
           isEndOfData={isEndOfData}
-          toggleOrderBy={toggleOrderBy}
-          handleDataModalChange={handleDataModalChange}
+          headerContent={
+            <StocksHeaderContent
+              searchInput={searchInput}
+              toggleOrderBy={toggleOrderBy}
+            />
+          }
+          bodyContent={
+            <StocksBodyContent
+              isLogged={isLogged}
+              data={data}
+              handleDataModalChange={handleDataModalChange}
+            />
+          }
         />
       </div>
       <TemplateBasicModal
