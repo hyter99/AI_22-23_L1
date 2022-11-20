@@ -10,14 +10,14 @@ datasource db {
 model BuyOffer {
   buyOfferId            Int           @id @default(autoincrement())
   userId                Int
-  stockId               Int
+  companyId             Int
   unitBuyPriceCents     Int
   quantity              Int
   created               DateTime      @db.Timestamptz(6) @default(now())
   status                Int           @default(0)
   User                  User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
   Transaction           Transaction[]
-  Stock                 Stock     @relation(fields: [stockId], references: [stockId], onDelete: Cascade, map: "BuyOffer")
+  Company               Company     @relation(fields: [companyId], references: [companyId], onDelete: Cascade, map: "BuyOffer")
 }
 
 model Company {
@@ -27,6 +27,7 @@ model Company {
   Stock                              Stock[]
   UserStock                          UserStock[]
   StockPriceHistory                  CompanyStockPriceHistory[]
+  BuyOffer                           BuyOffer[]
 }
 
 model SellOffer {
@@ -50,7 +51,6 @@ model Stock {
   userId                   Int
   Company                  Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
   User                     User                @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  BuyOffer                 BuyOffer[]
 }
 
 model CompanyStockPriceHistory {

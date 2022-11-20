@@ -2,7 +2,7 @@
 CREATE TABLE "BuyOffer" (
     "buyOfferId" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
-    "stockId" INTEGER NOT NULL,
+    "companyId" INTEGER NOT NULL,
     "unitBuyPriceCents" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "created" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,18 +39,19 @@ CREATE TABLE "Stock" (
     "companyId" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
     "priceCents" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Stock_pkey" PRIMARY KEY ("stockId")
 );
 
 -- CreateTable
-CREATE TABLE "StockPriceHistory" (
-    "stockPriceHistoryId" SERIAL NOT NULL,
-    "stockId" INTEGER NOT NULL,
+CREATE TABLE "CompanyStockPriceHistory" (
+    "companyStockPriceHistoryId" SERIAL NOT NULL,
+    "companyId" INTEGER NOT NULL,
     "priceCents" INTEGER NOT NULL,
     "changeDate" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "StockPriceHistory_pkey" PRIMARY KEY ("stockPriceHistoryId")
+    CONSTRAINT "CompanyStockPriceHistory_pkey" PRIMARY KEY ("companyStockPriceHistoryId")
 );
 
 -- CreateTable
@@ -84,6 +85,7 @@ CREATE TABLE "UserStock" (
     "userStockId" SERIAL NOT NULL,
     "userId" INTEGER NOT NULL,
     "stockQuantity" INTEGER NOT NULL,
+    "companyId" INTEGER NOT NULL,
 
     CONSTRAINT "UserStock_pkey" PRIMARY KEY ("userStockId")
 );
@@ -92,19 +94,25 @@ CREATE TABLE "UserStock" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
-ALTER TABLE "BuyOffer" ADD CONSTRAINT "Stock" FOREIGN KEY ("stockId") REFERENCES "Stock"("stockId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "BuyOffer" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BuyOffer" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "BuyOffer" ADD CONSTRAINT "BuyOffer" FOREIGN KEY ("companyId") REFERENCES "Company"("companyId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "SellOffer" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "SellOffer" ADD CONSTRAINT "UserStock" FOREIGN KEY ("userStockId") REFERENCES "UserStock"("userStockId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Stock" ADD CONSTRAINT "Company" FOREIGN KEY ("companyId") REFERENCES "Company"("companyId") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "StockPriceHistory" ADD CONSTRAINT "Stock" FOREIGN KEY ("stockId") REFERENCES "Stock"("stockId") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "Stock" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CompanyStockPriceHistory" ADD CONSTRAINT "Company" FOREIGN KEY ("companyId") REFERENCES "Company"("companyId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "Transaction" ADD CONSTRAINT "BuyOffer" FOREIGN KEY ("buyOfferId") REFERENCES "BuyOffer"("buyOfferId") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -119,7 +127,7 @@ ALTER TABLE "Transaction" ADD CONSTRAINT "SellOffer" FOREIGN KEY ("sellOfferId")
 ALTER TABLE "Transaction" ADD CONSTRAINT "Seller" FOREIGN KEY ("sellerId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserStock" ADD CONSTRAINT "Stock" FOREIGN KEY ("userStockId") REFERENCES "Stock"("stockId") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "UserStock" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserStock" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "UserStock" ADD CONSTRAINT "Company" FOREIGN KEY ("companyId") REFERENCES "Company"("companyId") ON DELETE CASCADE ON UPDATE NO ACTION;

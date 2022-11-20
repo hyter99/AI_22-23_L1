@@ -97,27 +97,21 @@ export class ProfileService {
       where: {
         userId,
         status: getUserSellOfferQuery.status,
-        Stock: {
-          Company: {
-            name: getUserSellOfferQuery.companyName,
-          },
+        Company: {
+          name: getUserSellOfferQuery.companyName,
         },
       },
       select: {
         buyOfferId: true,
-        stockId: true,
+        companyId: true,
         unitBuyPriceCents: true,
         quantity: true,
         created: true,
         status: true,
-        Stock: {
+        Company: {
           select: {
             companyId: true,
-            Company: {
-              select: {
-                name: true,
-              },
-            },
+            name: true,
           },
         },
       },
