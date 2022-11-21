@@ -35,7 +35,10 @@ export class ProfileService {
       where: {
         userId,
         Company: {
-          name: getUserStockQuery.companyName,
+          name: {
+            contains: getUserStockQuery.companyName,
+            mode: 'insensitive',
+          },
         },
       },
       select: {

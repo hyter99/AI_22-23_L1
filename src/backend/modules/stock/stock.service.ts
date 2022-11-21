@@ -18,7 +18,7 @@ export class StockService {
       },
       where: {
         Company: {
-          name: query.companyName,
+          name: { contains: query.companyName, mode: 'insensitive' },
         },
       },
       select: {
