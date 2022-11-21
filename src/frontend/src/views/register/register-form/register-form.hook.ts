@@ -9,6 +9,7 @@ import {initialRegisterInputs, initialErrorRegisterInputs} from "./register-form
 // functions
 import {doesStringContainOneOrMoreUpperCaseLetter, doesStringContainOneOrMoreNumber} from "../../../functions/string-contain-checking";
 import { TranslateRegisterErrorMessage } from "./register-form.functions";
+import {environment} from "../../../constants/environment-variables";
 
 const useRegisterForm = () => {
   const [registerInputs, setRegisterInputs] = useState<IRegisterInputs>(initialRegisterInputs);
@@ -154,7 +155,7 @@ const useRegisterForm = () => {
 
       // Fetching register
       //@ts-ignore
-      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
+      fetch(`${environment.backendUrl}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
