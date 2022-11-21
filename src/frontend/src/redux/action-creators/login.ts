@@ -38,7 +38,7 @@ export const loginUser = (email: string, password: string) => {
 
     try {
       // @ts-ignore
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/login`, {
+      const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
           email: email,
           password: password
         },{
@@ -78,7 +78,7 @@ export const logoutUser = () => {
   return async (dispatch: Dispatch<LoginActions>) => {
     /* UNCOMMENT WHEN LOGOUT IS DONE IN BACKEND API */
     // @ts-ignore
-    // await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/logout`, {
+    // await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
     //   userId: userId,
     //   token: accessToken
     // },{
@@ -137,7 +137,7 @@ export const getBalanceCents = () => {
       });
 
       // @ts-ignore
-      const {data} = await axios.get(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, { // to change
+      const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/wallet`, { // to change
         headers: {
           // maybe bearer?
           'Content-Type': 'application/json'
@@ -169,7 +169,7 @@ export const setBalanceCents = (newAmount: number) => {
       });
 
       // @ts-ignore
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, {
+      const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/wallet`, {
         amount: newAmount //to change
       },{
         headers: {
@@ -203,7 +203,7 @@ export const setUserData = (newFirstName: string, newLastName: string, newEmail:
     const {accessToken, user: {id: userID}} = useTypedSelector(state => state.login.loginData);
     try {
       // @ts-ignore
-      const {data} = await axios.patch(`${import.meta.env.VITE_BACKED_URL}/api/profile/${userID}`, {
+      const {data} = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/${userID}`, {
         name: newFirstName,
         surname: newLastName,
         email: newEmail

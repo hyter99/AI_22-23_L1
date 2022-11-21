@@ -23,7 +23,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     : selectedDataType === "mySellOffers" ? "profile/sell-offers"
     : "profile/buy-offers";
   //@ts-ignore
-  const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/` + additionUrl;
+  const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/` + additionUrl;
 
   useEffect(() => {
     fetchData(true);
