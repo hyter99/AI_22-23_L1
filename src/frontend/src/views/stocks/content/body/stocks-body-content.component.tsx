@@ -15,10 +15,10 @@ import { IStockAction } from "../../../../hooks/data-table/useDataTable.types";
 interface IStocksBodyContent {
   data: IStockAction[];
   isLogged?: boolean;
-  handleDataModalChange: (name: string, value: boolean, selItemIdx?: number) => void;
+  handleBuyOfferButtonClick: (index?: number) => void;
 }
 
-const StocksBodyContent: React.FC<IStocksBodyContent> = ({data, isLogged, handleDataModalChange}) => {
+const StocksBodyContent: React.FC<IStocksBodyContent> = ({data, isLogged, handleBuyOfferButtonClick}) => {
   
   return (
     <>
@@ -41,7 +41,7 @@ const StocksBodyContent: React.FC<IStocksBodyContent> = ({data, isLogged, handle
                       title="Kup"
                       type="button"
                       bigFont
-                      handleClick={() => handleDataModalChange("isBuyModalOpen", true, index)}
+                      handleClick={() => handleBuyOfferButtonClick(index)}
                     />
                   </div>
                 :

@@ -126,8 +126,8 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       ...prev,
       [name]: value
     }));
-
-    const itemIdxToSet: number = (selItemIdx && value) ? selItemIdx : -1;
+    
+    const itemIdxToSet: number = ((selItemIdx !== undefined) && value) ? selItemIdx : -1;
     setSelectedItemIdx(itemIdxToSet);
   };
 

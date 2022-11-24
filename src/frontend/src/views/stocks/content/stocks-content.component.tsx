@@ -7,9 +7,11 @@ import styles from "./stocks-content.module.scss";
 import SearchBar from "../../../components/search-bar/search-bar.component";
 import StocksTable from "../../../components/stocks-table/stocks-table.component";
 import BackToTopButton from "../../../components/back-to-top-button/back-to-top-button.component";
+import StocksHeaderContent from "./header/stocks-header-content.component";
+import StocksBodyContent from "./body/stocks-body-content.component";
 
-// templates
-import TemplateBasicModal from "../../../modals/basic-modal/basic-modal.template";
+// modals
+import BuySellStockModal from "../../../modals/stock/buy-sell-stock-modal/buy-sell-stock-modal.component";
 
 // hooks
 import useDataTable from "../../../hooks/data-table/useDataTable";
@@ -17,8 +19,7 @@ import useDataTable from "../../../hooks/data-table/useDataTable";
 // interfaces
 import { IStockAction } from "../../../hooks/data-table/useDataTable.types";
 import { IsMobileViewContext } from "../../../providers/is-mobile-view-provide.component";
-import StocksHeaderContent from "./header/stocks-header-content.component";
-import StocksBodyContent from "./body/stocks-body-content.component";
+
 interface IStocksContent {
   isLogged?: boolean;
 }
@@ -67,20 +68,22 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
             <StocksBodyContent
               isLogged={isLogged}
               data={data}
-              handleDataModalChange={handleDataModalChange}
+              handleBuyOfferButtonClick={(index) => handleDataModalChange("isBuyModalOpen", true, index)}
             />
           }
         />
       </div>
-      <TemplateBasicModal
+      <BuySellStockModal
+        isBuyModal={true}
         isOpened={dataModals.isBuyModalOpen}
-        onOutClick={() => handleDataModalChange("isBuyModalOpen", false)}
-      >
-        <div>
-          {/*TODO - prepare buy modal in separate component (with logic) AND paste it here*/}
-          {/*itemData={data[selectedItemIdx]}*/}
-        </div>
-      </TemplateBasicModal>
+        handleCancelClick={() => handleDataModalChange("isBuyModalOpen", false)}
+        data={
+          selectedItemIdx !== -1 ?
+            data[selectedItemIdx]
+          :
+            null
+        }
+      />
       <BackToTopButton
         elementId="scrollableDiv"
       />
