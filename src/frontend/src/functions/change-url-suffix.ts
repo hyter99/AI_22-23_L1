@@ -12,7 +12,7 @@ export const changeUrlSuffix = (newUrlSuffix: string): void => {
 
   // Join new url items with slash
   const replacedUrl = replacedUrlList.join("/");
-  console.log("replacedUrl", replacedUrl);
+  //console.log("replacedUrl", replacedUrl);
 
   // Establish new url in page bar
   history.pushState({}, "", replacedUrl);
