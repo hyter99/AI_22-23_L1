@@ -1,0 +1,70 @@
+@import "../../../../styles/variables";
+
+.selectPageBarContainer {
+  width: auto;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  
+  .content {
+    width: auto;
+    height: 100%;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: $colorDarkGray2;
+    border-radius: 10px;
+    margin: 0 auto;
+    
+    .itemContainer {
+      width: auto;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      &:first-of-type {
+        .pageItem {
+          margin-left: 0;
+        }
+      }
+
+      &:last-of-type {
+        .pageItem {
+          margin-right: 0;
+        }
+      }
+      
+      .pageItem {
+        width: auto;
+        height: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        background-color: transparent;
+        border: 2px solid transparent;
+        font-weight: 700;
+        font-size: 20px;
+        color: $colorDarkSilver2;
+        cursor: pointer;
+        margin: 0 10px;
+
+        &:hover {
+          border: 2px solid $colorBlack;
+        }
+
+        &.active {
+          background-color: $colorBlack;
+          color: $colorSilver2
+        }
+      }
+
+      .divider {
+        width: 4px;
+        height: 100%;
+        background-color: $colorDarkSilver2;
+      }
+    }    
+  }
+}

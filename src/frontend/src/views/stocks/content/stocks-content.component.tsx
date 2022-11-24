@@ -3,6 +3,10 @@ import React, { useContext } from "react";
 // styles
 import styles from "./stocks-content.module.scss";
 
+// templates
+import TemplateContentOfPage from "../../../templates/content-of-page/content-of-page.component";
+
+
 // components
 import SearchBar from "../../../components/search-bar/search-bar.component";
 import StocksTable from "../../../components/stocks-table/stocks-table.component";
@@ -42,7 +46,7 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
   
   return (
     <>
-      <div className={styles.container}>
+      <TemplateContentOfPage>
         <div className={styles.searchBarWrapper}>
           <SearchBar
             placeholder="Szukaj akcji"
@@ -72,7 +76,7 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
             />
           }
         />
-      </div>
+      </TemplateContentOfPage>
       <BuySellStockModal
         isBuyModal={true}
         isOpened={dataModals.isBuyModalOpen}
