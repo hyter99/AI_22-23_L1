@@ -15,7 +15,7 @@ import StocksHeaderContent from "./header/stocks-header-content.component";
 import StocksBodyContent from "./body/stocks-body-content.component";
 
 // modals
-import BuySellStockModal from "../../../modals/stock/buy-sell-stock-modal/buy-sell-stock-modal.component";
+import BuySellStockModal from "../../../modals/user-modals/buy-sell-stock-modal/buy-sell-stock-modal.component";
 
 // hooks
 import useDataTable from "../../../hooks/data-table/useDataTable";
