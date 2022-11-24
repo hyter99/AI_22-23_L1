@@ -6,7 +6,9 @@ import styles from './stock-details.module.scss';
 
 // templates
 import TemplateView from '../../templates/view/view.template';
-import TemplateBasicModal from "../../modals/basic-modal/basic-modal.template";
+
+// modals
+import BuySellStockModal from "../../modals/user-modals/buy-sell-stock-modal/buy-sell-stock-modal.component";
 
 // hooks
 import useStockDetails from "./stock-details.hook";
@@ -160,14 +162,26 @@ const ViewStockDetails: React.FC<IViewStockDetails> = (
               />
           }
         </div>
-        <TemplateBasicModal
+        <BuySellStockModal
+          isBuyModal={true}
           isOpened={isBuyModalOpened}
-          onOutClick={() => setIsBuyModalOpened(false)}
-        >
-          <div>
-             {/*TODO: create buy modal and fill it with mapped 'fetchData.data' object*/}
-          </div>
-        </TemplateBasicModal>
+          handleCancelClick={() => setIsBuyModalOpened(false)}
+          data={
+            stockFetch.data ?
+              {
+                stockId: stockFetch.data!.stockId,
+                priceCents: stockFetch.data!.priceCents,
+                quantity: stockFetch.data!.quantity,
+                Company: {
+                  companyId: stockFetch.data!.Company.companyId,
+                  name: stockFetch.data!.Company.name,
+                  description: stockFetch.data!.Company.description ? stockFetch.data!.Company.description : ""
+                }
+              }
+            :
+              null
+          }
+        />
       </div>
     </TemplateView>
   );
