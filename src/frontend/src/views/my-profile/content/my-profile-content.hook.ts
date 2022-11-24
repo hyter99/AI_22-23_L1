@@ -8,7 +8,7 @@ import { MyProfileAvailableUrlEnum } from "../my-profile.data";
 // functions
 import {translateEngPlMyProfilePageName} from "../../../functions/translate-pl-eng-my-profile-page-name";
 import {translatePlEngMyProfilePageName} from "../../../functions/translate-eng-pl-my-profile-page-name";
-import { changeUrlSuffix } from "../../../functions/change-url-suffix";
+import { ChangeUrlSuffix } from "../../../functions/change-url-suffix";
 
 const useMyProfileContent = () => {
   const [selectedPage, setSelectedPage] = useState<MyProfilePagesEnum>(MyProfilePagesEnum.DATA);
@@ -28,7 +28,7 @@ const useMyProfileContent = () => {
   
   // Custom establishment function with previous translation of selectedPage state
   const establishNewUrlSuffix = () => {
-    changeUrlSuffix(translateEngPlMyProfilePageName(selectedPage));
+    ChangeUrlSuffix(translateEngPlMyProfilePageName(selectedPage));
   };
   
   return {

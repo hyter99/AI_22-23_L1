@@ -14,6 +14,7 @@ import useMyProfileContent from "./my-profile-content.hook";
 
 // components
 import SelectPageBar from "./select-page-bar/select-page-bar.component";
+import MyProfileData from "./pages/data/my-profile-data.component";
 
 const MyProfileContent: React.FC = () => {
   const {selectedPage, setSelectedPage} = useMyProfileContent();
@@ -29,8 +30,7 @@ const MyProfileContent: React.FC = () => {
         </div>
         {
           selectedPage === MyProfilePagesEnum.DATA ?
-          //    DATA COMPONENT
-            <></>
+            <MyProfileData/>
           : selectedPage === MyProfilePagesEnum.STOCKS ?
           //    STOCKS COMPONENT
               <></>

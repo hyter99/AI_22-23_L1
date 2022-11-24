@@ -2,7 +2,7 @@
 
 .selectPageBarContainer {
   width: auto;
-  height: 80px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -66,5 +66,11 @@
         background-color: $colorDarkSilver2;
       }
     }    
+  }
+}
+
+@media all and (min-width: 800px) {
+  .selectPageBarContainer {
+    height: 80px;
   }
 }

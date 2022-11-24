@@ -1,4 +1,4 @@
-export const changeUrlSuffix = (newUrlSuffix: string): void => {
+export const ChangeUrlSuffix = (newUrlSuffix: string): void => {
   const currUrlElements = window.location.href.split("/");
   // Remove the second and last element from splitted list
   let replacedUrlList = [currUrlElements[0]];
