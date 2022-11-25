@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
 export const appConfigSchema = z.object({
+  VITE_BACKEND_URL: z.string().url(),
+  
   DATABASE_CONNECTOR: z.string().min(1),
   DATABASE_USER: z.string().min(1),
   DATABASE_PASSWORD: z.string().min(1),

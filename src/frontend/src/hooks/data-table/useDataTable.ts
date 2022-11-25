@@ -5,6 +5,7 @@ import { ISelectedDataType, IStockAction, IStocksInputFields, IDataModals, ISear
 
 // data
 import { initialStocksInputFields, initialDataModals } from "./useDataTable.data";
+import {environment} from "../../constants/environment-variables";
 
 function useDataTable<T>(selectedDataType: ISelectedDataType) {
   const [data, setData] = useState<T[]>([]);
@@ -23,7 +24,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     : selectedDataType === "mySellOffers" ? "profile/sell-offers"
     : "profile/buy-offers";
   //@ts-ignore
-  const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/` + additionUrl;
+  const API_URL = `${environment.backendUrl}/api/` + additionUrl;
 
   useEffect(() => {
     fetchData(true);
