@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
 
-const useBuySellStockModal = (isBuyModal: boolean) => {
+const useDeclineOfferModal = (isBuyModal: boolean) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // TODO - write logic of this modal
-  // important! - create reusable function (in functions folder) to handle price validation from string (after input change)
 
   const handleSubmitClick = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,4 +16,4 @@ const useBuySellStockModal = (isBuyModal: boolean) => {
   };
 };
 
-export default useBuySellStockModal;
+export default useDeclineOfferModal;

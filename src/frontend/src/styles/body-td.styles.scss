@@ -21,5 +21,13 @@ tr {
         margin-bottom: 0;
       }
     }
+    
+    &.colorGreen {
+      color: $colorLightGreen;
+    }
+
+    &.colorRed {
+      color: $colorLightRed;
+    }
   }
 }

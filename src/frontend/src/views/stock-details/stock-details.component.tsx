@@ -169,14 +169,9 @@ const ViewStockDetails: React.FC<IViewStockDetails> = (
           data={
             stockFetch.data ?
               {
-                stockId: stockFetch.data!.stockId,
-                priceCents: stockFetch.data!.priceCents,
-                quantity: stockFetch.data!.quantity,
-                Company: {
-                  companyId: stockFetch.data!.Company.companyId,
-                  name: stockFetch.data!.Company.name,
-                  description: stockFetch.data!.Company.description ? stockFetch.data!.Company.description : ""
-                }
+                id: stockFetch.data!.stockId,
+                name: stockFetch.data!.Company.name,
+                priceFromInCents: stockFetch.data!.priceCents
               }
             :
               null

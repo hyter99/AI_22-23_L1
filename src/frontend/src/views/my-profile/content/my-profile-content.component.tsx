@@ -15,6 +15,8 @@ import useMyProfileContent from "./my-profile-content.hook";
 // components
 import SelectPageBar from "./select-page-bar/select-page-bar.component";
 import MyProfileData from "./pages/data/my-profile-data.component";
+import MyProfileStocks from "./pages/stocks/my-profile-stocks.component";
+import MyProfileOffers from "./pages/buy-sell-offers/my-profile-buy-sell-offers.component";
 
 const MyProfileContent: React.FC = () => {
   const {selectedPage, setSelectedPage} = useMyProfileContent();
@@ -32,14 +34,15 @@ const MyProfileContent: React.FC = () => {
           selectedPage === MyProfilePagesEnum.DATA ?
             <MyProfileData/>
           : selectedPage === MyProfilePagesEnum.STOCKS ?
-          //    STOCKS COMPONENT
-              <></>
+            <MyProfileStocks/>
           : selectedPage === MyProfilePagesEnum.BUY_OFFERS ?
-          //    BUY-OFFERS COMPONENT
-              <></>
-          :
-          //    SELL-OFFERS COMPONENT
-              <></>
+            <MyProfileOffers
+              areBuyOffers={true}
+            />
+          : // MyProfilePagesEnum.SELL_OFFERS
+            <MyProfileOffers
+              areBuyOffers={false}
+            />
         }
       </div>
     </TemplateContentOfPage>

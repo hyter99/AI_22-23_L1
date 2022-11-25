@@ -1,30 +1,30 @@
 import React from "react";
 
 // styles
-import styles from "./stocks-header-content.module.scss";
+import styles from "./my-profile-buy-sell-offers-header.module.scss";
 
 // SVGs
-import SVGArrowDownV2 from "../../../../assets/svg/arrow_down_v2.svg";
+import SVGArrowDownV2 from "../../../../../../assets/svg/arrow_down_v2.svg";
 
 // data
-import { stockTableHeaders } from "./stocks-header-content.data";
+import { myProfileBuySellOffersTableHeaders } from "./my-profile-buy-sell-offers-header.data";
 
 // interfaces
-import { ISearchOrderBy, IStocksInputFields } from "../../../../hooks/data-table/useDataTable.types";
-interface IStocksHeaderContent {
+import { ISearchOrderBy, IStocksInputFields } from "../../../../../../hooks/data-table/useDataTable.types";
+interface IMyProfileBuySellOffersHeader {
   toggleOrderBy: (orderByName: ISearchOrderBy) => void;
   searchInput: IStocksInputFields;
 }
 
-const StocksHeaderContent: React.FC<IStocksHeaderContent> = ({toggleOrderBy, searchInput}) => {
+const MyProfileBuySellOffersHeader: React.FC<IMyProfileBuySellOffersHeader> = ({toggleOrderBy, searchInput}) => {
   const isOrderByHeader = (orderByName: ISearchOrderBy) => {
-    return (orderByName === "priceCents" || orderByName === "quantity");
-  };  
+    return (orderByName === "quantity" || orderByName === "priceCents" || orderByName === "created");
+  };
   
   return (
     <>
       {
-        stockTableHeaders.map(headerData => (
+        myProfileBuySellOffersTableHeaders.map(headerData => (
           <th
             key={headerData.id}
             style={{width: `${headerData.percentageWidth}%`}}
@@ -57,4 +57,4 @@ const StocksHeaderContent: React.FC<IStocksHeaderContent> = ({toggleOrderBy, sea
   )
 };
 
-export default StocksHeaderContent;
+export default MyProfileBuySellOffersHeader;

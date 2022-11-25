@@ -154,7 +154,7 @@ const useRegisterForm = () => {
 
       // Fetching register
       //@ts-ignore
-      fetch(`${import.meta.env.VITE_BACKED_URL}/api/auth/register`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

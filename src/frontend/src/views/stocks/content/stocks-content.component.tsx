@@ -58,7 +58,7 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
           />
         </div>
         <StocksTable
-          data={data}
+          dataLength={data.length}
           isLoading={isLoading}
           fetchData={fetchData}
           isEndOfData={isEndOfData}
@@ -83,7 +83,11 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
         handleCancelClick={() => handleDataModalChange("isBuyModalOpen", false)}
         data={
           selectedItemIdx !== -1 ?
-            data[selectedItemIdx]
+            {
+              id: data[selectedItemIdx].stockId,
+              name: data[selectedItemIdx].Company.name,
+              priceFromInCents: data[selectedItemIdx].priceCents
+            }
           :
             null
         }

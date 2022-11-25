@@ -8,9 +8,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import LoadingModal from "../../modals/loading-modal/loading-modal.component";
 
 // interfaces
-import { IStockAction } from "../../hooks/data-table/useDataTable.types";
 interface IStocksTable {
-  data: IStockAction[];
+  dataLength: number;
   isLoading?: boolean;
   isEndOfData?: boolean;
   fetchData: (isStart?: boolean) => void;
@@ -19,7 +18,7 @@ interface IStocksTable {
 }
 
 const StocksTable: React.FC<IStocksTable> = ({
-    data,
+    dataLength,
     isLoading,
     isEndOfData,
     fetchData,
@@ -30,13 +29,13 @@ const StocksTable: React.FC<IStocksTable> = ({
   return (
     <div className={styles.stocksTableWrapper}>
       {
-        (data.length === 0 && !isLoading) ?
+        (dataLength === 0 && !isLoading) ?
           <div className={styles.noActionsMessage}>
             Brak akcji
           </div>
         :
           <InfiniteScroll
-            dataLength={data.length}
+            dataLength={dataLength}
             next={fetchData}
             hasMore={!isEndOfData}
             loader={

@@ -1,40 +1,40 @@
 import React from "react";
 
 // styles
-import styles from "./buy-sell-stock-modal.module.scss";
+import styles from "./decline-offer-modal.module.scss";
 
 // templates
 import TemplateActionModal from "../../action-modal/action-modal.template";
 
 // hooks
-import useBuySellStockModal from "./buy-sell-stock-modal.hook";
+import useDeclineOfferModal from "./decline-offer-modal.hook";
 
 // interfaces
-import { IBuySellStockData } from "./buy-sell-stock-modal.types";
-interface IBuySellStockModal {
+import { IDeclineOfferData } from "./decline-offer-modal.types";
+interface IDeclineOfferModal {
   isBuyModal: boolean;
   isOpened: boolean;
   handleCancelClick: () => void;
-  data: IBuySellStockData | null;
+  data: IDeclineOfferData | null;
 }
 
-const BuySellStockModal: React.FC<IBuySellStockModal> = ({
-  isBuyModal,
-  isOpened,
-  handleCancelClick,
-  data
- }) => {
+const DeclineOfferModal: React.FC<IDeclineOfferModal> = ({
+     isBuyModal,
+     isOpened,
+     handleCancelClick,
+     data
+   }) => {
   const {
     isLoading,
     handleSubmitClick
-  } = useBuySellStockModal(isBuyModal);
-  
+  } = useDeclineOfferModal(isBuyModal);
+
   return (
     <TemplateActionModal
       isOpened={isOpened}
       isLoading={isLoading}
-      title={`Złóż ofertę ${isBuyModal ? "kupna" : "sprzedaży"} akcji`}
-      submitButtonTitle="Złóż ofertę"
+      title={`Anuluj ofertę ${isBuyModal ? "kupna" : "sprzedaży"} akcji`}
+      submitButtonTitle="Potwierdź"
       cancelButtonTitle="Zamknij"
       onSubmitClick={handleSubmitClick}
       onCancelClick={handleCancelClick}
@@ -47,4 +47,4 @@ const BuySellStockModal: React.FC<IBuySellStockModal> = ({
   );
 };
 
-export default BuySellStockModal;
+export default DeclineOfferModal;
