@@ -34,17 +34,6 @@ CREATE TABLE "SellOffer" (
 );
 
 -- CreateTable
-CREATE TABLE "Stock" (
-    "stockId" SERIAL NOT NULL,
-    "companyId" INTEGER NOT NULL,
-    "quantity" INTEGER NOT NULL,
-    "priceCents" INTEGER NOT NULL,
-    "userId" INTEGER NOT NULL,
-
-    CONSTRAINT "Stock_pkey" PRIMARY KEY ("stockId")
-);
-
--- CreateTable
 CREATE TABLE "CompanyStockPriceHistory" (
     "companyStockPriceHistoryId" SERIAL NOT NULL,
     "companyId" INTEGER NOT NULL,
@@ -104,12 +93,6 @@ ALTER TABLE "SellOffer" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES 
 
 -- AddForeignKey
 ALTER TABLE "SellOffer" ADD CONSTRAINT "UserStock" FOREIGN KEY ("userStockId") REFERENCES "UserStock"("userStockId") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Stock" ADD CONSTRAINT "Company" FOREIGN KEY ("companyId") REFERENCES "Company"("companyId") ON DELETE CASCADE ON UPDATE NO ACTION;
-
--- AddForeignKey
-ALTER TABLE "Stock" ADD CONSTRAINT "User" FOREIGN KEY ("userId") REFERENCES "User"("userId") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CompanyStockPriceHistory" ADD CONSTRAINT "Company" FOREIGN KEY ("companyId") REFERENCES "Company"("companyId") ON DELETE NO ACTION ON UPDATE NO ACTION;
