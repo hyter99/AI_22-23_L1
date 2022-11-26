@@ -101,7 +101,7 @@ const MyProfileOffers: React.FC<IMyProfileOffers> = ({areBuyOffers}) => {
         data={
           selectedItemIdx !== -1 ?
             {
-              id: data[selectedItemIdx].stockId,
+              id: data[selectedItemIdx].offerId,
               name: "" // TODO - get the name of the offer, when will be returned from backend API
             }
           :

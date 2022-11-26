@@ -20,6 +20,7 @@ interface IActionModal {
   isOpened: boolean;
   isLoading?: boolean;
   children: ReactNode;
+  isSubmitButtonDisabled?: boolean;
 }
 
 const TemplateActionModal: React.FC<IActionModal> = ({
@@ -30,7 +31,8 @@ const TemplateActionModal: React.FC<IActionModal> = ({
     onCancelClick,
     isOpened,
     isLoading,
-    children
+    children,
+    isSubmitButtonDisabled
  }) => {
   
   return (
@@ -62,6 +64,7 @@ const TemplateActionModal: React.FC<IActionModal> = ({
               fontColor="white"
               backgroundColor="darkerGray"
               bigFont
+              disabled={isSubmitButtonDisabled}
             />
           </div>
           <div className={styles.buttonWrapper}>

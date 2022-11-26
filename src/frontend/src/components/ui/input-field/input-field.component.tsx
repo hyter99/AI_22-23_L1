@@ -15,6 +15,7 @@ interface IInputField {
   errorMessage?: string;
   handleChange: (name: string, value: string) => void;
   disabled?: boolean;
+  isBorderBlack?: boolean;
 }
 
 const InputField: React.FC<IInputField> = ({
@@ -27,7 +28,8 @@ const InputField: React.FC<IInputField> = ({
     isError,
     errorMessage,
     handleChange,
-    disabled
+    disabled,
+    isBorderBlack
   }) => {
 
   return (
@@ -41,7 +43,12 @@ const InputField: React.FC<IInputField> = ({
           null
       }
       <input
-        className={`${styles.input} ${isError && !disabled ? styles.errorInput : ""} ${disabled ? styles.disabled : ""}`}
+        className={`
+          ${styles.input}
+          ${isError && !disabled ? styles.errorInput : ""}
+          ${disabled ? styles.disabled : ""}
+          ${isBorderBlack ? styles.borderBlack : ""}
+        `}
         type={type}
         name={name}
         value={value}

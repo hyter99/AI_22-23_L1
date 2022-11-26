@@ -35,13 +35,9 @@ const MyProfileContent: React.FC = () => {
             <MyProfileData/>
           : selectedPage === MyProfilePagesEnum.STOCKS ?
             <MyProfileStocks/>
-          : selectedPage === MyProfilePagesEnum.BUY_OFFERS ?
+          : // MyProfilePagesEnum.SELL_OFFERS || selectedPage === MyProfilePagesEnum.BUY_OFFERS ?
             <MyProfileOffers
-              areBuyOffers={true}
-            />
-          : // MyProfilePagesEnum.SELL_OFFERS
-            <MyProfileOffers
-              areBuyOffers={false}
+              areBuyOffers={selectedPage === MyProfilePagesEnum.BUY_OFFERS}
             />
         }
       </div>
