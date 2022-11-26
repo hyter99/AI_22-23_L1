@@ -30,7 +30,6 @@ async function main() {
   const users: Prisma.UserCreateManyInput[] = [];
   const companies: Prisma.CompanyCreateManyInput[] = [];
   const userStocks: Prisma.UserStockCreateManyInput[] = [];
-  const stockOffers: Prisma.StockCreateManyInput[] = [];
   const buyOffers: Prisma.BuyOfferCreateManyInput[] = [];
   const sellOffers: Prisma.SellOfferCreateManyInput[] = [];
   const companyStockPriceHistories: Prisma.CompanyStockPriceHistoryCreateManyInput[] = [];
@@ -91,32 +90,12 @@ async function main() {
     }
   }
 
-  //=========== Stock seeding =================
-  for (let i = 1; i <= amountOfStockOffers; i++) {
-    const userCompanyId = faker.datatype.number({
-      min: 1,
-      max: amountOfCompanies,
-    });
-    const userStockQuantity = faker.datatype.number({ min: 1, max: 10 });
-    const userStockPriceCents = faker.datatype.number(maxOfferCents);
-    const userId = faker.datatype.number({ min: 1, max: amountOfUsers });
-
-    const stockOffer: Prisma.StockUncheckedCreateInput = {
-      companyId: userCompanyId,
-      quantity: userStockQuantity,
-      priceCents: userStockPriceCents,
-      userId: userId,
-    };
-
-    stockOffers.push(stockOffer);
-  }
-
   //=========== BuyOffers seeding =================
   for (let i = 1; i <= amountOfBuyOffers; i++) {
     const userId = faker.datatype.number({ min: 1, max: amountOfUsers });
-    const userStockId = faker.datatype.number({
+    const companyStockId = faker.datatype.number({
       min: 1,
-      max: amountOfStockOffers,
+      max: amountOfCompanies,
     });
     const userUnitBuyPrice = faker.datatype.number({
       min: 1,
@@ -128,7 +107,7 @@ async function main() {
 
     const buyOffer: Prisma.BuyOfferUncheckedCreateInput = {
       userId: userId,
-      stockId: userStockId,
+      companyId: companyStockId,
       unitBuyPriceCents: userUnitBuyPrice,
       quantity: userBuyQuantity,
       created: userBuyOfferCreatedAt,
@@ -191,9 +170,6 @@ async function main() {
   const addUserStocks = async () =>
     await prisma.userStock.createMany({ data: userStocks });
 
-  const addStockOffers = async () =>
-    await prisma.stock.createMany({ data: stockOffers });
-
   const addSellOffers = async () =>
     await prisma.sellOffer.createMany({ data: sellOffers });
 
@@ -206,7 +182,6 @@ async function main() {
   await addUsers();
   await addCompanies();
   await addUserStocks();
-  await addStockOffers();
   await addBuyOffers();
   await addSellOffers();
   await addCompanyStockPriceHistories();
