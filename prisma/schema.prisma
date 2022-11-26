@@ -24,7 +24,6 @@ model Company {
   companyId                          Int     @id @default(autoincrement())
   name                               String  @db.VarChar
   description                        String?
-  Stock                              Stock[]
   UserStock                          UserStock[]
   StockPriceHistory                  CompanyStockPriceHistory[]
   BuyOffer                           BuyOffer[]
@@ -43,15 +42,6 @@ model SellOffer {
   UserStock              UserStock     @relation(fields: [userStockId], references: [userStockId], onDelete: Cascade, map: "UserStock")
 }
 
-model Stock {
-  stockId                  Int                 @id @default(autoincrement())
-  companyId                Int
-  quantity                 Int
-  priceCents               Int
-  userId                   Int
-  Company                  Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  User                     User                @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-}
 
 model CompanyStockPriceHistory {
   companyStockPriceHistoryId        Int        @id @default(autoincrement())
@@ -88,7 +78,7 @@ model User {
   TransactionBuyer        Transaction[] @relation("TransactionToBuyer")
   TransactionSeller       Transaction[] @relation("TransactionToSeller")
   UserStock               UserStock[]
-  Stock                   Stock[]
+
 }
 
 model UserStock {
