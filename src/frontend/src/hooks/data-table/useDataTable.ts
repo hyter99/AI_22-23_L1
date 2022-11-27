@@ -12,7 +12,7 @@ import {
 
 // data
 import { initialStocksInputFields, initialDataModals } from "./useDataTable.data";
-import {environment} from "../../constants/environment-variables";
+import { environment } from "../../constants/environment-variables";
 
 // redux
 import { useTypedSelector } from "../useTypedSelector";
@@ -25,7 +25,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     : selectedDataType === "myStockActions" ? "profile/stock"
     : selectedDataType === "mySellOffers" ? "profile/sell-offers"
     : "profile/buy-offers";
-  //@ts-ignore
+  
   const API_URL = `${environment.backendUrl}/api/` + ADDITION_URL;
   
   const [data, setData] = useState<T[]>([]);

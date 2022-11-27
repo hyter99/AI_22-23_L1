@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 
 // data
 import { initialMessageBar, initialInputFields, initialInputFieldsErrors } from "./buy-sell-stock-modal.data";
+import { environment } from "../../../constants/environment-variables";
 
 // functions
 import { IsStringAPositiveInteger } from "../../../functions/is-string-a-positive-integer";
@@ -98,8 +99,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: nu
     if (stockId && validateInputData()) {
       setIsLoading(true);
       
-      //@ts-ignore
-      const fetchUrl = `${import.meta.env.VITE_BACKEND_URL}/api/make-${isBuyModal ? "buy" : "sell"}-offer`;
+      const fetchUrl = `${environment.backendUrl}/api/make-${isBuyModal ? "buy" : "sell"}-offer`;
       
       const priceToSet = parseFloat(inputFields.price)*100;
       const fetchBody: any = {
@@ -130,7 +130,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: nu
               isSuccess: true,
               isError: false
             });
-            console.log("Created!");
+            //console.log("Created!");
           }
           else {
             //TODO - get error message from backend API (fi. when user hasn't got enough stock's quantity)

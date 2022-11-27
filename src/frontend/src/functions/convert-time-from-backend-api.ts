@@ -1,4 +1,4 @@
-const convertTimeFromBackendApi = (strTime: string): string => {
+const ConvertTimeFromBackendApi = (strTime: string): string => {
   const splittedTime = strTime.split("T");
   if (splittedTime.length > 1) {
     const inversedDateStr = splittedTime[0].split("-").reverse().join(".");
@@ -15,4 +15,4 @@ const convertTimeFromBackendApi = (strTime: string): string => {
   return "";
 };
 
-export default convertTimeFromBackendApi;
+export default ConvertTimeFromBackendApi;

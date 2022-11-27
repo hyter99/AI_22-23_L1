@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import {environment} from "../constants/environment-variables";
 
-//@ts-ignore
+// data
+import { environment } from "../constants/environment-variables";
+
 const API_URL = `${environment.backendUrl}/api/`;
 //const API_URL = 'http://localhost:3000/api/';
 

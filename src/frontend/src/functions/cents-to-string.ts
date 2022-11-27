@@ -6,5 +6,5 @@ export const CentsToString = (cents: number): string => {
   // console.log(cents)
   // return `${realDollars.toString()}.${realCents.toString()}`;
   
-  return (cents/100).toFixed(2).toString();
+  return (cents/100).toFixed(2);
 };
