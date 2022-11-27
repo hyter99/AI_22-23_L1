@@ -1,3 +1,3 @@
 # Transaction algorithm chart
 
-![Transaction algorithm](https://user-images.githubusercontent.com/65306120/204158485-6872954e-93e7-4b8d-9c60-466ea8d66319.png)
+![Transaction algorithm](https://user-images.githubusercontent.com/65306120/197349715-4f53d61c-10c9-46ec-bc83-e718246d6d09.png)
