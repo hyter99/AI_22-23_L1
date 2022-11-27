@@ -8,7 +8,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   getUserProfile(userId: number) {
     return this.prisma.user.findFirstOrThrow({
@@ -46,13 +46,6 @@ export class ProfileService {
             companyId: true,
             name: true,
             description: true,
-            Stock: {
-              select: {
-                stockId: true,
-                quantity: true,
-                priceCents: true,
-              },
-            },
           },
         },
       },
@@ -72,6 +65,11 @@ export class ProfileService {
       where: {
         userId,
         status: getUserSellOfferQuery.status,
+        UserStock: {
+          Company: {
+            name: getUserSellOfferQuery.companyName
+          }
+        }
       },
       select: {
         sellOfferId: true,
@@ -80,25 +78,35 @@ export class ProfileService {
         quantity: true,
         created: true,
         status: true,
+        UserStock: {
+          select: {
+            Company: {
+              select: {
+                name: true,
+                description: true
+              }
+            }
+          }
+        }
       },
     });
   }
 
   getUserBuyOffers(
     userId: number,
-    getUserSellOfferQuery: GetUserBuyOfferQuery,
+    getUserBuyOfferQuery: GetUserBuyOfferQuery,
   ) {
     return this.prisma.buyOffer.findMany({
-      take: getUserSellOfferQuery.take,
-      skip: getUserSellOfferQuery.skip,
+      take: getUserBuyOfferQuery.take,
+      skip: getUserBuyOfferQuery.skip,
       orderBy: {
-        [getUserSellOfferQuery.orderBy]: getUserSellOfferQuery.orderType,
+        [getUserBuyOfferQuery.orderBy]: getUserBuyOfferQuery.orderType,
       },
       where: {
         userId,
-        status: getUserSellOfferQuery.status,
+        status: getUserBuyOfferQuery.status,
         Company: {
-          name: getUserSellOfferQuery.companyName,
+          name: getUserBuyOfferQuery.companyName,
         },
       },
       select: {

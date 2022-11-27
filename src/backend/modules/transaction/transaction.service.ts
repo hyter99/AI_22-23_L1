@@ -7,8 +7,8 @@ import { PrismaService } from "../database/prisma.service";
 export class TransactionService {
   constructor(private readonly prisma: PrismaService) { }
 
-  @Cron(new Date(Date.now() + 5000))
-  // @Cron(CronExpression.EVERY_10_SECONDS)
+  // @Cron(new Date(Date.now() + 5000))
+  @Cron(CronExpression.EVERY_5_MINUTES)
   handleCron() {
     // 0 - Active offer
     // 1 - Expired offer
@@ -17,7 +17,7 @@ export class TransactionService {
     // 4 - Offer realized
     // 5 - Transaction realized
 
-    // this.checkOfferValidity()
+    this.checkOfferValidity()
     this.transactionCycle()
   }
 
@@ -58,6 +58,9 @@ export class TransactionService {
             balanceCents: true
           }
         }
+      },
+      orderBy: {
+        created: 'asc'
       }
     })
 
@@ -92,7 +95,6 @@ export class TransactionService {
 
     for (const sellOffer of matchingSellOffer) {
       if (quantity === 0) return
-      //const requiredBalancea = sellOffer.quantity >= buyOffer.quantity ? sellOffer.unitSellPriceCents * buyOffer.quantity : sellOffer.unitSellPriceCents * sellOffer.quantity
 
       const userStock = await this.prisma.userStock.findFirst({
         where: {
