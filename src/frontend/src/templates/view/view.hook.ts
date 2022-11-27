@@ -2,18 +2,23 @@ import { useEffect } from "react";
 
 // redux
 import { useActions } from "../../hooks/useActions";
+import { useTypedSelector } from "../../hooks/useTypedSelector";
 
-const useView = (isLogged?: boolean) => {
+const useView = (viewTitle: string, isLogged?: boolean) => {
+  const {accessToken} = useTypedSelector(state => state.login.loginData);
   const { getBalanceCents } = useActions();
-
+  
   useEffect(() => {
     if (isLogged) {
-      //console.log("I'm here!!");
-      //getBalanceCents(); /* UNCOMMENT WHEN ENDPOINT IS PREPARED */
+      getBalanceCents(accessToken, viewTitle); /* UNCOMMENT WHEN ENDPOINT IS PREPARED */
     }
+    
+    // return () => {
+    //   console.log("Unmounting component");
+    // };
   },[]);
 
-  return {};
+  return;
 };
 
 export default useView;

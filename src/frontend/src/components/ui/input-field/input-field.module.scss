@@ -61,6 +61,14 @@
     &.disabled {
       cursor: not-allowed;
     }
+    
+    &.borderBlack {
+      border-color: $colorBlack;
+      
+      &:focus {
+        border-color: $colorDarkPurple;
+      }
+    }
   }
 
   .errorMessage {

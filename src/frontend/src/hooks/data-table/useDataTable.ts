@@ -1,77 +1,128 @@
 import { useEffect, useState } from "react";
 
 // types
-import { ISelectedDataType, IStockAction, IStocksInputFields, IDataModals, ISearchOrderBy } from "./useDataTable.types";
+import {
+  ISelectedDataType,
+  IStockAction,
+  IStocksInputFields,
+  IDataModals,
+  ISearchOrderBy,
+  IMyStockAction, IMyOfferAction, StockStatusEnum
+} from "./useDataTable.types";
 
 // data
 import { initialStocksInputFields, initialDataModals } from "./useDataTable.data";
 import {environment} from "../../constants/environment-variables";
 
-function useDataTable<T>(selectedDataType: ISelectedDataType) {
-  const [data, setData] = useState<T[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
-  const [searchInput, setSearchInput] = useState<IStocksInputFields>(initialStocksInputFields);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [dataModals, setDataModals] = useState<IDataModals>(initialDataModals);
-  const [selectedItemIdx, setSelectedItemIdx] = useState<number>(-1);
-  const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
+// redux
+import { useTypedSelector } from "../useTypedSelector";
 
+function useDataTable<T>(selectedDataType: ISelectedDataType) {  
+  const FIRST_PAGE_NUM = 1;
   const ELEMENTS_PER_PAGE = 20;
-  const additionUrl: string =
+  const ADDITION_URL: string =
     selectedDataType === "stockActions" ? "stocks"
     : selectedDataType === "myStockActions" ? "profile/stock"
     : selectedDataType === "mySellOffers" ? "profile/sell-offers"
     : "profile/buy-offers";
   //@ts-ignore
-  const API_URL = `${environment.backendUrl}/api/` + additionUrl;
-
+  const API_URL = `${environment.backendUrl}/api/` + ADDITION_URL;
+  
+  const [data, setData] = useState<T[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(FIRST_PAGE_NUM);
+  const [isEndOfData, setIsEndOfData] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<IStocksInputFields>(initialStocksInputFields);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [dataModals, setDataModals] = useState<IDataModals>(initialDataModals);
+  const [selectedItemIdx, setSelectedItemIdx] = useState<number>(-1);
+  const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
+  
+  const {accessToken} = useTypedSelector(state => state.login.loginData);
+  
   useEffect(() => {
-    fetchData(true);
+    setData([]);
+    setIsEndOfData(false);
+    setSearchInput(initialStocksInputFields);
+    setDataModals(initialDataModals);
+    setSelectedItemIdx(-1);
     setIsFirstRender(false);
-  },[]);
+    fetchData(true);
+    
+    //console.log("API_URL:", API_URL);
+  },[selectedDataType]);
 
   useEffect(() => {
     if (!isFirstRender) {
       onSearchClick();
     }
-  },[searchInput.orderBy, searchInput.isOrderTypeAscending]);
+  },[searchInput.orderBy, searchInput.isOrderTypeAscending, searchInput.status]);
 
   /* TO BE REMOVED */
   useEffect(() => {
-    console.log("data length:", data.length);
+    console.log("data:", data);
   },[data]);
 
   const fetchData = (isStart?: boolean) => {
     // Get and change the page
-    const pageToFetch = isStart ? 1 : currentPage+1;
+    const pageToFetch = isStart ? FIRST_PAGE_NUM : currentPage+1;
     setCurrentPage(pageToFetch);
 
-    // Prepare url
+    // Prepare url with queryParams
     const fetchUrl: string = API_URL.concat(
       `?page=${pageToFetch}`,
       `&take=${ELEMENTS_PER_PAGE}`,
       searchInput.searchField !== "" ? `&companyName=${searchInput.searchField}` : "",
-      searchInput.orderBy !== "" ? `&orderBy=${searchInput.orderBy}` : "",
+      searchInput.status !== StockStatusEnum.ALL_OFFERS ? `&status=${searchInput.status}` : "",
+      // There is other 'orderBy' name for 'price' in 'sell-offers' and 'buy-offers' views
+      searchInput.orderBy !== "" ?
+        `&orderBy=${
+          selectedDataType === "myBuyOffers" ?
+            searchInput.orderBy === "priceCents" ?
+              "unitBuyPriceCents"
+            :
+              searchInput.orderBy
+          : selectedDataType === "mySellOffers" ?
+              searchInput.orderBy === "priceCents" ?
+                "unitSellPriceCents"
+              :
+                searchInput.orderBy
+          : selectedDataType === "myStockActions" ?
+            searchInput.orderBy === "quantity" ?
+              "stockQuantity"
+            :
+              searchInput.orderBy
+          :
+            searchInput.orderBy
+        }`
+      :
+        "",
       `&orderType=${searchInput.isOrderTypeAscending ? "asc" : "desc"}`
     );
     /* TO BE REMOVED */
     console.log("fetchUrl:", fetchUrl);
 
+    // Prepare headers for fetch
+    const fetchHeaders: any = {
+      'Content-Type': 'application/json'
+    }
+    
+    if (selectedDataType !== "stockActions") {
+      fetchHeaders["Authorization"] = `Bearer ${accessToken}`;
+    }
+    
     // Make fetch of desired page
     setIsLoading(true);
     fetch(fetchUrl, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: fetchHeaders
     })
       .then(async response => {
         const resData = await response.json();
         if (response.ok) {
           if (resData.length > 0) {
             let dataToAppend: T[] = [];
-
+            
+            // Create proper data object (based on 'selectedDataType')
             if (selectedDataType === "stockActions") {
               dataToAppend = resData.map((item: any) => ({
                 stockId: item.stockId,
@@ -84,7 +135,27 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
                 priceCents: item.priceCents
               } as IStockAction)) as T[];
             }
-            /* TO DO - add 'else if' for other 'selectedDataType' */
+            else if (selectedDataType === "myStockActions") {
+              dataToAppend = resData.map((item: any) => ({
+                userStockId: item.userStockId,
+                stockQuantity: item.stockQuantity,
+                Company: {
+                  companyId: item.Company.companyId,
+                  name: item.Company.name,
+                  description: item.Company.description
+                }
+              } as IMyStockAction)) as T[];
+            }
+            else {// (selectedDataType === "myBuyOffers" || selectedDataType === "mySellOffers")
+              dataToAppend = resData.map((item: any) => ({
+                offerId: selectedDataType === "myBuyOffers" ? item.buyOfferId : item.sellOfferId,
+                stockId: selectedDataType === "myBuyOffers" ? item.stockId : item.userStockId, //TODO - change stockId acquired when it's sell-offer
+                unitPriceCents: selectedDataType === "myBuyOffers" ? item.unitBuyPriceCents : item.unitSellPriceCents,
+                quantity: item.quantity,
+                created: item.created,
+                status: item.status
+              } as IMyOfferAction)) as T[];
+            }
             setData(prev => [
               ...prev,
               ...dataToAppend
@@ -113,21 +184,34 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       fetchData(true);
     }
   };
-
+  
   const handleInputChange = (name: string, value: string) => {
+    let valueToSet: string | number = value;
+    if (name === "status") {
+      valueToSet = parseInt(valueToSet);
+    }
+    
     setSearchInput(prev => ({
       ...prev,
-      [name]: value
+      [name]: valueToSet
     }));
   };
+  
+  // useEffect(() => {
+  //   console.log("searchInput", searchInput);
+  // },[searchInput]);
 
-  const handleDataModalChange = (name: string, value: boolean, selItemIdx?: number) => {
+  const handleDataModalChange = (
+    name: "isBuyModalOpen" | "isSellModalOpen" | "isDeclineModalOpen",
+    value: boolean,
+    selItemIdx?: number
+  ) => {
     setDataModals(prev => ({
       ...prev,
       [name]: value
     }));
-
-    const itemIdxToSet: number = (selItemIdx && value) ? selItemIdx : -1;
+    
+    const itemIdxToSet: number = ((selItemIdx !== undefined) && value) ? selItemIdx : -1;
     setSelectedItemIdx(itemIdxToSet);
   };
 

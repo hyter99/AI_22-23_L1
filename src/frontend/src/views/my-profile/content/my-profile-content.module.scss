@@ -1,0 +1,16 @@
+@import "../../../styles/variables";
+
+.myProfileContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  
+  .topBarContainer {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+}

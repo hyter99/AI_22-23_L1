@@ -1,9 +1,10 @@
 // interfaces
-import {IStocksInputFields, IDataModals} from "./useDataTable.types";
+import { IDataModals, IStocksInputFields, StockStatusEnum } from "./useDataTable.types";
 
 export const initialStocksInputFields: IStocksInputFields = {
   searchField: "",
   orderBy: "",
+  status: StockStatusEnum.ALL_OFFERS,
   isOrderTypeAscending: true
 }
 

@@ -1,0 +1,33 @@
+@import "src/frontend/src/styles/variables";
+
+tr {
+  &:hover {
+    background-color: $colorSemiLightGray2;
+  }
+  
+  td {
+    border: 2px solid $colorBlack;
+    font-weight: 700;
+    font-size: 24px;
+    color: $colorWhite;
+    padding: 10px;
+
+    .buttonWrapper {
+      height: 35px;
+      width: 200px;
+      margin: 0 auto 6px auto;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+    
+    &.colorGreen {
+      color: $colorLightGreen;
+    }
+
+    &.colorRed {
+      color: $colorLightRed;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@import "src/frontend/src/styles/variables";
+
+th {
+  font-weight: 700;
+  font-size: 32px;
+  color: $colorDarkWhite2;
+  border: 5px solid $colorBlack;
+  position: relative;
+  padding: 10px;
+
+  &.cursorPointer {
+    cursor: pointer;
+  }
+  
+  .arrow {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 20px;
+    right: 5px;
+
+    &.ascendingArrow {
+      filter: invert(48%) sepia(97%) saturate(382%) hue-rotate(89deg) brightness(93%) contrast(92%);
+      transform: rotateZ(180deg);
+    }
+
+    &.descendingArrow {
+      filter: invert(23%) sepia(100%) saturate(1901%) hue-rotate(353deg) brightness(93%) contrast(86%);
+    }
+  }
+}
