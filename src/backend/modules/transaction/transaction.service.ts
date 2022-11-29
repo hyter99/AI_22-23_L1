@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { Prisma, PrismaClient } from "@prisma/client";
 import { PrismaService } from "../database/prisma.service";
+import { buyOffer } from "./dto/buyOffer.dto";
 
 @Injectable()
 export class TransactionService {
@@ -52,7 +53,12 @@ export class TransactionService {
       where: {
         status: 0
       },
-      include: {
+      select: {
+        buyOfferId: true,
+        companyId: true,
+        userId: true,
+        quantity: true,
+        unitBuyPriceCents: true,
         User: {
           select: {
             balanceCents: true
@@ -69,12 +75,12 @@ export class TransactionService {
     }
   }
 
-  async findMatchingSellOffers(buyOffer: any) {
+  async findMatchingSellOffers(buyOffer: buyOffer) {
     const { balanceCents } = buyOffer.User;
     let { quantity } = buyOffer;
 
     if (balanceCents < quantity * buyOffer.unitBuyPriceCents) {
-      await this.throwUserHasNoSufficientFundsError(buyOffer.buyOfferId)
+      await this.setUserHasNoSufficientFundsStatus(buyOffer.buyOfferId)
       return
     }
 
@@ -107,169 +113,100 @@ export class TransactionService {
       })
       const buyerStockId = userStock?.userStockId === undefined ? -1 : userStock.userStockId;
 
-      if (sellOffer.quantity >= quantity) { //Triggers when number of purchased stock is lesser then or equal number of sold stock
-        const cost = sellOffer.unitSellPriceCents * quantity
+      let cost, sellOfferStatus, buyOfferStatus, stockQuantitySelled;
 
-        const sellOfferStatus = quantity === sellOffer.quantity ? 4 : 0;
-
-        //Database transaction
-        await this.prisma.$transaction([
-          this.prisma.buyOffer.update({
-            where: {
-              buyOfferId: buyOffer.buyOfferId
-            },
-            data: {
-              status: 4,
-              quantity: {
-                decrement: quantity
-              },
-              User: {
-                update: {
-                  balanceCents: {
-                    decrement: cost
-                  }
-                },
-              }
-            }
-          }),
-
-          this.prisma.sellOffer.update({
-            where: {
-              sellOfferId: sellOffer.sellOfferId
-            },
-            data: {
-              quantity: {
-                decrement: quantity
-              },
-              status: sellOfferStatus,
-              UserStock: {
-                update: {
-                  stockQuantity: {
-                    decrement: quantity
-                  },
-                  User: {
-                    update: {
-                      balanceCents: {
-                        increment: cost
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }),
-
-          this.prisma.userStock.upsert({
-            where: {
-              userStockId: buyerStockId
-            },
-            update: {
-              stockQuantity: {
-                increment: quantity
-              },
-            },
-            create: {
-              userId: buyOffer.userId,
-              stockQuantity: quantity,
-              companyId: buyOffer.companyId
-            }
-          }),
-
-          this.prisma.transaction.create({
-            data: {
-              buyOfferId: buyOffer.buyOfferId,
-              sellOfferId: sellOffer.sellOfferId,
-              status: 5,
-              sellerId: sellOffer.userId,
-              buyerId: buyOffer.userId,
-            },
-          }),
-        ])
-
-        quantity = 0
-      } else { //Triggers when number of purchased stock is greater then number of sold stock
-        const cost = sellOffer.unitSellPriceCents * sellOffer.quantity
-
-        //Database transaction
-        await this.prisma.$transaction([
-          this.prisma.buyOffer.update({
-            where: {
-              buyOfferId: buyOffer.buyOfferId
-            },
-            data: {
-              status: 0,
-              quantity: {
-                decrement: sellOffer.quantity
-              },
-              User: {
-                update: {
-                  balanceCents: {
-                    decrement: cost
-                  }
-                },
-              }
-            }
-          }),
-
-          this.prisma.sellOffer.update({
-            where: {
-              sellOfferId: sellOffer.sellOfferId
-            },
-            data: {
-              quantity: {
-                decrement: sellOffer.quantity
-              },
-              status: 4,
-              UserStock: {
-                update: {
-                  stockQuantity: {
-                    decrement: sellOffer.quantity
-                  },
-                  User: {
-                    update: {
-                      balanceCents: {
-                        increment: cost
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }),
-
-          this.prisma.userStock.upsert({
-            where: {
-              userStockId: buyerStockId
-            },
-            update: {
-              stockQuantity: {
-                increment: sellOffer.quantity
-              },
-            },
-            create: {
-              userId: buyOffer.userId,
-              stockQuantity: sellOffer.quantity,
-              companyId: buyOffer.companyId
-            }
-          }),
-
-          this.prisma.transaction.create({
-            data: {
-              buyOfferId: buyOffer.buyOfferId,
-              sellOfferId: sellOffer.sellOfferId,
-              status: 5,
-              sellerId: sellOffer.userId,
-              buyerId: buyOffer.userId,
-            },
-          }),
-        ])
-
-        quantity -= sellOffer.quantity;
+      if (sellOffer.quantity >= quantity) {
+        cost = sellOffer.unitSellPriceCents * quantity
+        sellOfferStatus = quantity === sellOffer.quantity ? 4 : 0;
+        buyOfferStatus = 4
+        stockQuantitySelled = quantity
+      } else {
+        cost = sellOffer.unitSellPriceCents * sellOffer.quantity
+        sellOfferStatus = 4
+        buyOfferStatus = 0
+        stockQuantitySelled = sellOffer.quantity
       }
+
+
+      await this.prisma.$transaction([
+        this.prisma.buyOffer.update({
+          where: {
+            buyOfferId: buyOffer.buyOfferId
+          },
+          data: {
+            status: buyOfferStatus,
+            quantity: {
+              decrement: stockQuantitySelled
+            },
+            User: {
+              update: {
+                balanceCents: {
+                  decrement: cost
+                }
+              },
+            }
+          }
+        }),
+
+        this.prisma.sellOffer.update({
+          where: {
+            sellOfferId: sellOffer.sellOfferId
+          },
+          data: {
+            quantity: {
+              decrement: stockQuantitySelled
+            },
+            status: sellOfferStatus,
+            UserStock: {
+              update: {
+                stockQuantity: {
+                  decrement: stockQuantitySelled
+                },
+                User: {
+                  update: {
+                    balanceCents: {
+                      increment: cost
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }),
+
+        this.prisma.userStock.upsert({
+          where: {
+            userStockId: buyerStockId
+          },
+          update: {
+            stockQuantity: {
+              increment: stockQuantitySelled
+            },
+          },
+          create: {
+            userId: buyOffer.userId,
+            stockQuantity: stockQuantitySelled,
+            companyId: buyOffer.companyId
+          }
+        }),
+
+        this.prisma.transaction.create({
+          data: {
+            buyOfferId: buyOffer.buyOfferId,
+            sellOfferId: sellOffer.sellOfferId,
+            status: 5,
+            sellerId: sellOffer.userId,
+            buyerId: buyOffer.userId,
+          },
+        }),
+      ])
+
+      quantity -= stockQuantitySelled
+
     }
   }
 
-  async throwUserHasNoSufficientFundsError(buyOfferId: number) {
+  async setUserHasNoSufficientFundsStatus(buyOfferId: number) {
     await this.prisma.buyOffer.update({
       where: {
         buyOfferId: buyOfferId

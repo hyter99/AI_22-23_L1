@@ -11,7 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './database/prisma.module';
 import { OfferModule } from './offer/offer.module';
 import { ProfileModule } from './profile/profile.module';
-import { StockModule } from './stock/stock.module';
+import { CompanyModule } from './company/company.module';
 import { ConfigModule } from "@nestjs/config";
 import { TransactionService } from './transaction/transaction.service';
 
@@ -25,7 +25,7 @@ import { TransactionService } from './transaction/transaction.service';
     PrismaModule,
     AuthModule,
     OfferModule,
-    StockModule,
+    CompanyModule,
     ProfileModule,
     ConfigModule.forRoot({
       validate: appConfigSchema.parse,
@@ -33,4 +33,4 @@ import { TransactionService } from './transaction/transaction.service';
   ],
   providers: [UniqueConstraint, ExistsConstraint, TransactionService],
 })
-export class AppModule {}
+export class AppModule { }

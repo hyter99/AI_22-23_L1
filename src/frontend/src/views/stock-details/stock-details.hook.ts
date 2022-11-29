@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useFetch } from '../../hooks/useFetch';
 
 // controller class
-import type { StockController } from '../../../../backend/modules/stock/stock.controller';
+import type { StockController } from '../../../../backend/modules/company/company.controller';
 
 type StockGetOne = Awaited<
   ReturnType<typeof StockController['prototype']['getOne']>
@@ -26,7 +26,7 @@ const useStockDetails = (id: string) => {
   });
   //console.log("stockFetch:", stockFetch);
   const [isBuyModalOpened, setIsBuyModalOpened] = useState<boolean>(false);
-  
+
   return {
     priceFormatter,
     stockFetch,

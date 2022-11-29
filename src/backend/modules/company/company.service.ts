@@ -1,14 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { combineLatest } from 'rxjs';
 
 import { PrismaService } from '../database/prisma.service';
-import { GetStocksQuery } from './dto/get-stocks.query';
+import { GetCompaniesQuery } from './dto/get-companies.query';
 
 @Injectable()
-export class StockService {
+export class CompanyService {
   constructor(private readonly prisma: PrismaService) { }
 
-  getMany(query: GetStocksQuery) {
+  getMany(query: GetCompaniesQuery) {
     const take = query.take ? query.take : 10;
 
     return this.prisma.company.findMany({
@@ -48,7 +47,7 @@ export class StockService {
         },
       })
       .catch(() => {
-        throw new NotFoundException(`Stcok with id ${companyId} not found`);
+        throw new NotFoundException(`Company with id ${companyId} not found`);
       });
   }
 }

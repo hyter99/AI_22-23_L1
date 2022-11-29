@@ -82,6 +82,7 @@ export class ProfileService {
           select: {
             Company: {
               select: {
+                companyId: true,
                 name: true,
                 description: true
               }
@@ -120,6 +121,7 @@ export class ProfileService {
           select: {
             companyId: true,
             name: true,
+            description: true,
           },
         },
       },
