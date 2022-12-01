@@ -20,7 +20,7 @@ import { ProfileService } from './profile.service';
 @UseGuards(JwtAuthenticationGuard)
 @Controller('profile')
 export class ProfileConstroller {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(private readonly profileService: ProfileService) { }
 
   @Get('/me')
   getUserProfile(@Req() request: RequestWithUser) {
@@ -57,11 +57,11 @@ export class ProfileConstroller {
   @Get('/buy-offers')
   getUserBuyOffers(
     @Req() request: RequestWithUser,
-    @Query() getUserSellOfferQuery: GetUserBuyOfferQuery,
+    @Query() getUserBuyOfferQuery: GetUserBuyOfferQuery,
   ) {
     return this.profileService.getUserBuyOffers(
       request.user.userId,
-      getUserSellOfferQuery,
+      getUserBuyOfferQuery,
     );
   }
 

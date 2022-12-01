@@ -12,7 +12,7 @@ export class OfferService {
     return this.prisma.buyOffer.create({
       data: {
         userId: userId,
-        stockId: createBuyOfferDto.stockId,
+        companyId: createBuyOfferDto.companyId,
         quantity: createBuyOfferDto.quantity,
         unitBuyPriceCents: createBuyOfferDto.unitBuyPriceCents,
         status: createBuyOfferDto.status,
@@ -27,7 +27,7 @@ export class OfferService {
     return this.prisma.sellOffer.create({
       data: {
         userId: userId,
-        userStockId: createSellOfferDto.stockId,
+        userStockId: createSellOfferDto.userStockId,
         quantity: createSellOfferDto.quantity,
         unitSellPriceCents: createSellOfferDto.unitSellPriceCents,
         status: createSellOfferDto.status,

@@ -2,10 +2,10 @@ import { IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
 import { Exists } from '../../../decorators/exists.decorator';
 
 export class CreateBuyOfferDto {
-  @Exists('stock', 'stockId')
+  @Exists('company', 'companyId')
   @IsPositive()
   @IsNotEmpty()
-  stockId!: number;
+  companyId!: number;
 
   @IsPositive()
   @IsNotEmpty()

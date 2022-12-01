@@ -8,95 +8,83 @@ datasource db {
 }
 
 model BuyOffer {
-  buyOfferId            Int           @id @default(autoincrement())
-  userId                Int
-  stockId               Int
-  unitBuyPriceCents     Int
-  quantity              Int
-  created               DateTime      @db.Timestamptz(6) @default(now())
-  status                Int           @default(0)
-  User                  User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  Transaction           Transaction[]
-  Stock                 Stock     @relation(fields: [stockId], references: [stockId], onDelete: Cascade, map: "BuyOffer")
+  buyOfferId        Int           @id @default(autoincrement())
+  userId            Int
+  companyId         Int
+  unitBuyPriceCents Int
+  quantity          Int
+  created           DateTime      @default(now()) @db.Timestamptz(6)
+  status            Int           @default(0)
+  User              User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  Transaction       Transaction[]
+  Company           Company       @relation(fields: [companyId], references: [companyId], onDelete: Cascade, map: "BuyOffer")
 }
 
 model Company {
-  companyId                          Int     @id @default(autoincrement())
-  name                               String  @db.VarChar
-  description                        String?
-  Stock                              Stock[]
-  UserStock                          UserStock[]
-  StockPriceHistory                  CompanyStockPriceHistory[]
+  companyId         Int                        @id @default(autoincrement())
+  name              String                     @db.VarChar
+  description       String?
+  UserStock         UserStock[]
+  StockPriceHistory CompanyStockPriceHistory[]
+  BuyOffer          BuyOffer[]
 }
 
 model SellOffer {
-  sellOfferId            Int           @id @default(autoincrement())
-  userId                 Int
-  userStockId            Int
-  unitSellPriceCents     Int
-  quantity               Int
-  created                DateTime      @db.Timestamptz(6) @default(now())
-  status                 Int           @default(0)
-  User                   User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  Transaction            Transaction[]
-  UserStock              UserStock     @relation(fields: [userStockId], references: [userStockId], onDelete: Cascade, map: "UserStock")
-}
-
-model Stock {
-  stockId                  Int                 @id @default(autoincrement())
-  companyId                Int
-  quantity                 Int
-  priceCents               Int
-  userId                   Int
-  Company                  Company             @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  User                     User                @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  BuyOffer                 BuyOffer[]
+  sellOfferId        Int           @id @default(autoincrement())
+  userId             Int
+  userStockId        Int
+  unitSellPriceCents Int
+  quantity           Int
+  created            DateTime      @default(now()) @db.Timestamptz(6)
+  status             Int           @default(0)
+  User               User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  Transaction        Transaction[]
+  UserStock          UserStock     @relation(fields: [userStockId], references: [userStockId], onDelete: Cascade, map: "UserStock")
 }
 
 model CompanyStockPriceHistory {
-  companyStockPriceHistoryId        Int        @id @default(autoincrement())
-  companyId                         Int
-  priceCents                        Int
-  changeDate                        DateTime   @db.Timestamptz(6) @default(now())
-  Company                           Company    @relation(fields: [companyId], references: [companyId], onDelete: NoAction, onUpdate: NoAction, map: "Company")
+  companyStockPriceHistoryId Int      @id @default(autoincrement())
+  companyId                  Int
+  priceCents                 Int
+  changeDate                 DateTime @default(now()) @db.Timestamptz(6)
+  Company                    Company  @relation(fields: [companyId], references: [companyId], onDelete: NoAction, onUpdate: NoAction, map: "Company")
 }
 
 model Transaction {
-  transactionId          Int       @id @default(autoincrement())
-  buyOfferId             Int
-  sellOfferId            Int
-  status                 Int       @default(0)
-  date                   DateTime  @db.Timestamptz(6) @default(now())
-  sellerId               Int
-  buyerId                Int
-  BuyOffer               BuyOffer  @relation(fields: [buyOfferId], references: [buyOfferId], onDelete: Cascade, map: "BuyOffer")
-  Buyer                  User      @relation("TransactionToBuyer", fields: [buyerId], references: [userId], onDelete: Cascade, map: "Buyer")
-  SellOffer              SellOffer @relation(fields: [sellOfferId], references: [sellOfferId], onDelete: Cascade, map: "SellOffer")
-  Seller                 User      @relation("TransactionToSeller", fields: [sellerId], references: [userId], onDelete: Cascade, map: "Seller")
+  transactionId Int       @id @default(autoincrement())
+  buyOfferId    Int
+  sellOfferId   Int
+  status        Int       @default(0)
+  date          DateTime  @default(now()) @db.Timestamptz(6)
+  sellerId      Int
+  buyerId       Int
+  BuyOffer      BuyOffer  @relation(fields: [buyOfferId], references: [buyOfferId], onDelete: Cascade, map: "BuyOffer")
+  Buyer         User      @relation("TransactionToBuyer", fields: [buyerId], references: [userId], onDelete: Cascade, map: "Buyer")
+  SellOffer     SellOffer @relation(fields: [sellOfferId], references: [sellOfferId], onDelete: Cascade, map: "SellOffer")
+  Seller        User      @relation("TransactionToSeller", fields: [sellerId], references: [userId], onDelete: Cascade, map: "Seller")
 }
 
 model User {
-  userId                  Int           @id @default(autoincrement())
-  email                   String        @db.VarChar @unique
-  password                String        @db.VarChar
-  passwordSalt			      String		    @db.VarChar
-  name                    String        @db.VarChar
-  surname                 String        @db.VarChar
-  balanceCents            Int
-  BuyOffer                BuyOffer[]
-  SellOffer               SellOffer[]
-  TransactionBuyer        Transaction[] @relation("TransactionToBuyer")
-  TransactionSeller       Transaction[] @relation("TransactionToSeller")
-  UserStock               UserStock[]
-  Stock                   Stock[]
+  userId            Int           @id @default(autoincrement())
+  email             String        @unique @db.VarChar
+  password          String        @db.VarChar
+  passwordSalt      String        @db.VarChar
+  name              String        @db.VarChar
+  surname           String        @db.VarChar
+  balanceCents      Int
+  BuyOffer          BuyOffer[]
+  SellOffer         SellOffer[]
+  TransactionBuyer  Transaction[] @relation("TransactionToBuyer")
+  TransactionSeller Transaction[] @relation("TransactionToSeller")
+  UserStock         UserStock[]
 }
 
 model UserStock {
-  userStockId      Int   @id @default(autoincrement())
-  userId           Int
-  stockQuantity    Int
-  companyId        Int
-  User             User  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
-  Company          Company @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
-  SellOffer        SellOffer[]
+  userStockId   Int         @id @default(autoincrement())
+  userId        Int
+  stockQuantity Int
+  companyId     Int
+  User          User        @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
+  Company       Company     @relation(fields: [companyId], references: [companyId], onDelete: Cascade, onUpdate: NoAction, map: "Company")
+  SellOffer     SellOffer[]
 }
