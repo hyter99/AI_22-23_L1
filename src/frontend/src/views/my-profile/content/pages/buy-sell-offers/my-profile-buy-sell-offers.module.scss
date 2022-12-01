@@ -1,0 +1,23 @@
+@import "src/frontend/src/views/stocks/content/stocks-content.module";
+
+.searchBarWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .inputField {
+    width: 70%;
+    height: auto;
+  }
+
+  .select {
+    width: 30%;
+    height: 53px;
+    background-color: $colorDarkGray2;
+    border-radius: 10px;
+    margin-left: 5px;
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+  }
+}

@@ -38,11 +38,17 @@ interface ResetStatusAction {
   type: ActionType.USER_LOGIN_RESET_STATUS;
 }
 
+interface SetLastViewSetAction {
+  type: ActionType.USER_SET_LAST_VIEW_SET;
+  payload: string;
+}
+
 interface SetBalanceCentsAction {
   type: ActionType.USER_SET_BALANCE_CENTS;
   payload: {
     successMessage: string;
     newAmount: number;
+    viewSet: string | undefined;
   };
 }
 
@@ -63,5 +69,6 @@ export type LoginActions =
   SetSuccessAction |
   SetLoadingAction |
   ResetStatusAction |
+  SetLastViewSetAction |
   SetBalanceCentsAction |
   SetNewUserDataAction;

@@ -68,7 +68,7 @@ const LoginForm:React.FC= () => {
               <MessageBox
                 message={errorLogin}
                 isError
-                width100
+                wide
               />
             :
               null

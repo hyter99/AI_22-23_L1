@@ -17,7 +17,7 @@ As part of the Internet Applications laboratories, a web application was created
 
 **Front-end technologies:**
 - React - [more info](https://pl.reactjs.org)
-- Vite 
+- Vite [more info](https://vitejs.dev)
 
 ## Wiki
 

@@ -2,7 +2,11 @@
 
 .messageBox {
   width: 280px;
+  height: 100%;
   border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   p {
     color: $colorWhite;
@@ -22,10 +26,6 @@
 
   &.colorRed {
     background-color: $colorRed;
-  }
-
-  &.width100 {
-    width: 100%;
   }
 
   a {

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
-//@ts-ignore
-const API_URL = `${import.meta.env.VITE_BACKED_URL}/api/`;
+// data
+import { environment } from "../constants/environment-variables";
+
+const API_URL = `${environment.backendUrl}/api/`;
 //const API_URL = 'http://localhost:3000/api/';
 
 export function useFetch<T>(url: string) {

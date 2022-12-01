@@ -8,6 +8,8 @@ interface ILoginState {
   error: string | null;
   success: string | null;
   loginData: ILogin;
+  lastViewSet: string;
+  lastTimeViewSet: number;
 }
 
 // initial state
@@ -24,7 +26,9 @@ const initialState: ILoginState = {
       email: "",
       balanceCents: 0
     }
-  }
+  },
+  lastViewSet: "",
+  lastTimeViewSet: new Date().getTime()
 };
 
 const reducer = (state: ILoginState = initialState, action: LoginActions): ILoginState => {
@@ -77,14 +81,38 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
       state.loading = false;
       state.error = null;
       state.success = null;
+      state.lastViewSet = "";
+      return {...state};
+      
+    case ActionType.USER_SET_LAST_VIEW_SET:
+      state.lastViewSet = action.payload;
       return {...state};
 
     case ActionType.USER_SET_BALANCE_CENTS:
-      state.loginData.user.balanceCents = action.payload.newAmount;
-      state.loading = false;
-      state.error = null;
-      state.success = action.payload.successMessage; //added
-      return {...state, loginData: {...state.loginData, user: {...state.loginData.user}}}
+      console.log("WORKING for view:", action.payload.viewSet);
+      if (action.payload.viewSet) {
+        //can update on site change or every 10s on the same site
+        //console.log(new Date().getTime() - state.lastTimeViewSet)
+        if (action.payload.viewSet !== state.lastViewSet || (new Date().getTime() - state.lastTimeViewSet) > 10000) {
+          console.log("Update of balance with state.lastViewSet:", state.lastViewSet);
+          state.loginData.user.balanceCents = action.payload.newAmount;
+          state.loading = false;
+          state.error = null;
+          state.success = action.payload.successMessage; //added
+          state.lastViewSet = action.payload.viewSet;
+          state.lastTimeViewSet = new Date().getTime();
+          return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}}};
+        }
+        return state;
+      }
+      else {
+        console.log("Forced update of balance");
+        state.loginData.user.balanceCents = action.payload.newAmount;
+        state.loading = false;
+        state.error = null;
+        state.success = action.payload.successMessage; //added
+        return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}}};
+      }
 
     case ActionType.USER_SET_NEW_DATA:
       state.loading = false;

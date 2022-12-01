@@ -5,6 +5,10 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import ViewError from "../../error/error.component";
 import ViewStocks from "../../stocks/stocks.component";
 import ViewDetailsStock from "../../stock-details/stock-details.component";
+import ViewMyProfile from "../../my-profile/my-profile.component";
+
+// enum
+import { MyProfileAvailableUrlEnum } from "../../my-profile/my-profile.data";
 
 // interfaces
 interface IAuthenticatedApp {
@@ -12,10 +16,9 @@ interface IAuthenticatedApp {
 }
 
 const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
-
+  
   return (
     <Switch>
-      {/*TODO - Other paths*/}
       {/*Main routes*/}
       <Route
         exact
@@ -25,8 +28,7 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
             appVersion={appVersion}
             isLogged={true}
           />
-        )
-        }
+        )}
       />
       <Route
         exact
@@ -40,10 +42,27 @@ const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
       />
       <Route
         exact
-        path={["/logowanie", "/rejestracja"]}
+        path="/moj-profil/:page_name"
         component={() => (
-          <Redirect to="/" />
+          <ViewMyProfile
+            appVersion={appVersion}
+            isLogged={true}
+          />
         )}
+      />
+      <Route
+        exact
+        path="/moj-profil"
+        component={() =>
+          <Redirect to={`/moj-profil/${MyProfileAvailableUrlEnum.DATA}`} />
+        }
+      />
+      <Route
+        exact
+        path={["/logowanie", "/rejestracja"]}
+        component={() =>
+          <Redirect to="/" />
+        }
       />
       {/*Other routes*/}
       <Route

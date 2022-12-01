@@ -1,0 +1,56 @@
+@import "src/frontend/src/styles/variables";
+
+.myProfileDataContainer {
+  width: 100%;
+  height: auto;
+  padding: 40px;
+  background-color: $colorBlack;
+  font-weight: 700;
+  font-size: 30px;
+  color: $colorWhite;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 10px;
+  
+  table {
+    width: auto;
+    height: auto;
+    margin-bottom: 15px;
+    border: unset;
+    background-color: transparent;
+    
+    tr {
+      
+      &:hover {
+        background-color: transparent;
+      }
+      td {
+        font-size: inherit;
+      }
+    }
+  }
+  
+  .buttonWrapper {
+    width: 200px;
+    height: 50px;
+    
+    &.marginLeft {
+      margin-left: 40px;
+    }
+  }
+  
+  .fundsRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 25px;
+    
+    p {
+      &:first-of-type {
+        margin-right: 20px;
+      }
+    }
+  }
+}

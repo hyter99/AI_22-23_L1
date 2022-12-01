@@ -9,15 +9,13 @@ interface IMessageBox {
   link?: ReactElement;
   wide?: boolean;
   isError?: boolean;
-  width100?: boolean;
 }
 
 const MessageBox: React.FC<IMessageBox> = ({
   message,
   link,
   wide,
-  isError,
-  width100
+  isError
 }) => {
 
   return (
@@ -25,7 +23,6 @@ const MessageBox: React.FC<IMessageBox> = ({
       ${styles.messageBox}
       ${wide ? styles.wide : ""}
       ${isError ? styles.colorRed : styles.colorGreen}
-      ${width100 ? styles.width100 : ""}
     `}>
       <p>{message}{link ? link : ""}</p>
     </div>

@@ -1,30 +1,30 @@
-const enum signCases {
+const enum SignCasesEnum {
   NUMERIC,
   UPPER_CASE,
   LOWER_CASE,
   UNDEFINED
 }
 
-const checkSignCase = (ch: string): number => {
+const CheckSignCase = (ch: string): number => {
   if (!isNaN(parseInt(ch))){
-    return signCases.NUMERIC;
+    return SignCasesEnum.NUMERIC;
   }
   else {
     if (ch === ch.toUpperCase()) {
-      return signCases.UPPER_CASE;
+      return SignCasesEnum.UPPER_CASE;
     }
     if (ch === ch.toLowerCase()){
-      return signCases.LOWER_CASE;
+      return SignCasesEnum.LOWER_CASE;
     }
   }
 
-  return signCases.UNDEFINED;
+  return SignCasesEnum.UNDEFINED;
 };
 
-export const doesStringContainOneOrMoreUpperCaseLetter = (strToCheck: string): boolean => {
+export const DoesStringContainOneOrMoreUpperCaseLetter = (strToCheck: string): boolean => {
   for (let i = 0; i < strToCheck.length; i++) {
-    const signNumber = checkSignCase(strToCheck[i]);
-    if (signNumber === signCases.UPPER_CASE) {
+    const signNumber = CheckSignCase(strToCheck[i]);
+    if (signNumber === SignCasesEnum.UPPER_CASE) {
       return true;
     }
   }
@@ -32,10 +32,10 @@ export const doesStringContainOneOrMoreUpperCaseLetter = (strToCheck: string): b
   return false;
 };
 
-export const doesStringContainOneOrMoreNumber = (strToCheck: string): boolean => {
+export const DoesStringContainOneOrMoreNumber = (strToCheck: string): boolean => {
   for (let i = 0; i < strToCheck.length; i++) {
-    const signNumber = checkSignCase(strToCheck[i]);
-    if (signNumber === signCases.NUMERIC) {
+    const signNumber = CheckSignCase(strToCheck[i]);
+    if (signNumber === SignCasesEnum.NUMERIC) {
       return true;
     }
   }
