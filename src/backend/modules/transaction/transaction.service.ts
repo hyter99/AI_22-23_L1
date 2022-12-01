@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Cron, CronExpression } from '@nestjs/schedule';
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { PrismaService } from "../database/prisma.service";
 import { buyOffer } from "./dto/buyOffer.dto";
 
@@ -20,6 +20,29 @@ export class TransactionService {
 
     this.checkOfferValidity()
     this.transactionCycle()
+  }
+
+  async getActiveBuyOffers() {
+    return this.prisma.buyOffer.findMany({
+      where: {
+        status: 0
+      },
+      select: {
+        buyOfferId: true,
+        companyId: true,
+        userId: true,
+        quantity: true,
+        unitBuyPriceCents: true,
+        User: {
+          select: {
+            balanceCents: true
+          }
+        }
+      },
+      orderBy: {
+        created: 'asc'
+      }
+    });
   }
 
   async checkOfferValidity() {
@@ -49,33 +72,14 @@ export class TransactionService {
   }
 
   async transactionCycle() {
-    const activeBuyOffers = await this.prisma.buyOffer.findMany({
-      where: {
-        status: 0
-      },
-      select: {
-        buyOfferId: true,
-        companyId: true,
-        userId: true,
-        quantity: true,
-        unitBuyPriceCents: true,
-        User: {
-          select: {
-            balanceCents: true
-          }
-        }
-      },
-      orderBy: {
-        created: 'asc'
-      }
-    })
+    const activeBuyOffers = await this.getActiveBuyOffers();
 
     for (const buyOffer of activeBuyOffers) {
       await this.findMatchingSellOffers(buyOffer)
     }
   }
 
-  async findMatchingSellOffers(buyOffer: buyOffer) {
+  async findMatchingSellOffers(buyOffer: Awaited<ReturnType<typeof this.getActiveBuyOffers>>[number]) {
     const { balanceCents } = buyOffer.User;
     let { quantity } = buyOffer;
 
