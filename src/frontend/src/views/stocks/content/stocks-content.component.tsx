@@ -84,8 +84,8 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
         data={
           selectedItemIdx !== -1 ?
             {
-              id: data[selectedItemIdx].stockId,
-              name: data[selectedItemIdx].Company.name,
+              id: data[selectedItemIdx].companyId,
+              name: data[selectedItemIdx].name,
               priceFromInCents: data[selectedItemIdx].priceCents
             }
           :

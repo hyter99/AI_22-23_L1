@@ -25,10 +25,10 @@ const StocksBodyContent: React.FC<IStocksBodyContent> = ({data, isLogged, handle
       {
         data.map((item, index) => (
           <tr
-            key={item.stockId}
+            key={item.companyId}
           >
             <td>{`${index+1}.`}</td>
-            <td>{item.Company.name}</td>
+            <td>{item.name}</td>
             <td>{item.quantity}</td>
             <td>{`${CentsToString(item.priceCents)} PLN`}</td>
             <td>
@@ -49,7 +49,7 @@ const StocksBodyContent: React.FC<IStocksBodyContent> = ({data, isLogged, handle
               }
               <div className={styles.buttonWrapper}>
                 <Link
-                  to={`/szczegoly-akcji/${item.stockId}`}
+                  to={`/szczegoly-akcji/${item.companyId}`}
                 >
                   <Button
                     fontColor="white"
