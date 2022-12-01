@@ -1,21 +1,21 @@
-export type ISelectedDataType = "stockActions" | "myStockActions" | "mySellOffers" | "myBuyOffers";
+import { CompanyController } from '../../../../backend/modules/company/company.controller';
+
+export type ISelectedDataType =
+  | 'stockActions'
+  | 'myStockActions'
+  | 'mySellOffers'
+  | 'myBuyOffers';
 
 // data types to show
-export interface IStockAction {
-  stockId: number;
-  Company: {
-    companyId: number;
-    name: string;
-    description: string;
-  };
-  quantity: number;
-  priceCents: number;
-}
+
+export type IStockAction = Awaited<
+  ReturnType<typeof CompanyController['prototype']['get']>
+>[number];
 
 // export interface IMyStockActions {...}
 // export interface IMyOffers {...}
 
-export type ISearchOrderBy = "quantity" | "priceCents" | "";
+export type ISearchOrderBy = 'quantity' | 'priceCents' | '';
 
 export interface IStocksInputFields {
   searchField: string;

@@ -18,7 +18,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
 
   const ELEMENTS_PER_PAGE = 20;
   const additionUrl: string =
-    selectedDataType === "stockActions" ? "stocks"
+    selectedDataType === "stockActions" ? "companies"
     : selectedDataType === "myStockActions" ? "profile/stock"
     : selectedDataType === "mySellOffers" ? "profile/sell-offers"
     : "profile/buy-offers";
@@ -73,13 +73,10 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
 
             if (selectedDataType === "stockActions") {
               dataToAppend = resData.map((item: any) => ({
-                stockId: item.stockId,
+                companyId: item.companyId,
                 quantity: item.quantity,
-                Company: {
-                  companyId: item.Company.quantity,
-                  name: item.Company.name,
-                  description: item.Company.description
-                },
+                description: item.description,
+                name: item.name,
                 priceCents: item.priceCents
               } as IStockAction)) as T[];
             }

@@ -4,10 +4,10 @@ import { useState } from "react";
 import { useFetch } from '../../hooks/useFetch';
 
 // controller class
-import type { StockController } from '../../../../backend/modules/company/company.controller';
+import type { CompanyController } from '../../../../backend/modules/company/company.controller';
 
 type StockGetOne = Awaited<
-  ReturnType<typeof StockController['prototype']['getOne']>
+  ReturnType<typeof CompanyController['prototype']['getOne']>
 >;
 
 const useStockDetails = (id: string) => {
@@ -16,9 +16,9 @@ const useStockDetails = (id: string) => {
     currency: 'PLN'
   });
 
-  const stockFetch = useFetch<StockGetOne>(`stocks/${id}`);
+  const stockFetch = useFetch<StockGetOne>(`companies/${id}`);
 
-  const mappedData = stockFetch.data?.Company.StockPriceHistory.map((item) => {
+  const mappedData = stockFetch.data?.StockPriceHistory.map((item) => {
     return {
       label: item.changeDate,
       value: item.priceCents,

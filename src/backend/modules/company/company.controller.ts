@@ -5,7 +5,7 @@ import { CompanyService } from './company.service';
 
 @Controller('companies')
 export class CompanyController {
-  constructor(private readonly stockService: CompanyService) { }
+  constructor(private readonly stockService: CompanyService) {}
 
   @Get()
   get(@Query() getStocksQuery: GetCompaniesQuery) {

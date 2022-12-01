@@ -5,35 +5,72 @@ import { GetCompaniesQuery } from './dto/get-companies.query';
 
 @Injectable()
 export class CompanyService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
-  getMany(query: GetCompaniesQuery) {
+  async getMany(query: GetCompaniesQuery) {
     const take = query.take ? query.take : 10;
 
-    return this.prisma.company.findMany({
+    const results = await this.prisma.company.findMany({
       skip: query.skip,
       take: take,
       orderBy: {
-        [query.orderBy ?? 'stockId']: query.orderType ?? 'desc',
+        [query.orderBy ?? 'companyId']: query.orderType ?? 'desc',
       },
       select: {
         companyId: true,
         name: true,
         description: true,
+        UserStock: {
+          select: {
+            _count: true,
+            SellOffer: {
+              select: {
+                quantity: true,
+                unitSellPriceCents: true,
+              },
+            },
+          },
+        },
       },
+    });
+
+    return results.map((result) => {
+      return {
+        ...result,
+        quantity: result.UserStock.reduce(
+          (all, cur) =>
+            all + cur.SellOffer.reduce((all2, cur2) => all2 + cur2.quantity, 0),
+          0,
+        ),
+        priceCents:
+          result.UserStock.flatMap((us) =>
+            us.SellOffer.map((so) => so.unitSellPriceCents),
+          ).reduce((all, cur) => (all < cur ? all : cur)) ?? null,
+      };
     });
   }
 
-  getOne(companyId: number) {
-    return this.prisma.company
+  async getOne(companyId: number) {
+    const result = await this.prisma.company
       .findFirstOrThrow({
         where: {
-          companyId
+          companyId,
         },
         select: {
           companyId: true,
           name: true,
           description: true,
+          UserStock: {
+            select: {
+              _count: true,
+              SellOffer: {
+                select: {
+                  quantity: true,
+                  unitSellPriceCents: true,
+                },
+              },
+            },
+          },
           StockPriceHistory: {
             select: {
               companyStockPriceHistoryId: true,
@@ -49,5 +86,18 @@ export class CompanyService {
       .catch(() => {
         throw new NotFoundException(`Company with id ${companyId} not found`);
       });
+
+    return {
+      ...result,
+      quantity: result.UserStock.reduce(
+        (all, cur) =>
+          all + cur.SellOffer.reduce((all2, cur2) => all2 + cur2.quantity, 0),
+        0,
+      ),
+      minPrice:
+        result.UserStock.flatMap((us) =>
+          us.SellOffer.map((so) => so.unitSellPriceCents),
+        ).reduce((all, cur) => (all < cur ? all : cur)) ?? null,
+    };
   }
 }

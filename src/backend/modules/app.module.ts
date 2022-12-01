@@ -4,7 +4,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { join } from 'path';
 import { ExistsConstraint } from '../decorators/exists.decorator';
 
-import { appConfigSchema } from '../schemas/app.config.schema'
+import { appConfigSchema } from '../schemas/app.config.schema';
 
 import { UniqueConstraint } from '../decorators/unique.decorator';
 import { AuthModule } from './auth/auth.module';
@@ -12,14 +12,14 @@ import { PrismaModule } from './database/prisma.module';
 import { OfferModule } from './offer/offer.module';
 import { ProfileModule } from './profile/profile.module';
 import { CompanyModule } from './company/company.module';
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule } from '@nestjs/config';
 import { TransactionService } from './transaction/transaction.service';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', '.vite'),
-      exclude: ['/api*'],
+      exclude: ['*api*'],
     }),
     ScheduleModule.forRoot(),
     PrismaModule,
@@ -33,4 +33,4 @@ import { TransactionService } from './transaction/transaction.service';
   ],
   providers: [UniqueConstraint, ExistsConstraint, TransactionService],
 })
-export class AppModule { }
+export class AppModule {}
