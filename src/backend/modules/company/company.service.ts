@@ -16,6 +16,7 @@ export class CompanyService {
       orderBy: {
         [query.orderBy ?? 'companyId']: query.orderType ?? 'desc',
       },
+      where: { name: { contains: query.companyName, mode: 'insensitive' } },
       select: {
         companyId: true,
         name: true,
