@@ -1,0 +1,67 @@
+@import "../../../styles/variables";
+
+.contentContainer {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  
+  .dataRow {
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    
+    .item {
+      font-size: 25px;
+      font-weight: 700;
+      color: $colorBlack;
+      margin-right: 28px;
+      padding-top: 5px;
+
+      &.title {
+        font-size: 30px;
+        padding-top: 0;
+      }
+      
+      &.big {
+        font-size: 30px;
+        
+        &.title {
+          font-size: 35px;
+        }
+      }
+      
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+    
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  
+  .inputRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    
+    .inputContainer {
+      width: 250px;
+      margin-right: 65px;
+      
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+  
+  .messageBarContainer {
+    width: 100%;
+    height: 25px;
+  }
+}

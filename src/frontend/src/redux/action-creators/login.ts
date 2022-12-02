@@ -5,7 +5,9 @@ import {Dispatch} from "redux";
 import {ActionType} from "../action-types/login";
 import {LoginActions} from "../actions/login";
 import {ILogin, INewUserData} from "../data-types/login";
-import { useTypedSelector } from "../../hooks/useTypedSelector";
+
+// data
+import { environment } from "../../constants/environment-variables";
 
 /* Remember! */
 /* Axios throws an exception to the 'catch' block if it recognizes ANY error in request */
@@ -37,8 +39,7 @@ export const loginUser = (email: string, password: string) => {
     });
 
     try {
-      // @ts-ignore
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/login`, {
+      const {data} = await axios.post(`${environment.backendUrl}/api/auth/login`, {
           email: email,
           password: password
         },{
@@ -77,8 +78,7 @@ export const loginUser = (email: string, password: string) => {
 export const logoutUser = () => {
   return async (dispatch: Dispatch<LoginActions>) => {
     /* UNCOMMENT WHEN LOGOUT IS DONE IN BACKEND API */
-    // @ts-ignore
-    // await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/auth/logout`, {
+    // await axios.post(`${environment.backendUrl}/api/auth/logout`, {
     //   userId: userId,
     //   token: accessToken
     // },{
@@ -128,29 +128,38 @@ export const resetStatus = () => {
   }
 };
 
-export const getBalanceCents = () => {
+export const setLastViewSet = (state: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
-    const {accessToken} = useTypedSelector(state => state.login.loginData);
+    dispatch({
+      type: ActionType.USER_SET_LAST_VIEW_SET,
+      payload: state
+    });
+  }
+};
+
+export const getBalanceCents = (accessToken: string, viewSet: string) => {
+  return async (dispatch: Dispatch<LoginActions>) => {
     try {
       dispatch({
         type: ActionType.USER_LOGIN_REQUEST
       });
-
-      // @ts-ignore
-      const {data} = await axios.get(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, { // to change
+      
+      const {data} = await axios.get(`${environment.backendUrl}/api/profile/wallet`, { // to change
         headers: {
-          // maybe bearer?
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         }
       });
-
+      
       dispatch({
         type: ActionType.USER_SET_BALANCE_CENTS,
         payload: {
           successMessage: "",
-          newAmount: data.balanceCents ? data.balanceCents : 0 // to change (without condition checking)
+          newAmount: data.balanceCents ? data.balanceCents : 0, // to change (without condition checking)
+          viewSet: viewSet
         }
       });
+      
     } catch (err) {
       dispatch({
         type: ActionType.USER_LOGIN_FAIL,
@@ -160,20 +169,18 @@ export const getBalanceCents = () => {
   };
 };
 
-export const setBalanceCents = (newAmount: number) => {
+export const setBalanceCents = (newAmount: number, accessToken: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
-    const {accessToken} = useTypedSelector(state => state.login.loginData);
     try {
       dispatch({
         type: ActionType.USER_LOGIN_REQUEST
       });
-
-      // @ts-ignore
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKED_URL}/api/wallet`, {
+      
+      const {data} = await axios.post(`${environment.backendUrl}/api/profile/wallet`, {
         amount: newAmount //to change
       },{
         headers: {
-          // maybe bearer?
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         }
       });
@@ -182,7 +189,8 @@ export const setBalanceCents = (newAmount: number) => {
         type: ActionType.USER_SET_BALANCE_CENTS,
         payload: {
           successMessage: "",
-          newAmount: data.balanceCents ? data.balanceCents : newAmount // to change (without condition checking)
+          newAmount: data.balanceCents ? data.balanceCents : newAmount, // to change (without condition checking)
+          viewSet: undefined
         }
       });
     } catch (err) {
@@ -194,22 +202,26 @@ export const setBalanceCents = (newAmount: number) => {
   };
 };
 
-export const setUserData = (newFirstName: string, newLastName: string, newEmail: string) => {
+export const setUserData = (
+    newFirstName: string,
+    newLastName: string,
+    newEmail: string,
+    accessToken: string,
+    userId: string
+  ) => {
   return async (dispatch: Dispatch<LoginActions>) => {
     dispatch({
       type: ActionType.USER_LOGIN_REQUEST
     });
-
-    const {accessToken, user: {id: userID}} = useTypedSelector(state => state.login.loginData);
+    
     try {
-      // @ts-ignore
-      const {data} = await axios.patch(`${import.meta.env.VITE_BACKED_URL}/api/profile/${userID}`, {
+      const {data} = await axios.patch(`${environment.backendUrl}/api/profile/${userId}`, {
         name: newFirstName,
         surname: newLastName,
         email: newEmail
       },{
         headers: {
-          // maybe bearer?
+          'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         }
       });

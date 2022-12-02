@@ -5,9 +5,10 @@ import {IRegisterInputs, IErrorRegisterInputs} from "./register-form.types";
 
 // data
 import {initialRegisterInputs, initialErrorRegisterInputs} from "./register-form.data";
+import { environment } from "../../../constants/environment-variables";
 
 // functions
-import {doesStringContainOneOrMoreUpperCaseLetter, doesStringContainOneOrMoreNumber} from "../../../functions/string-contain-checking";
+import {DoesStringContainOneOrMoreUpperCaseLetter, DoesStringContainOneOrMoreNumber} from "../../../functions/string-contain-checking";
 import { TranslateRegisterErrorMessage } from "./register-form.functions";
 
 const useRegisterForm = () => {
@@ -114,11 +115,11 @@ const useRegisterForm = () => {
       isError = true;
       passwordErrorMessage = "Hasło ma mniej niż 6 znaków";
     }
-    else if (!doesStringContainOneOrMoreUpperCaseLetter(registerInputs.password)) {
+    else if (!DoesStringContainOneOrMoreUpperCaseLetter(registerInputs.password)) {
       isError = true;
       passwordErrorMessage = "Hasło nie zawiera żadnej dużej litery";
     }
-    else if (!doesStringContainOneOrMoreNumber(registerInputs.password)) {
+    else if (!DoesStringContainOneOrMoreNumber(registerInputs.password)) {
       isError = true;
       passwordErrorMessage = "Hasło nie zawiera żadnej cyfry";
     }
@@ -153,8 +154,7 @@ const useRegisterForm = () => {
       setIsLoadingRegister(true);
 
       // Fetching register
-      //@ts-ignore
-      fetch(`${import.meta.env.VITE_BACKED_URL}/api/auth/register`, {
+      fetch(`${environment.backendUrl}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

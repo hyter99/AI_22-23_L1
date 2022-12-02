@@ -1,0 +1,54 @@
+@import "../../styles/variables";
+
+.stocksTableWrapper {
+  width: 100%;
+  height: auto;
+  margin-top: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: $colorBlack;
+
+  .noActionsMessage {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $colorWhite;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: transparent;
+    border-radius: 10px;
+  }
+
+  table {
+    border: 2px solid $colorBlack;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+
+    thead {
+      background-color: $colorDarkerGray2;
+    }
+
+    tbody {
+      background-color: $colorDarkGray2;
+    }
+  }
+
+  .loaderWrapper {
+    width: 100%;
+    height: 60px;
+    padding: 20px 10px;
+    position: relative;
+  }
+
+  .endOfDataMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $colorWhite;
+  }
+}

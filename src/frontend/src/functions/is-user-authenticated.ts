@@ -1,4 +1,4 @@
-const isUserAuthenticated = (accessToken: string): boolean => {
+const IsUserAuthenticated = (accessToken: string): boolean => {
   if(accessToken !== "") {
       return true;
   }
@@ -6,4 +6,4 @@ const isUserAuthenticated = (accessToken: string): boolean => {
   return false;
 };
 
-export default isUserAuthenticated;
+export default IsUserAuthenticated;

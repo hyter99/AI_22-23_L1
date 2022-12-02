@@ -1,0 +1,9 @@
+@import "../../../styles/variables";
+
+.searchBarWrapper {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: auto;
+  z-index: 99;
+}
