@@ -2,9 +2,9 @@ import axios from "axios";
 import {Dispatch} from "redux";
 
 // types
-import {ActionType} from "../action-types/login";
-import {LoginActions} from "../actions/login";
-import {ILogin, INewUserData} from "../data-types/login";
+import {ActionType} from "../action-types/user";
+import {LoginActions} from "../actions/user";
+import {ILogin} from "../data-types/user";
 
 // data
 import { environment } from "../../constants/environment-variables";
@@ -28,14 +28,14 @@ export const loginUser = (email: string, password: string) => {
     // };
     //
     // dispatch({
-    //   type: ActionType.USER_LOGIN_SUCCESS,
+    //   type: ActionType.USER_SUCCESS,
     //   payload: loginResults
     // });
     /* END */
 
     /* UNCOMMENT WHILE LOGIN IS DONE IN BACKEND API */
     dispatch({
-      type: ActionType.USER_LOGIN_REQUEST
+      type: ActionType.USER_REQUEST
     });
 
     try {
@@ -55,19 +55,19 @@ export const loginUser = (email: string, password: string) => {
           firstName: data.name ? data.name : "",
           lastName: data.surname ? data.surname : "",
           email: data.email ? data.email : "",
-          balanceCents: data.balanceCents ? data.balanceCents : 0
+          balanceCents: data.accountBalance ? data.accountBalance : 0
         }
       };
 
       dispatch({
-        type: ActionType.USER_LOGIN_SUCCESS,
+        type: ActionType.USER_SUCCESS,
         payload: loginResults
       });
     } catch (err: any) {
       /* can read err data from backend API via: 'err.response.data' - it has corresponding 'message' field */
       //console.log("Błąd logowania:", err.response.data.message);
       dispatch({
-        type: ActionType.USER_LOGIN_FAIL,
+        type: ActionType.USER_FAIL,
         payload: "Niepoprawne dane logowania"
       });
     }
@@ -75,8 +75,8 @@ export const loginUser = (email: string, password: string) => {
   }
 };
 
-export const logoutUser = () => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+export const logoutUserLocal = () => {
+  return (dispatch: Dispatch<LoginActions>) => {
     /* UNCOMMENT WHEN LOGOUT IS DONE IN BACKEND API */
     // await axios.post(`${environment.backendUrl}/api/auth/logout`, {
     //   userId: userId,
@@ -93,43 +93,43 @@ export const logoutUser = () => {
   }
 };
 
-export const setLoginErrorMessage = (state: string | null) => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+export const setLoginErrorMessageLocal = (state: string | null) => {
+  return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
-      type: ActionType.USER_LOGIN_SET_ERROR,
+      type: ActionType.USER_SET_ERROR,
       payload: state
     });
   }
 };
 
-export const setSuccessMessage = (state: string | null) => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+export const setSuccessMessageLocal = (state: string | null) => {
+  return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
-      type: ActionType.USER_LOGIN_SET_SUCCESS,
+      type: ActionType.USER_SET_SUCCESS,
       payload: state
     });
   }
 };
 
-export const setLoading = (state: boolean) => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+export const setLoadingLocal = (state: boolean) => {
+  return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
-      type: ActionType.USER_LOGIN_SET_LOADING,
+      type: ActionType.USER_SET_LOADING,
       payload: state
     });
   }
 };
 
-export const resetStatus = () => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+export const resetStatusLocal = () => {
+  return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
-      type: ActionType.USER_LOGIN_RESET_STATUS
+      type: ActionType.USER_RESET_STATUS
     });
   }
 };
 
-export const setLastViewSet = (state: string) => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+export const setLastViewSetLocal = (state: string) => {
+  return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
       type: ActionType.USER_SET_LAST_VIEW_SET,
       payload: state
@@ -141,7 +141,7 @@ export const getBalanceCents = (accessToken: string, viewSet: string) => {
   return async (dispatch: Dispatch<LoginActions>) => {
     try {
       dispatch({
-        type: ActionType.USER_LOGIN_REQUEST
+        type: ActionType.USER_REQUEST
       });
       
       const {data} = await axios.get(`${environment.backendUrl}/api/profile/wallet`, { // to change
@@ -162,89 +162,39 @@ export const getBalanceCents = (accessToken: string, viewSet: string) => {
       
     } catch (err) {
       dispatch({
-        type: ActionType.USER_LOGIN_FAIL,
+        type: ActionType.USER_FAIL,
         payload: "Nie udało się pobrać informacji o środkach"
       });
     }
   };
 };
 
-export const setBalanceCents = (newAmount: number, accessToken: string) => {
-  return async (dispatch: Dispatch<LoginActions>) => {
-    try {
+export const setBalanceCentsLocal = (newAmount: number) => {
+  return (dispatch: Dispatch<LoginActions>) => {
       dispatch({
-        type: ActionType.USER_LOGIN_REQUEST
-      });
-      
-      const {data} = await axios.post(`${environment.backendUrl}/api/profile/wallet`, {
-        amount: newAmount //to change
-      },{
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      dispatch({
-        type: ActionType.USER_SET_BALANCE_CENTS,
+        type: ActionType.USER_SET_BALANCE_CENTS_LOCAL,
         payload: {
-          successMessage: "",
-          newAmount: data.balanceCents ? data.balanceCents : newAmount, // to change (without condition checking)
-          viewSet: undefined
+          newAmount: newAmount
         }
       });
-    } catch (err) {
-      dispatch({
-        type: ActionType.USER_LOGIN_FAIL,
-        payload: "Nie udało się dodać środków do konta"
-      });
-    }
   };
 };
 
-export const setUserData = (
+export const setUserDataLocal = (
     newFirstName: string,
     newLastName: string,
-    newEmail: string,
-    accessToken: string,
-    userId: string
+    newEmail: string | null
   ) => {
-  return async (dispatch: Dispatch<LoginActions>) => {
+  return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
-      type: ActionType.USER_LOGIN_REQUEST
+      type: ActionType.USER_SET_NEW_DATA,
+      payload: {
+        userData: {
+          firstName: newFirstName,
+          lastName: newLastName,
+          email: newEmail
+        }
+      }
     });
-    
-    try {
-      const {data} = await axios.patch(`${environment.backendUrl}/api/profile/${userId}`, {
-        name: newFirstName,
-        surname: newLastName,
-        email: newEmail
-      },{
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const newUserData: INewUserData = {
-        firstName: newFirstName,
-        lastName: newLastName,
-        email: newEmail
-      };
-
-      dispatch({
-        type: ActionType.USER_SET_NEW_DATA,
-        payload: {
-          successMessage: "Poprawnie zmieniono dane",
-          userData: newUserData
-        }
-      });
-    } catch (err: any) {
-      const mess: string = err.message ? err.message : "Nowe dane są niepoprawne"; //err.response.data.message
-      dispatch({
-        type: ActionType.USER_LOGIN_FAIL,
-        payload: mess
-      });
-    }
   };
 };

@@ -9,7 +9,7 @@ import Button from "../../../../../../components/ui/button/button.component";
 // functions
 import { CentsToString } from "../../../../../../functions/cents-to-string";
 import ConvertTimeFromBackendApi from "../../../../../../functions/convert-time-from-backend-api";
-import { GetOfferStatusName } from "../../../../../../functions/getOfferStatusName";
+import { GetOfferStatusName } from "../../../../../../functions/get-offer-status-name";
 
 // interfaces
 import { IMyOfferAction } from "../../../../../../hooks/data-table/useDataTable.types";

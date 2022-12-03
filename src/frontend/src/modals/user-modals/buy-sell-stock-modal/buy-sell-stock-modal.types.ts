@@ -15,9 +15,3 @@ export interface IInputFieldsErrors {
   quantity: string;
   price: string;
 }
-
-export interface IMessageBar {
-  message: string;
-  isError: boolean;
-  isSuccess: boolean;
-}

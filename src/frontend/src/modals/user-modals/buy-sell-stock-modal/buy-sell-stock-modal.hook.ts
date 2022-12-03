@@ -1,25 +1,28 @@
 import React, {useState, useEffect} from "react";
 
 // data
-import { initialMessageBar, initialInputFields, initialInputFieldsErrors } from "./buy-sell-stock-modal.data";
+import { initialInputFields, initialInputFieldsErrors } from "./buy-sell-stock-modal.data";
 import { environment } from "../../../constants/environment-variables";
 
 // functions
 import { IsStringAPositiveInteger } from "../../../functions/is-string-a-positive-integer";
 import { IsStringAPrice } from "../../../functions/is-string-a-price";
 
+// hooks
+import useMessageBar from "../../../hooks/message-bar/useMessageBar";
+
 // redux
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
 // interfaces
-import { IMessageBar, IInputFields, IInputFieldsErrors } from "./buy-sell-stock-modal.types";
+import { IInputFields, IInputFieldsErrors } from "./buy-sell-stock-modal.types";
 
 const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: number) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputFields, setInputFields] = useState<IInputFields>(initialInputFields);
   const [inputFieldsErrors, setInputFieldsErrors] = useState<IInputFieldsErrors>(initialInputFieldsErrors);
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
-  const [messageBar, setMessageBar] = useState<IMessageBar>(initialMessageBar);
+  const {messageBar, setMessageBar, resetMessageBar} = useMessageBar();
   
   const {accessToken} = useTypedSelector(state => state.login.loginData);
   
@@ -114,7 +117,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: nu
         fetchBody.unitSellPriceCents = priceToSet;
       }
       
-      console.log("body to set:", fetchBody);
+      //console.log("body to set:", fetchBody);
       
       fetch(fetchUrl, {
         method: 'POST',
@@ -168,7 +171,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: nu
     setInputFields(initialInputFields);
     setInputFieldsErrors(initialInputFieldsErrors);
     setIsLiveValidation(false);
-    setMessageBar(initialMessageBar);
+    resetMessageBar();
   };
   
   return {

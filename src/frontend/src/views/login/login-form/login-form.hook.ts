@@ -6,6 +6,7 @@ import {useTypedSelector} from "../../../hooks/useTypedSelector";
 
 // data
 import {initialLoginInputs, initialErrorLoginInputs} from "./login-form.data";
+import { emailRgx } from "../../../data/email-rgx";
 
 // interfaces
 import {IErrorLoginInputs, ILoginInputs} from "./login-form.types";
@@ -14,12 +15,11 @@ const useLoginForm = () => {
   const [loginInputs, setLoginInputs] = useState<ILoginInputs>(initialLoginInputs);
   const [errorLoginInputs, setErrorLoginInputs] = useState<IErrorLoginInputs>(initialErrorLoginInputs);
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
-  const {loginUser, resetStatus} = useActions();
+  const {loginUser, resetStatusLocal} = useActions();
   const {loading: loadingLogin, error: errorLogin} = useTypedSelector(state => state.login);
-  const emailRgx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   useEffect(() => {
-    resetStatus();
+    resetStatusLocal();
   },[]);
 
   // Validate data, when the live validation is on (after first attempt to log in)

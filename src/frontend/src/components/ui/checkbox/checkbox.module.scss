@@ -7,11 +7,15 @@
   padding-left: 37px;
   cursor: pointer;
   color: $colorWhite;
-  font-weight: 400;
+  font-weight: 600;
   font-style: normal;
   font-size: 18px;
   text-align: left;
 
+  &.black {
+    color: $colorBlack;
+  }
+  
   &.disabledContainer {
     cursor: not-allowed;
   }

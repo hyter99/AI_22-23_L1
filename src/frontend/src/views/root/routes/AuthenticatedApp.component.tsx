@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 // views
@@ -15,7 +15,7 @@ interface IAuthenticatedApp {
   appVersion: string;
 }
 
-const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {
+const AuthenticatedApp: React.FC<IAuthenticatedApp> = ({appVersion}) => {  
   
   return (
     <Switch>

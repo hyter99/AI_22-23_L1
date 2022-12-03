@@ -1,8 +1,8 @@
 @import "src/frontend/src/styles/variables";
 
 .modalContainer {
-  min-width: 800px;
-  max-width: 1000px;
+  width: 450px;
+  //max-width: 1000px;
   height: auto;
   padding: 40px 50px;
   background-color: $colorSilver2;
@@ -47,5 +47,17 @@
         margin-right: 50px;
       }
     }
+  }
+}
+
+@media all and (min-width: 650px) {
+  .modalContainer {
+    width: 600px;
+  }
+}
+
+@media all and (min-width: 900px) {
+  .modalContainer {
+    width: 800px;
   }
 }

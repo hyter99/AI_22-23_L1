@@ -1,17 +1,17 @@
-import { ActionType } from "../action-types/login";
-import { ILogin, INewUserData } from "../data-types/login";
+import { ActionType } from "../action-types/user";
+import { ILogin, INewUserData } from "../data-types/user";
 
 interface UserLoginRequestAction {
-  type: ActionType.USER_LOGIN_REQUEST;
+  type: ActionType.USER_REQUEST;
 }
 
 interface UserLoginSuccessAction {
-  type: ActionType.USER_LOGIN_SUCCESS;
+  type: ActionType.USER_SUCCESS;
   payload: ILogin;
 }
 
 interface UserLoginFailAction {
-  type: ActionType.USER_LOGIN_FAIL;
+  type: ActionType.USER_FAIL;
   payload: string;
 }
 
@@ -20,22 +20,22 @@ interface UserLogoutAction {
 }
 
 interface SetErrorAction {
-  type: ActionType.USER_LOGIN_SET_ERROR;
+  type: ActionType.USER_SET_ERROR;
   payload: string | null;
 }
 
 interface SetSuccessAction {
-  type: ActionType.USER_LOGIN_SET_SUCCESS;
+  type: ActionType.USER_SET_SUCCESS;
   payload: string | null;
 }
 
 interface SetLoadingAction {
-  type: ActionType.USER_LOGIN_SET_LOADING;
+  type: ActionType.USER_SET_LOADING;
   payload: boolean;
 }
 
 interface ResetStatusAction {
-  type: ActionType.USER_LOGIN_RESET_STATUS;
+  type: ActionType.USER_RESET_STATUS;
 }
 
 interface SetLastViewSetAction {
@@ -48,14 +48,20 @@ interface SetBalanceCentsAction {
   payload: {
     successMessage: string;
     newAmount: number;
-    viewSet: string | undefined;
+    viewSet: string;
+  };
+}
+
+interface SetBalanceCentsLocalAction {
+  type: ActionType.USER_SET_BALANCE_CENTS_LOCAL;
+  payload: {
+    newAmount: number;
   };
 }
 
 interface SetNewUserDataAction {
   type: ActionType.USER_SET_NEW_DATA;
   payload: {
-    successMessage: string;
     userData: INewUserData
   };
 }
@@ -71,4 +77,5 @@ export type LoginActions =
   ResetStatusAction |
   SetLastViewSetAction |
   SetBalanceCentsAction |
+  SetBalanceCentsLocalAction |
   SetNewUserDataAction;

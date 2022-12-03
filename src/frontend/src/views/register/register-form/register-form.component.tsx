@@ -107,6 +107,7 @@ const RegisterForm: React.FC = () => {
             name="isPrivacyPolicySet"
             value="privacyPolicy"
             label="Akceptuję regulamin strony"
+            labelColor="white"
             checked={registerInputs.isPrivacyPolicySet}
             handleChange={handleCheckboxChange}
             isError={errorRegisterInputs.isPrivacyPolicySetError}

@@ -3,3 +3,5 @@ export interface IEditUserData {
   lastName: string;
   email: string;
 }
+
+export type IEditUserDataError = IEditUserData

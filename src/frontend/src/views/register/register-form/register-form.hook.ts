@@ -6,6 +6,7 @@ import {IRegisterInputs, IErrorRegisterInputs} from "./register-form.types";
 // data
 import {initialRegisterInputs, initialErrorRegisterInputs} from "./register-form.data";
 import { environment } from "../../../constants/environment-variables";
+import { emailRgx } from "../../../data/email-rgx";
 
 // functions
 import {DoesStringContainOneOrMoreUpperCaseLetter, DoesStringContainOneOrMoreNumber} from "../../../functions/string-contain-checking";
@@ -18,7 +19,6 @@ const useRegisterForm = () => {
   const [errorMessageRegister, setErrorMessageRegister] = useState<string>("");
   const [isLoadingRegister, setIsLoadingRegister] = useState<boolean>(false);
   const [isSuccessRegister, setIsSuccessRegister] = useState<boolean>(false);
-  const emailRgx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   // useEffect(() => {
   //   console.log("Inputs change:", registerInputs);
