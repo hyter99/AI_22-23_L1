@@ -128,10 +128,10 @@ export const resetStatusLocal = () => {
   }
 };
 
-export const setLastViewSetLocal = (state: string) => {
+export const setLastViewLocal = (state: string) => {
   return (dispatch: Dispatch<LoginActions>) => {
     dispatch({
-      type: ActionType.USER_SET_LAST_VIEW_SET,
+      type: ActionType.USER_SET_LAST_VIEW,
       payload: state
     });
   }

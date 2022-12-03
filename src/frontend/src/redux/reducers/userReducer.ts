@@ -59,19 +59,6 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
       };
 
     case ActionType.USER_LOGOUT:
-      state.loading = false;
-      state.error = null;
-      state.success = null;
-      state.loginData = {
-        accessToken: "",
-        user: {
-          id: "",
-          firstName: "",
-          lastName: "",
-          email: "",
-          balanceCents: 0
-        }
-      };
       return {
         ...state,
         loading: false,
@@ -115,7 +102,7 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
         success: null
       };
       
-    case ActionType.USER_SET_LAST_VIEW_SET:
+    case ActionType.USER_SET_LAST_VIEW:
       return {
         ...state,
         lastViewSet: action.payload
@@ -146,52 +133,50 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
 
     case ActionType.USER_SET_BALANCE_CENTS_LOCAL:
       /*BEFORE*/
-      state.loginData.user = {
-        ...state.loginData.user,
-        balanceCents: action.payload.newAmount
-      };
-      return { ...state }; //working
-      //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
+      // state.loginData.user = {
+      //   ...state.loginData.user,
+      //   balanceCents: action.payload.newAmount
+      // };
+      // return { ...state }; //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
       /*END-BEFORE*/
 
       /*AFTER*/
-      // return {
-      //   ...state,
-      //   loginData: {
-      //     ...state.loginData,
-      //     user: {
-      //       ...state.loginData.user,
-      //       balanceCents: action.payload.newAmount
-      //     }
-      //   }
-      // }
+      return {
+        ...state,
+        loginData: {
+          ...state.loginData,
+          user: {
+            ...state.loginData.user,
+            balanceCents: action.payload.newAmount
+          }
+        }
+      }
       /*END-AFTER*/
 
     case ActionType.USER_SET_NEW_DATA:
       /*BEFORE*/
-      state.loginData.user = {
-        ...state.loginData.user,
-        firstName: action.payload.userData.firstName,
-        lastName: action.payload.userData.lastName,
-        email: action.payload.userData.email ?? state.loginData.user.email
-      };
-      return { ...state }; //working
-      //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
+      // state.loginData.user = {
+      //   ...state.loginData.user,
+      //   firstName: action.payload.userData.firstName,
+      //   lastName: action.payload.userData.lastName,
+      //   email: action.payload.userData.email ?? state.loginData.user.email
+      // };
+      // return { ...state }; //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
       /*END-BEFORE*/
       
       /*AFTER*/
-      // return {
-      //   ...state,
-      //   loginData: {
-      //     ...state.loginData,
-      //     user: {
-      //       ...state.loginData.user,
-      //       firstName: action.payload.userData.firstName,
-      //       lastName: action.payload.userData.lastName,
-      //       email: action.payload.userData.email ?? state.loginData.user.email
-      //     }
-      //   }
-      // }
+      return {
+        ...state,
+        loginData: {
+          ...state.loginData,
+          user: {
+            ...state.loginData.user,
+            firstName: action.payload.userData.firstName,
+            lastName: action.payload.userData.lastName,
+            email: action.payload.userData.email ?? state.loginData.user.email
+          }
+        }
+      }
       /*END-AFTER*/
     default:
       return state;

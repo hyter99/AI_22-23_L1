@@ -22,7 +22,6 @@ const useAddFundsModal = (isOpened: boolean) => {
   const [inputAmountError, setInputAmountError] = useState<string>("");
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
   const {messageBar, setMessageBar, resetMessageBar} = useMessageBar();
-  // TODO - write logic of this modal (with function to count balanceAfterChange - write function to sumBalance based on 2 strings (use 'CentsToString' function))
   
   useEffect(() => {
     resetData();

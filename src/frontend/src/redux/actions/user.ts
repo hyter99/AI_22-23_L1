@@ -38,8 +38,8 @@ interface ResetStatusAction {
   type: ActionType.USER_RESET_STATUS;
 }
 
-interface SetLastViewSetAction {
-  type: ActionType.USER_SET_LAST_VIEW_SET;
+interface SetLastViewAction {
+  type: ActionType.USER_SET_LAST_VIEW;
   payload: string;
 }
 
@@ -75,7 +75,7 @@ export type LoginActions =
   SetSuccessAction |
   SetLoadingAction |
   ResetStatusAction |
-  SetLastViewSetAction |
+  SetLastViewAction |
   SetBalanceCentsAction |
   SetBalanceCentsLocalAction |
   SetNewUserDataAction;

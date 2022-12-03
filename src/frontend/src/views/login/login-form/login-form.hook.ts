@@ -15,11 +15,12 @@ const useLoginForm = () => {
   const [loginInputs, setLoginInputs] = useState<ILoginInputs>(initialLoginInputs);
   const [errorLoginInputs, setErrorLoginInputs] = useState<IErrorLoginInputs>(initialErrorLoginInputs);
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
-  const {loginUser, resetStatusLocal} = useActions();
+  const {loginUser, resetStatusLocal, setLastViewLocal} = useActions();
   const {loading: loadingLogin, error: errorLogin} = useTypedSelector(state => state.login);
 
   useEffect(() => {
     resetStatusLocal();
+    setLastViewLocal("");
   },[]);
 
   // Validate data, when the live validation is on (after first attempt to log in)
