@@ -20,7 +20,7 @@ export interface IMyStockAction {
 
 export interface IMyOfferAction {
   offerId: number;
-  stockId: number;
+  companyId: number;
   unitPriceCents: number;
   quantity: number;
   created: string;
