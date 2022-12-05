@@ -6,4 +6,8 @@ export class GetCompaniesQuery extends Pagination {
   @IsString()
   @IsOptional()
   orderBy?: 'companyId' | 'name' | 'description';
+
+  @IsString()
+  @IsOptional()
+  companyName?: string;
 }

@@ -8,7 +8,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   getUserProfile(userId: number) {
     return this.prisma.user.findFirstOrThrow({
@@ -35,7 +35,10 @@ export class ProfileService {
       where: {
         userId,
         Company: {
-          name: getUserStockQuery.companyName,
+          name: {
+            contains: getUserStockQuery.companyName,
+            mode: 'insensitive',
+          },
         },
       },
       select: {
@@ -67,9 +70,12 @@ export class ProfileService {
         status: getUserSellOfferQuery.status,
         UserStock: {
           Company: {
-            name: getUserSellOfferQuery.companyName
-          }
-        }
+            name: {
+              contains: getUserSellOfferQuery.companyName,
+              mode: 'insensitive',
+            },
+          },
+        },
       },
       select: {
         sellOfferId: true,
@@ -84,19 +90,16 @@ export class ProfileService {
               select: {
                 companyId: true,
                 name: true,
-                description: true
-              }
-            }
-          }
-        }
+                description: true,
+              },
+            },
+          },
+        },
       },
     });
   }
 
-  getUserBuyOffers(
-    userId: number,
-    getUserBuyOfferQuery: GetUserBuyOfferQuery,
-  ) {
+  getUserBuyOffers(userId: number, getUserBuyOfferQuery: GetUserBuyOfferQuery) {
     return this.prisma.buyOffer.findMany({
       take: getUserBuyOfferQuery.take,
       skip: getUserBuyOfferQuery.skip,
@@ -107,7 +110,10 @@ export class ProfileService {
         userId,
         status: getUserBuyOfferQuery.status,
         Company: {
-          name: getUserBuyOfferQuery.companyName,
+          name: {
+            contains: getUserBuyOfferQuery.companyName,
+            mode: 'insensitive',
+          },
         },
       },
       select: {
