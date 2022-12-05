@@ -8,8 +8,8 @@ import Button from "../../../../../../components/ui/button/button.component";
 
 // functions
 import { CentsToString } from "../../../../../../functions/cents-to-string";
-import convertTimeFromBackendApi from "../../../../../../functions/convert-time-from-backend-api";
-import { getOfferStatusName } from "../../../../../../functions/getOfferStatusName";
+import ConvertTimeFromBackendApi from "../../../../../../functions/convert-time-from-backend-api";
+import { GetOfferStatusName } from "../../../../../../functions/getOfferStatusName";
 
 // interfaces
 import { IMyOfferAction } from "../../../../../../hooks/data-table/useDataTable.types";
@@ -24,7 +24,7 @@ const MyProfileBuySellOffersBody: React.FC<IMyProfileBuySellOffersBody> = ({data
     <>
       {
         data.map((item, index) => {
-          const statusName = getOfferStatusName(item.status);
+          const statusName = GetOfferStatusName(item.status);
           
           return (
             <tr
@@ -35,7 +35,7 @@ const MyProfileBuySellOffersBody: React.FC<IMyProfileBuySellOffersBody> = ({data
               {/*TODO - fill the 'action's name' from backendAPI when it's done*/}
               <td>{item.quantity}</td>
               <td>{`${CentsToString(item.unitPriceCents)} PLN`}</td>
-              <td>{convertTimeFromBackendApi(item.created)}</td>
+              <td>{ConvertTimeFromBackendApi(item.created)}</td>
               {/*convert date*/}
               <td
                 className={

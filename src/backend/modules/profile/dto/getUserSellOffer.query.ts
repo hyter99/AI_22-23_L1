@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsEnum, IsInt, IsOptional } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 import { OrderByForUserSellOffer } from "../enum/orderByForUserSellOffer.enum";
 import { Pagination } from "../../../queries/pagination.query";
 
@@ -8,10 +8,9 @@ export class GetUserSellOfferQuery extends Pagination {
   @IsOptional()
   readonly orderBy: OrderByForUserSellOffer = OrderByForUserSellOffer.sellOfferId;
 
-  // @IsString()
-  // @IsOptional()
-  // readonly companyName?: string;
-  // No relation between SellOffer and Stock, thus cannot find CompanyName in a decent way.
+  @IsString()
+  @IsOptional()
+  readonly companyName?: string;
 
   @Type(() => Number)
   @IsInt()

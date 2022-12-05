@@ -4,11 +4,11 @@ import { Exists } from '../../../decorators/exists.decorator';
 import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateSellOfferDto {
-  @Exists('stock', 'stockId')
+  @Exists('userStock', 'userStockId')
   @IsPositive()
   @IsNotEmpty()
-  @ApiProperty({type: Number, description: 'Stock ID'})
-  stockId!: number;
+  @ApiProperty({type: Number, description: 'UserStock ID'})
+  userStockId!: number;
 
   @IsPositive()
   @IsNotEmpty()

@@ -1,13 +1,13 @@
 import { IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
 import { Exists } from '../../../decorators/exists.decorator';
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBuyOfferDto {
-  @Exists('stock', 'stockId')
+  @Exists('company', 'companyId')
   @IsPositive()
   @IsNotEmpty()
-  @ApiProperty({type: Number, description: 'Stock ID'})
-  stockId!: number;
+  @ApiProperty({type: Number, description: 'Company ID'})
+  companyId!: number;
 
   @IsPositive()
   @IsNotEmpty()

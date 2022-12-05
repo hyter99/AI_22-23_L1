@@ -36,3 +36,6 @@ coverage
 
 # IDE - VSCode
 .vscode/*
+
+# Server Files
+server/

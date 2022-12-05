@@ -6,8 +6,8 @@ import { MyProfilePagesEnum } from "./my-profile-content.data";
 import { MyProfileAvailableUrlEnum } from "../my-profile.data";
 
 // functions
-import {translateEngPlMyProfilePageName} from "../../../functions/translate-pl-eng-my-profile-page-name";
-import {translatePlEngMyProfilePageName} from "../../../functions/translate-eng-pl-my-profile-page-name";
+import {TranslateEngPlMyProfilePageName} from "../../../functions/translate-pl-eng-my-profile-page-name";
+import {TranslatePlEngMyProfilePageName} from "../../../functions/translate-eng-pl-my-profile-page-name";
 import { ChangeUrlSuffix } from "../../../functions/change-url-suffix";
 
 const useMyProfileContent = () => {
@@ -17,7 +17,7 @@ const useMyProfileContent = () => {
   // Set selectPage at beginning from url
   useEffect(() => {
     // Get url from parameter
-    const translatedPageName = translatePlEngMyProfilePageName(page_name);
+    const translatedPageName = TranslatePlEngMyProfilePageName(page_name);
     setSelectedPage(translatedPageName);
   },[]);
   
@@ -28,7 +28,7 @@ const useMyProfileContent = () => {
   
   // Custom establishment function with previous translation of selectedPage state
   const establishNewUrlSuffix = () => {
-    ChangeUrlSuffix(translateEngPlMyProfilePageName(selectedPage));
+    ChangeUrlSuffix(TranslateEngPlMyProfilePageName(selectedPage));
   };
   
   return {

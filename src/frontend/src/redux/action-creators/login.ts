@@ -6,6 +6,9 @@ import {ActionType} from "../action-types/login";
 import {LoginActions} from "../actions/login";
 import {ILogin, INewUserData} from "../data-types/login";
 
+// data
+import { environment } from "../../constants/environment-variables";
+
 /* Remember! */
 /* Axios throws an exception to the 'catch' block if it recognizes ANY error in request */
 /* Fetch throws it to the catch block only if it can't reach the backend API (e.g. when the URL is wrong)
@@ -36,8 +39,7 @@ export const loginUser = (email: string, password: string) => {
     });
 
     try {
-      // @ts-ignore
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
+      const {data} = await axios.post(`${environment.backendUrl}/api/auth/login`, {
           email: email,
           password: password
         },{
@@ -76,8 +78,7 @@ export const loginUser = (email: string, password: string) => {
 export const logoutUser = () => {
   return async (dispatch: Dispatch<LoginActions>) => {
     /* UNCOMMENT WHEN LOGOUT IS DONE IN BACKEND API */
-    // @ts-ignore
-    // await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`, {
+    // await axios.post(`${environment.backendUrl}/api/auth/logout`, {
     //   userId: userId,
     //   token: accessToken
     // },{
@@ -142,9 +143,8 @@ export const getBalanceCents = (accessToken: string, viewSet: string) => {
       dispatch({
         type: ActionType.USER_LOGIN_REQUEST
       });
-
-      // @ts-ignore
-      const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/profile/wallet`, { // to change
+      
+      const {data} = await axios.get(`${environment.backendUrl}/api/profile/wallet`, { // to change
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
@@ -175,9 +175,8 @@ export const setBalanceCents = (newAmount: number, accessToken: string) => {
       dispatch({
         type: ActionType.USER_LOGIN_REQUEST
       });
-
-      // @ts-ignore
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/profile/wallet`, {
+      
+      const {data} = await axios.post(`${environment.backendUrl}/api/profile/wallet`, {
         amount: newAmount //to change
       },{
         headers: {
@@ -216,8 +215,7 @@ export const setUserData = (
     });
     
     try {
-      // @ts-ignore
-      const {data} = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/api/profile/${userId}`, {
+      const {data} = await axios.patch(`${environment.backendUrl}/api/profile/${userId}`, {
         name: newFirstName,
         surname: newLastName,
         email: newEmail
