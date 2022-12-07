@@ -17,7 +17,7 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 // interfaces
 import { IInputFields, IInputFieldsErrors } from "./buy-sell-stock-modal.types";
 
-const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: number) => {
+const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: number) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputFields, setInputFields] = useState<IInputFields>(initialInputFields);
   const [inputFieldsErrors, setInputFieldsErrors] = useState<IInputFieldsErrors>(initialInputFieldsErrors);
@@ -99,14 +99,14 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, stockId?: nu
     e.preventDefault();
     setIsLiveValidation(true);
     
-    if (stockId && validateInputData()) {
+    if (companyId && validateInputData()) {
       setIsLoading(true);
       
       const fetchUrl = `${environment.backendUrl}/api/make-${isBuyModal ? "buy" : "sell"}-offer`;
       
       const priceToSet = parseFloat(inputFields.price)*100;
       const fetchBody: any = {
-        stockId: stockId,
+        companyId: companyId,
         quantity: parseInt(inputFields.quantity),
         status: 0
       };

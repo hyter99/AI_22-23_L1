@@ -21,7 +21,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
   const FIRST_PAGE_NUM = 1;
   const ELEMENTS_PER_PAGE = 20;
   const ADDITION_URL: string =
-    selectedDataType === "stockActions" ? "stocks"
+    selectedDataType === "stockActions" ? "companies"
     : selectedDataType === "myStockActions" ? "profile/stock"
     : selectedDataType === "mySellOffers" ? "profile/sell-offers"
     : "profile/buy-offers";
@@ -125,13 +125,10 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
             // Create proper data object (based on 'selectedDataType')
             if (selectedDataType === "stockActions") {
               dataToAppend = resData.map((item: any) => ({
-                stockId: item.stockId,
+                companyId: item.companyId,
                 quantity: item.quantity,
-                Company: {
-                  companyId: item.Company.quantity,
-                  name: item.Company.name,
-                  description: item.Company.description
-                },
+                description: item.description,
+                name: item.name,
                 priceCents: item.priceCents
               } as IStockAction)) as T[];
             }
@@ -149,7 +146,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
             else {// (selectedDataType === "myBuyOffers" || selectedDataType === "mySellOffers")
               dataToAppend = resData.map((item: any) => ({
                 offerId: selectedDataType === "myBuyOffers" ? item.buyOfferId : item.sellOfferId,
-                stockId: selectedDataType === "myBuyOffers" ? item.stockId : item.userStockId, //TODO - change stockId acquired when it's sell-offer
+                companyId: selectedDataType === "myBuyOffers" ? item.companyId : item.userStockId, //TODO - change stockId acquired when it's sell-offer
                 unitPriceCents: selectedDataType === "myBuyOffers" ? item.unitBuyPriceCents : item.unitSellPriceCents,
                 quantity: item.quantity,
                 created: item.created,

@@ -35,7 +35,10 @@ export class ProfileService {
       where: {
         userId,
         Company: {
-          name: getUserStockQuery.companyName,
+          name: {
+            contains: getUserStockQuery.companyName,
+            mode: 'insensitive',
+          },
         },
       },
       select: {
@@ -46,13 +49,6 @@ export class ProfileService {
             companyId: true,
             name: true,
             description: true,
-            Stock: {
-              select: {
-                stockId: true,
-                quantity: true,
-                priceCents: true,
-              },
-            },
           },
         },
       },
@@ -72,6 +68,14 @@ export class ProfileService {
       where: {
         userId,
         status: getUserSellOfferQuery.status,
+        UserStock: {
+          Company: {
+            name: {
+              contains: getUserSellOfferQuery.companyName,
+              mode: 'insensitive',
+            },
+          },
+        },
       },
       select: {
         sellOfferId: true,
@@ -80,44 +84,50 @@ export class ProfileService {
         quantity: true,
         created: true,
         status: true,
+        UserStock: {
+          select: {
+            Company: {
+              select: {
+                companyId: true,
+                name: true,
+                description: true,
+              },
+            },
+          },
+        },
       },
     });
   }
 
-  getUserBuyOffers(
-    userId: number,
-    getUserSellOfferQuery: GetUserBuyOfferQuery,
-  ) {
+  getUserBuyOffers(userId: number, getUserBuyOfferQuery: GetUserBuyOfferQuery) {
     return this.prisma.buyOffer.findMany({
-      take: getUserSellOfferQuery.take,
-      skip: getUserSellOfferQuery.skip,
+      take: getUserBuyOfferQuery.take,
+      skip: getUserBuyOfferQuery.skip,
       orderBy: {
-        [getUserSellOfferQuery.orderBy]: getUserSellOfferQuery.orderType,
+        [getUserBuyOfferQuery.orderBy]: getUserBuyOfferQuery.orderType,
       },
       where: {
         userId,
-        status: getUserSellOfferQuery.status,
-        Stock: {
-          Company: {
-            name: getUserSellOfferQuery.companyName,
+        status: getUserBuyOfferQuery.status,
+        Company: {
+          name: {
+            contains: getUserBuyOfferQuery.companyName,
+            mode: 'insensitive',
           },
         },
       },
       select: {
         buyOfferId: true,
-        stockId: true,
+        companyId: true,
         unitBuyPriceCents: true,
         quantity: true,
         created: true,
         status: true,
-        Stock: {
+        Company: {
           select: {
             companyId: true,
-            Company: {
-              select: {
-                name: true,
-              },
-            },
+            name: true,
+            description: true,
           },
         },
       },

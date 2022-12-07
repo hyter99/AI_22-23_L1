@@ -4,7 +4,6 @@
 # compiled output
 /dist
 /node_modules
-/.prettierignore
 /.vite
 
 # Logs
@@ -31,6 +30,7 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+/.prettierignore
 
 # IDE - VSCode
 .vscode/*
