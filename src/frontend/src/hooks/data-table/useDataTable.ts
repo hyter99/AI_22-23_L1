@@ -146,11 +146,12 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
             else {// (selectedDataType === "myBuyOffers" || selectedDataType === "mySellOffers")
               dataToAppend = resData.map((item: any) => ({
                 offerId: selectedDataType === "myBuyOffers" ? item.buyOfferId : item.sellOfferId,
-                companyId: selectedDataType === "myBuyOffers" ? item.companyId : item.userStockId, //TODO - change stockId acquired when it's sell-offer
+                companyId: selectedDataType === "myBuyOffers" ? item.companyId : item.userStockId,
                 unitPriceCents: selectedDataType === "myBuyOffers" ? item.unitBuyPriceCents : item.unitSellPriceCents,
                 quantity: item.quantity,
                 created: item.created,
-                status: item.status
+                status: item.status,
+                name: selectedDataType === "myBuyOffers" ? item.Company.name : item.UserStock.Company.name
               } as IMyOfferAction)) as T[];
             }
             setData(prev => [

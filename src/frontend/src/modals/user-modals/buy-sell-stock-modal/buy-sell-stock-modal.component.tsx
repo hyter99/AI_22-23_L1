@@ -122,6 +122,19 @@ const BuySellStockModal: React.FC<IBuySellStockModal> = ({
             {`${CentsToString(usersBalanceCents)} PLN`}
           </div>
         </div>
+        {
+          data?.availableQuantity ?
+            <div className={styles.dataRow}>
+              <div className={`${styles.item} ${styles.title}`}>
+                Posiadana ilość akcji:
+              </div>
+              <div className={styles.item}>
+                {data.availableQuantity}
+              </div>
+            </div>
+          :
+            null
+        }
         <div className={styles.messageBarContainer}>
           {
             (messageBar.isError || messageBar.isSuccess) ?

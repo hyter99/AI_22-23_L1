@@ -73,6 +73,7 @@ const MyProfileOffers: React.FC<IMyProfileOffers> = ({areBuyOffers}) => {
             isLabelOnLeft
             noErrorBar
             whiteLabel
+            isExtended
           />
         </div>
       </div>
@@ -102,7 +103,8 @@ const MyProfileOffers: React.FC<IMyProfileOffers> = ({areBuyOffers}) => {
           selectedItemIdx !== -1 ?
             {
               id: data[selectedItemIdx].offerId,
-              name: "" // TODO - get the name of the offer, when will be returned from backend API
+              name: data[selectedItemIdx].name,
+              quantity: data[selectedItemIdx].quantity
             }
           :
             null

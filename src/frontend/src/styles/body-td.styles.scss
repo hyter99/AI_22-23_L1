@@ -29,5 +29,13 @@ tr {
     &.colorRed {
       color: $colorLightRed;
     }
+
+    &.colorDarkRed {
+      color: $colorRed;
+    }
+    
+    &.colorDarkGreen {
+      color: $colorGreen;
+    }
   }
 }

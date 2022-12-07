@@ -7,6 +7,7 @@ import { environment } from "../../../constants/environment-variables";
 // functions
 import { IsStringAPositiveInteger } from "../../../functions/is-string-a-positive-integer";
 import { IsStringAPrice } from "../../../functions/is-string-a-price";
+import { IsStringAPositivePrice } from "../../../functions/is-string-a-positive-price";
 
 // hooks
 import useMessageBar from "../../../hooks/message-bar/useMessageBar";
@@ -17,7 +18,7 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector";
 // interfaces
 import { IInputFields, IInputFieldsErrors } from "./buy-sell-stock-modal.types";
 
-const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: number) => {
+const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputFields, setInputFields] = useState<IInputFields>(initialInputFields);
   const [inputFieldsErrors, setInputFieldsErrors] = useState<IInputFieldsErrors>(initialInputFieldsErrors);
@@ -57,9 +58,10 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
     
     // Price check
     let priceErrorMessage = "";
-    if (!IsStringAPrice(inputFields.price)) {
+    //!IsStringAPrice(inputFields.price) || Number(inputFields.price) <= 0
+    if (!IsStringAPositivePrice(inputFields.price)) {
       isError = true;
-      priceErrorMessage = "Podaj poprawną cenę";
+      priceErrorMessage = "Zły format ceny";
     }
 
     setInputFieldsErrors(prev => ({
@@ -99,21 +101,22 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
     e.preventDefault();
     setIsLiveValidation(true);
     
-    if (companyId && validateInputData()) {
+    if (id && validateInputData()) {
       setIsLoading(true);
       
       const fetchUrl = `${environment.backendUrl}/api/make-${isBuyModal ? "buy" : "sell"}-offer`;
       
       const priceToSet = parseFloat(inputFields.price)*100;
       const fetchBody: any = {
-        companyId: companyId,
         quantity: parseInt(inputFields.quantity),
         status: 0
       };
       if (isBuyModal) {
+        fetchBody.companyId = id;
         fetchBody.unitBuyPriceCents = priceToSet;
       }
       else { //isSellModal
+        fetchBody.userStockId = id;
         fetchBody.unitSellPriceCents = priceToSet;
       }
       

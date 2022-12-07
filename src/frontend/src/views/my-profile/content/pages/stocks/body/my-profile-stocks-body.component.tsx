@@ -50,7 +50,7 @@ const MyProfileStocksBody: React.FC<IMyProfileStocksBody> = ({data, handleBuyOff
               </div>
               <div className={styles.buttonWrapper}>
                 <Link
-                  to={`/szczegoly-akcji/${item.userStockId}`}
+                  to={`/szczegoly-akcji/${item.Company.companyId}`}
                 >
                   <Button
                     fontColor="white"

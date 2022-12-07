@@ -10,7 +10,7 @@ const useSelect = (value: string, options: IOption[]) => {
   const [isSelectOpened, setIsSelectOpened] = useState<boolean>(false);
   const refSelect = useRef<HTMLDivElement>(null);
   useOnClickOutside(refSelect, () => setIsSelectOpened(false));
-
+  
   const toggleSelectOpened = () => {
     setIsSelectOpened(!isSelectOpened);
   };

@@ -11,7 +11,7 @@ export class TransactionService {
   handleCron() {
     // 0 - Active offer
     // 1 - Expired offer
-    // 2 - User has no suffecient funds
+    // 2 - User has no sufficient funds
     // 3 - User has no stock
     // 4 - Offer realized
     // 5 - Transaction realized

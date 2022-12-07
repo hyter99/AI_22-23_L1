@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 
 // functions
 import { IsStringAPrice } from "../../../functions/is-string-a-price";
+import { IsStringAPositivePrice } from "../../../functions/is-string-a-positive-price";
 
 // redux
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
@@ -90,7 +91,8 @@ const useAddFundsModal = (isOpened: boolean) => {
     let errorAmountMessage = "";
     
     // Price
-    if (!IsStringAPrice(inputAmount)) {
+    //!IsStringAPrice(inputAmount) || Number(inputAmount) <= 0
+    if (!IsStringAPositivePrice(inputAmount)) {
       isError = true;
       errorAmountMessage = "Zły format ceny";
     }

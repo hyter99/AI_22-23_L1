@@ -16,5 +16,21 @@ export const myProfileBuySellOfferStateSelect: IMyProfileBuySellOfferStateSelect
   {
     title: "Wygasły",
     value: StockStatusEnum.EXPIRED_OFFER
+  },
+  {
+    title: "Brak środków",
+    value: StockStatusEnum.USER_HAS_NO_SUFFICIENT_FUNDS
+  },
+  {
+    title: "Brak akcji użytkownika",
+    value: StockStatusEnum.USER_HAS_NO_STOCK
+  },
+  {
+    title: "Oferta zrealizowana",
+    value: StockStatusEnum.OFFER_REALIZED
+  },
+  {
+    title: "Transakcja zrealizowana",
+    value: StockStatusEnum.TRANSACTION_REALIZED
   }
 ];

@@ -31,18 +31,20 @@ const MyProfileBuySellOffersBody: React.FC<IMyProfileBuySellOffersBody> = ({data
               key={item.offerId}
             >
               <td>{`${index + 1}.`}</td>
-              <td>{""}</td>
-              {/*TODO - fill the 'action's name' from backendAPI when it's done*/}
+              <td>{item.name}</td>
               <td>{item.quantity}</td>
               <td>{`${CentsToString(item.unitPriceCents)} PLN`}</td>
               <td>{ConvertTimeFromBackendApi(item.created)}</td>
-              {/*convert date*/}
               <td
                 className={
                   statusName === "Aktywny" ?
                     styles.colorGreen
                   : statusName === "Wygasły" ?
                       styles.colorRed
+                  : statusName === "Brak środków" || statusName === "Brak akcji użytkownika" ?
+                      styles.colorDarkRed
+                  : statusName === "Zrealizowane" || statusName === "Oferta zrealizowana" || statusName === "Transakcja zrealizowana" ?
+                      styles.colorDarkGreen
                   :
                     ""
                 }

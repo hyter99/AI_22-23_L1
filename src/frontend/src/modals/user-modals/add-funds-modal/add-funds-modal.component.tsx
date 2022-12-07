@@ -89,7 +89,7 @@ const AddFundsModal: React.FC<IAddFundsModal> = ({
                 isError={messageBar.isError}
                 wide
               />
-              :
+            :
               null
           }
         </div>

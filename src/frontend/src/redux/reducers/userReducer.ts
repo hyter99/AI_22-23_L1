@@ -133,50 +133,50 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
 
     case ActionType.USER_SET_BALANCE_CENTS_LOCAL:
       /*BEFORE*/
-      // state.loginData.user = {
-      //   ...state.loginData.user,
-      //   balanceCents: action.payload.newAmount
-      // };
-      // return { ...state }; //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
+      state.loginData.user = {
+        ...state.loginData.user,
+        balanceCents: action.payload.newAmount
+      };
+      return { ...state }; //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
       /*END-BEFORE*/
 
       /*AFTER*/
-      return {
-        ...state,
-        loginData: {
-          ...state.loginData,
-          user: {
-            ...state.loginData.user,
-            balanceCents: action.payload.newAmount
-          }
-        }
-      }
+      // return {
+      //   ...state,
+      //   loginData: {
+      //     ...state.loginData,
+      //     user: {
+      //       ...state.loginData.user,
+      //       balanceCents: action.payload.newAmount
+      //     }
+      //   }
+      // }
       /*END-AFTER*/
 
     case ActionType.USER_SET_NEW_DATA:
       /*BEFORE*/
-      // state.loginData.user = {
-      //   ...state.loginData.user,
-      //   firstName: action.payload.userData.firstName,
-      //   lastName: action.payload.userData.lastName,
-      //   email: action.payload.userData.email ?? state.loginData.user.email
-      // };
-      // return { ...state }; //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
+      state.loginData.user = {
+        ...state.loginData.user,
+        firstName: action.payload.userData.firstName,
+        lastName: action.payload.userData.lastName,
+        email: action.payload.userData.email ?? state.loginData.user.email
+      };
+      return { ...state }; //return { ...state, loginData: {...state.loginData, user: {...state.loginData.user}} }; //?
       /*END-BEFORE*/
       
       /*AFTER*/
-      return {
-        ...state,
-        loginData: {
-          ...state.loginData,
-          user: {
-            ...state.loginData.user,
-            firstName: action.payload.userData.firstName,
-            lastName: action.payload.userData.lastName,
-            email: action.payload.userData.email ?? state.loginData.user.email
-          }
-        }
-      }
+      // return {
+      //   ...state,
+      //   loginData: {
+      //     ...state.loginData,
+      //     user: {
+      //       ...state.loginData.user,
+      //       firstName: action.payload.userData.firstName,
+      //       lastName: action.payload.userData.lastName,
+      //       email: action.payload.userData.email ?? state.loginData.user.email
+      //     }
+      //   }
+      // }
       /*END-AFTER*/
     default:
       return state;

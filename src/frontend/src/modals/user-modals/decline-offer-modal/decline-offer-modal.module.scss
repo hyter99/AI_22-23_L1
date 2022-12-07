@@ -3,4 +3,20 @@
 .contentContainer {
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  
+  p {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    font-weight: 700;
+    font-size: 25px;
+    color: $colorBlack;
+    margin-bottom: 5px;
+    
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
 }

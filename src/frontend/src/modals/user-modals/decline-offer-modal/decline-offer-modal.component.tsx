@@ -19,10 +19,10 @@ interface IDeclineOfferModal {
 }
 
 const DeclineOfferModal: React.FC<IDeclineOfferModal> = ({
-     isBuyModal,
-     isOpened,
-     handleCancelClick,
-     data
+    isBuyModal,
+    isOpened,
+    handleCancelClick,
+    data
    }) => {
   const {
     isLoading,
@@ -40,8 +40,8 @@ const DeclineOfferModal: React.FC<IDeclineOfferModal> = ({
       onCancelClick={handleCancelClick}
     >
       <div className={styles.contentContainer}>
-        {/*TODO - write body of the modal (with styling)*/}
-        {data?.id}
+        <p>Czy na pewno chcesz anulować następującą akcję?</p>
+        <p>{data?.name}: w liczbie {data?.quantity}</p>
       </div>
     </TemplateActionModal>
   );

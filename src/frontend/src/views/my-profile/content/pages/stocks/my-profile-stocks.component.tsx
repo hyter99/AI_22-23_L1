@@ -94,7 +94,7 @@ const MyProfileStocks: React.FC<IStocksContent> = ({}) => {
         data={
           selectedItemIdx !== -1 ?
             {
-              id: data[selectedItemIdx].Company.companyId,
+              id: data[selectedItemIdx].userStockId,
               name: data[selectedItemIdx].Company.name,
               availableQuantity: data[selectedItemIdx].stockQuantity
             }
