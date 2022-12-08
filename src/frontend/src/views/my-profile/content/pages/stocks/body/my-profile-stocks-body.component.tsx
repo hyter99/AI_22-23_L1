@@ -27,6 +27,7 @@ const MyProfileStocksBody: React.FC<IMyProfileStocksBody> = ({data, handleBuyOff
             <td>{`${index+1}.`}</td>
             <td>{item.Company.name}</td>
             <td>{item.stockQuantity}</td>
+            {/*TODO - add priceCents body*/}
             <td>
               <div className={styles.buttonWrapper}>
                 <Button
