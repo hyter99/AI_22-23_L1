@@ -29,6 +29,9 @@ export class CompanyService {
                 quantity: true,
                 unitSellPriceCents: true,
               },
+              where: {
+                status: 0,
+              },
             },
           },
         },
@@ -68,6 +71,9 @@ export class CompanyService {
                 select: {
                   quantity: true,
                   unitSellPriceCents: true,
+                },
+                where: {
+                  status: 0,
                 },
               },
             },
