@@ -170,7 +170,7 @@ const ViewStockDetails: React.FC<IViewStockDetails> = (props) => {
               {
                 id: stockFetch.data.companyId,
                 name: stockFetch.data.name,
-                priceFromInCents: stockFetch.data.minPrice
+                priceFromInCents: stockFetch.data.minPrice ?? undefined
               }
             :
               null
