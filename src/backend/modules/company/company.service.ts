@@ -10,6 +10,12 @@ export class CompanyService {
   async getMany(query: GetCompaniesQuery) {
     const take = query.take ? query.take : 10;
 
+    let orderBy: string = "";
+    if(query.orderBy === "quantity" || query.orderBy ===  "priceCents"){
+      orderBy = query.orderBy;
+      query.orderBy = undefined;
+    }
+
     const results = await this.prisma.company.findMany({
       skip: query.skip,
       take: take,
@@ -38,7 +44,7 @@ export class CompanyService {
       },
     });
 
-    return results.map((result) => {
+    const companies = results.map((result) => {
       return {
         ...result,
         quantity: result.UserStock.reduce(
@@ -47,11 +53,35 @@ export class CompanyService {
           0,
         ),
         priceCents:
-          result.UserStock.flatMap((us) =>
-            us.SellOffer.map((so) => so.unitSellPriceCents),
-          ).reduce((all, cur) => (all < cur ? all : cur)) ?? null,
+          result.UserStock.length > 0
+            ? Math.min(
+              ...result.UserStock.flatMap((us) => 
+                us.SellOffer.map((so) => so.unitSellPriceCents),
+              ),
+            )
+          : 0 // I changed null to 0. I don't know if null was essential. Everything seems to work fine.
+        // priceCents:
+        //   result.UserStock.flatMap((us) =>
+        //     us.SellOffer.map((so) => so.unitSellPriceCents),
+        //   ).reduce((all, cur) => (all < cur ? all : cur)) ?? null,
       };
     });
+
+    if (orderBy != "") {
+      companies.sort((a,b) => {
+        const sortOrder = query.orderType === 'asc' ? 1: -1;
+        let result;
+        if(orderBy === "priceCents"){
+          result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
+        } else {
+          result = (a.quantity < b.quantity) ? -1 : (a.quantity > b.quantity) ? 1 : 0;
+        }
+        
+        return result * sortOrder;
+      })
+    }
+
+    return companies;
   }
 
   async getOne(companyId: number) {

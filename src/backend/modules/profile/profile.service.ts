@@ -5,6 +5,7 @@ import { GetUserBuyOfferQuery } from './dto/getUserBuyOffer.query';
 import { GetUserSellOfferQuery } from './dto/getUserSellOffer.query';
 import { GetUserStockQuery } from './dto/getUserStock.query';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { OrderByForUserStock } from './enum/orderByForUserStock.enum';
 
 @Injectable()
 export class ProfileService {
@@ -25,8 +26,14 @@ export class ProfileService {
     });
   }
 
-  getUserStock(userId: number, getUserStockQuery: GetUserStockQuery) {
-    return this.prisma.userStock.findMany({
+  async getUserStock(userId: number, getUserStockQuery: GetUserStockQuery) {
+    let orderByPriceCents;
+    if(getUserStockQuery.orderBy === 'priceCents'){
+      getUserStockQuery.orderBy = OrderByForUserStock.userStockId
+      orderByPriceCents = true;
+    }
+
+    const results = await this.prisma.userStock.findMany({
       take: getUserStockQuery.take,
       skip: getUserStockQuery.skip,
       orderBy: {
@@ -49,10 +56,48 @@ export class ProfileService {
             companyId: true,
             name: true,
             description: true,
+            UserStock: {
+              select: {
+                SellOffer: {
+                  select: {
+                    quantity: true,
+                    unitSellPriceCents: true,
+                  },
+                  where: {
+                    status: 0,
+                    userId,
+                  },
+                },
+              },
+            },
           },
         },
       },
     });
+
+    const userStockWithPriceCents = results.map((result) => {
+      return {
+        ...result,
+        priceCents:
+          result.Company.UserStock.length > 0
+            ? Math.min(
+              ...result.Company.UserStock.flatMap((us) => 
+                us.SellOffer.map((so) => so.unitSellPriceCents),
+              ),
+            )
+          : 0
+      };
+    });
+
+    if (orderByPriceCents) {
+      userStockWithPriceCents.sort((a,b) => {
+        const sortOrder = getUserStockQuery.orderType === 'asc' ? 1: -1
+        const result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
+        return result * sortOrder;
+      })
+    }
+
+    return userStockWithPriceCents;
   }
 
   getUserSellOffers(
