@@ -8,36 +8,36 @@ export class AppConfig {
     requireHost: true,
     require_tld: false,
   })
-  VITE_BACKEND_URL?: string;
+  VITE_BACKEND_URL!: string;
   
   @IsString()
   @IsNotEmpty()
-  DATABASE_CONNECTOR?: string;
+  DATABASE_CONNECTOR!: string;
 
   @IsString()
   @IsNotEmpty()
-  DATABASE_USER?: string;
+  DATABASE_USER!: string;
 
   @IsString()
   @IsNotEmpty()
-  DATABASE_PASSWORD?: string;
+  DATABASE_PASSWORD!: string;
 
-  @IsInt()
   @Min(1)
   @Max(65535)
-  DATABASE_PORT?: number;
+  @IsInt()
+  DATABASE_PORT!: number;
 
   @IsString()
   @IsNotEmpty()
-  DATABASE_HOST?: string;
+  DATABASE_HOST!: string;
   
   @IsString()
   @IsNotEmpty()
-  DATABASE_URL?: string;
+  DATABASE_URL!: string;
 
   @IsString()
   @IsNotEmpty()
-  JWT_SECRET?: string;
+  JWT_SECRET!: string;
 }
 
 class ViolatedConstraint {
