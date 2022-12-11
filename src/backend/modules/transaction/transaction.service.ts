@@ -11,8 +11,8 @@ type TransactionBuyOffer = Awaited<
 export class TransactionService {
   constructor(private readonly prisma: PrismaService) {}
 
-  @Cron(CronExpression.EVERY_5_MINUTES)
-  handleCron() {
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  async handleCron() {
     // 0 - Active offer
     // 1 - Expired offer
     // 2 - User has no sufficient funds
@@ -20,8 +20,8 @@ export class TransactionService {
     // 4 - Offer realized
     // 5 - Transaction realized
 
-    this.checkOfferValidity();
-    this.transactionCycle();
+    await this.checkOfferValidity();
+    await this.transactionCycle();
   }
 
   async getActiveBuyOffers() {
@@ -76,19 +76,22 @@ export class TransactionService {
   async transactionCycle() {
     const activeBuyOffers = await this.getActiveBuyOffers();
 
-    return Promise.all(activeBuyOffers.map(this.findMatchingSellOffers));
+    return Promise.all(
+      activeBuyOffers.map((buyOffer) => {
+        if (
+          buyOffer.User.balanceCents <
+          buyOffer.quantity * buyOffer.unitBuyPriceCents
+        ) {
+          return this.setUserHasNoSufficientFundsStatus(buyOffer.buyOfferId);
+        } else {
+          return this.findMatchingSellOffers(buyOffer);
+        }
+      }),
+    );
   }
 
   async findMatchingSellOffers(buyOffer: TransactionBuyOffer) {
-    const {
-      quantity,
-      unitBuyPriceCents,
-      User: { balanceCents },
-    } = buyOffer;
-
-    if (balanceCents < quantity * unitBuyPriceCents) {
-      return this.setUserHasNoSufficientFundsStatus(buyOffer.buyOfferId);
-    }
+    const { unitBuyPriceCents } = buyOffer;
 
     const matchingSellOffers = await this.prisma.sellOffer.findMany({
       where: {
@@ -104,6 +107,10 @@ export class TransactionService {
         unitSellPriceCents: 'asc',
       },
     });
+
+    if (matchingSellOffers.length === 0) {
+      return;
+    }
 
     const userStock = await this.prisma.userStock.findFirst({
       where: {
@@ -213,8 +220,10 @@ export class TransactionService {
         .reduce((all, cur) => all + cur, 0);
 
     const boughtOffersCount =
-      sellOfferParams.sellOffersBoughtFully.length +
-      (sellOfferParams.sellOfferBoughtPartially ? 1 : 0);
+      sellOfferParams.sellOffersBoughtFully.reduce(
+        (all, cur) => all + cur.quantity,
+        0,
+      ) + sellOfferParams.sellOfferBoughtPartiallyTake;
 
     return {
       ...sellOfferParams,
@@ -284,7 +293,7 @@ export class TransactionService {
           quantity: {
             decrement: sellOfferTake,
           },
-          status: 4,
+          status: 0,
           Transaction: {
             create: {
               buyOfferId: buyOffer.buyOfferId,
