@@ -5,6 +5,8 @@ export class AppConfig {
   @IsUrl({
     protocols: ["http", "https"],
     requireProtocol: true,
+    requireHost: true,
+    require_tld: false,
   })
   VITE_BACKEND_URL?: string;
   
@@ -29,10 +31,8 @@ export class AppConfig {
   @IsNotEmpty()
   DATABASE_HOST?: string;
   
-  @IsUrl({
-    allow_underscores: true,
-    requireProtocol: true,
-  })
+  @IsString()
+  @IsNotEmpty()
   DATABASE_URL?: string;
 
   @IsString()
@@ -45,8 +45,8 @@ class ViolatedConstraint {
 }
 
 export class ConfigValidationError {
-  public message: string;
-  public constraints?: ViolatedConstraint[];
+  readonly message: string;
+  readonly constraints?: ViolatedConstraint[];
 
   constructor(violatedConstraints: ViolatedConstraint[]) {
     this.message = "Config validation failed";
@@ -55,10 +55,10 @@ export class ConfigValidationError {
 }
 
 export const validateConfig = (config: Record<string, any>) => {
-    let parsedConfig = plainToInstance(AppConfig, config);
-    let errors = validateSync(parsedConfig);
+    const parsedConfig = plainToInstance(AppConfig, config, {enableImplicitConversion: true});
+    const errors = validateSync(parsedConfig);
     if(errors.length !== 0) {
-      let violatedConstraints = errors.map((e: ValidationError) => e.constraints!);
+      const violatedConstraints = errors.map((e: ValidationError) => e.constraints!);
       throw new ConfigValidationError(violatedConstraints)
     }
     return parsedConfig;
