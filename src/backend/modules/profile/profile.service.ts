@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { number } from 'zod';
 import { PrismaService } from '../database/prisma.service';
 import { AddWalletDto } from './dto/addWallet.dto';
 import { GetUserBuyOfferQuery } from './dto/getUserBuyOffer.query';
@@ -67,7 +66,13 @@ export class ProfileService {
 
     const userStockWithPriceCents = usersStocks.map((result) => {
       return {
-        ...result,
+        userStockId: result.userStockId,
+        stockQuantity: result.stockQuantity,
+        Company: {
+            companyId: result.Company.companyId,
+            name: result.Company.name,
+            description: result.Company.description
+        },
         priceCents:
           result.Company.UserStock.length > 0
             ? Math.min(
@@ -79,28 +84,15 @@ export class ProfileService {
       };
     });
 
-    const res: {
-      userStockId:number|null,
-      stockQuantity:number|null,
-      priceCents:number|null,
-      Company: {UserStock?: any}
-    }[] = userStockWithPriceCents;
-
-    for (const userStock of res){
-      delete userStock.Company.UserStock;
-    }
-
-    res.sort((a,b) => {
+    userStockWithPriceCents.sort((a,b) => {
         const sortOrder = getUserStockQuery.orderType === 'asc' ? 1: -1
         let result = 0;
         switch(getUserStockQuery.orderBy){
           case OrderByForUserStock.userStockId: {
-            if(a.userStockId !== null && b.userStockId !== null)
             result = (a.userStockId < b.userStockId) ? -1 : (a.userStockId > b.userStockId) ? 1 : 0;
             break;
           }
           case OrderByForUserStock.stockQuantity: {
-            if(a.stockQuantity !== null && b.stockQuantity !== null)
             result = (a.stockQuantity < b.stockQuantity) ? -1 : (a.stockQuantity > b.stockQuantity) ? 1 : 0;
             break;
           }
@@ -112,15 +104,8 @@ export class ProfileService {
         }
         return result * sortOrder;
     })
-    
-    let finalResult = [];
 
-    for (let i = getUserStockQuery.skip; i<getUserStockQuery.skip + getUserStockQuery.take; i++) {
-      if(res[i])
-      finalResult.push(res[i]);
-    }
-
-    return finalResult;
+    return userStockWithPriceCents.slice(getUserStockQuery.skip, getUserStockQuery.skip + getUserStockQuery.take);
   }
 
   getUserSellOffers(

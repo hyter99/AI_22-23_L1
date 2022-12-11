@@ -48,7 +48,7 @@ export class CompanyService {
                 us.SellOffer.map((so) => so.unitSellPriceCents),
               ),
             )
-          : 0
+          : null
       };
     });
     
@@ -61,9 +61,24 @@ export class CompanyService {
           result = (a.description < b.description) ? -1 : (a.description > b.description) ? 1 : 0;
           break;
         }
-        default: {
-          if(query.orderBy !== undefined)
-          result = (a[query.orderBy] < b[query.orderBy]) ? -1 : (a[query.orderBy] > b[query.orderBy]) ? 1 : 0;
+        case "companyId": {
+          if(a.companyId !== null && b.companyId !== null)
+          result = (a.companyId < b.companyId) ? -1 : (a.companyId > b.companyId) ? 1 : 0;
+          break;
+        }
+        case "name": {
+          if(a.name !== null && b.name !== null)
+          result = (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+          break;
+        }
+        case "quantity": {
+          if(a.quantity !== null && b.quantity !== null)
+          result = (a.quantity < b.quantity) ? -1 : (a.quantity > b.quantity) ? 1 : 0;
+          break;
+        }
+        case "priceCents": {
+          if(a.priceCents !== null && b.priceCents !== null)
+          result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
           break;
         }
       }
