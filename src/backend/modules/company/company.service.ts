@@ -10,18 +10,7 @@ export class CompanyService {
   async getMany(query: GetCompaniesQuery) {
     const take = query.take ? query.take : 10;
 
-    let orderBy: string = "";
-    if(query.orderBy === "quantity" || query.orderBy ===  "priceCents"){
-      orderBy = query.orderBy;
-      query.orderBy = undefined;
-    }
-
     const results = await this.prisma.company.findMany({
-      skip: query.skip,
-      take: take,
-      orderBy: {
-        [query.orderBy ?? 'companyId']: query.orderType ?? 'desc',
-      },
       where: { name: { contains: query.companyName, mode: 'insensitive' } },
       select: {
         companyId: true,
@@ -59,29 +48,36 @@ export class CompanyService {
                 us.SellOffer.map((so) => so.unitSellPriceCents),
               ),
             )
-          : 0 // I changed null to 0. I don't know if null was essential. Everything seems to work fine.
-        // priceCents:
-        //   result.UserStock.flatMap((us) =>
-        //     us.SellOffer.map((so) => so.unitSellPriceCents),
-        //   ).reduce((all, cur) => (all < cur ? all : cur)) ?? null,
+          : 0
       };
     });
-
-    if (orderBy != "") {
-      companies.sort((a,b) => {
-        const sortOrder = query.orderType === 'asc' ? 1: -1;
-        let result;
-        if(orderBy === "priceCents"){
-          result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
-        } else {
-          result = (a.quantity < b.quantity) ? -1 : (a.quantity > b.quantity) ? 1 : 0;
+    
+    companies.sort((a,b) => {
+      const sortOrder = query.orderType === 'asc' ? 1: -1
+      let result = 0;
+      switch(query.orderBy){
+        case "description": {
+          if(a.description !== null && b.description !== null)
+          result = (a.description < b.description) ? -1 : (a.description > b.description) ? 1 : 0;
+          break;
         }
-        
-        return result * sortOrder;
-      })
+        default: {
+          if(query.orderBy !== undefined)
+          result = (a[query.orderBy] < b[query.orderBy]) ? -1 : (a[query.orderBy] > b[query.orderBy]) ? 1 : 0;
+          break;
+        }
+      }
+      return result * sortOrder;
+    })
+
+    let finalResult = [];
+
+    for (let i = query.skip; i<query.skip + take; i++) {
+      if(companies[i])
+      finalResult.push(companies[i]);
     }
 
-    return companies;
+    return finalResult;
   }
 
   async getOne(companyId: number) {

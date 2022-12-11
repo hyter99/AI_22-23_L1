@@ -5,9 +5,9 @@ import { Pagination } from "../../../queries/pagination.query";
 export class GetUserStockQuery extends Pagination {
   @IsEnum(OrderByForUserStock)
   @IsOptional()
-  orderBy: OrderByForUserStock = OrderByForUserStock.userStockId;
+  readonly orderBy: OrderByForUserStock = OrderByForUserStock.userStockId;
   
   @IsString()
   @IsOptional()
-  companyName?: string;
+  readonly companyName?: string;
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { number } from 'zod';
 import { PrismaService } from '../database/prisma.service';
 import { AddWalletDto } from './dto/addWallet.dto';
 import { GetUserBuyOfferQuery } from './dto/getUserBuyOffer.query';
@@ -27,18 +28,8 @@ export class ProfileService {
   }
 
   async getUserStock(userId: number, getUserStockQuery: GetUserStockQuery) {
-    let orderByPriceCents;
-    if(getUserStockQuery.orderBy === 'priceCents'){
-      getUserStockQuery.orderBy = OrderByForUserStock.userStockId
-      orderByPriceCents = true;
-    }
 
-    const results = await this.prisma.userStock.findMany({
-      take: getUserStockQuery.take,
-      skip: getUserStockQuery.skip,
-      orderBy: {
-        [getUserStockQuery.orderBy]: getUserStockQuery.orderType,
-      },
+    const usersStocks = await this.prisma.userStock.findMany({
       where: {
         userId,
         Company: {
@@ -64,8 +55,7 @@ export class ProfileService {
                     unitSellPriceCents: true,
                   },
                   where: {
-                    status: 0,
-                    userId,
+                    status: 0
                   },
                 },
               },
@@ -75,7 +65,7 @@ export class ProfileService {
       },
     });
 
-    const userStockWithPriceCents = results.map((result) => {
+    const userStockWithPriceCents = usersStocks.map((result) => {
       return {
         ...result,
         priceCents:
@@ -85,19 +75,52 @@ export class ProfileService {
                 us.SellOffer.map((so) => so.unitSellPriceCents),
               ),
             )
-          : 0
+          : null
       };
     });
 
-    if (orderByPriceCents) {
-      userStockWithPriceCents.sort((a,b) => {
-        const sortOrder = getUserStockQuery.orderType === 'asc' ? 1: -1
-        const result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
-        return result * sortOrder;
-      })
+    const res: {
+      userStockId:number|null,
+      stockQuantity:number|null,
+      priceCents:number|null,
+      Company: {UserStock?: any}
+    }[] = userStockWithPriceCents;
+
+    for (const userStock of res){
+      delete userStock.Company.UserStock;
     }
 
-    return userStockWithPriceCents;
+    res.sort((a,b) => {
+        const sortOrder = getUserStockQuery.orderType === 'asc' ? 1: -1
+        let result = 0;
+        switch(getUserStockQuery.orderBy){
+          case OrderByForUserStock.userStockId: {
+            if(a.userStockId !== null && b.userStockId !== null)
+            result = (a.userStockId < b.userStockId) ? -1 : (a.userStockId > b.userStockId) ? 1 : 0;
+            break;
+          }
+          case OrderByForUserStock.stockQuantity: {
+            if(a.stockQuantity !== null && b.stockQuantity !== null)
+            result = (a.stockQuantity < b.stockQuantity) ? -1 : (a.stockQuantity > b.stockQuantity) ? 1 : 0;
+            break;
+          }
+          case OrderByForUserStock.priceCents: {
+            if(a.priceCents !== null && b.priceCents !== null)
+            result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
+            break;
+          }
+        }
+        return result * sortOrder;
+    })
+    
+    let finalResult = [];
+
+    for (let i = getUserStockQuery.skip; i<getUserStockQuery.skip + getUserStockQuery.take; i++) {
+      if(res[i])
+      finalResult.push(res[i]);
+    }
+
+    return finalResult;
   }
 
   getUserSellOffers(
