@@ -46,7 +46,7 @@ class ViolatedConstraint {
 
 export class ConfigValidationError {
   readonly message: string;
-  readonly constraints?: ViolatedConstraint[];
+  readonly constraints: ViolatedConstraint[];
 
   constructor(violatedConstraints: ViolatedConstraint[]) {
     this.message = "Config validation failed";
