@@ -85,14 +85,7 @@ export class CompanyService {
       return result * sortOrder;
     })
 
-    let finalResult = [];
-
-    for (let i = query.skip; i<query.skip + take; i++) {
-      if(companies[i])
-      finalResult.push(companies[i]);
-    }
-
-    return finalResult;
+    return companies.slice(query.skip, query.skip + take);
   }
 
   async getOne(companyId: number) {
