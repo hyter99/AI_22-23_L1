@@ -136,9 +136,13 @@ export class CompanyService {
         0,
       ),
       minPrice:
-        result.UserStock.flatMap((us) =>
-          us.SellOffer.map((so) => so.unitSellPriceCents),
-        ).reduce((all, cur) => (all < cur ? all : cur)) ?? null,
+        result.UserStock.length > 0
+          ? Math.min(
+              ...result.UserStock.flatMap((us) =>
+                us.SellOffer.map((so) => so.unitSellPriceCents),
+              ),
+            )
+          : null,
     };
   }
 }
