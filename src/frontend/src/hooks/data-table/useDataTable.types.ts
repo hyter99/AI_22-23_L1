@@ -11,16 +11,17 @@ export type ISelectedDataType =
 //   ReturnType<typeof CompanyController['prototype']['get']>
 // >[number];
 export type IStockAction = {
-  companyId: number,
-  name: string,
-  description: string,
-  quantity: number,
-  priceCents: number
+  companyId: number;
+  name: string;
+  description: string;
+  quantity: number;
+  priceCents: number | null;
 }
 
 export interface IMyStockAction {
   userStockId: number;
   stockQuantity: number;
+  priceCents: number | null;
   Company: {
     companyId: number;
     name: string;

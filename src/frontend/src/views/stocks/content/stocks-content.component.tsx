@@ -86,7 +86,7 @@ const StocksContent: React.FC<IStocksContent> = ({isLogged}) => {
             {
               id: data[selectedItemIdx].companyId,
               name: data[selectedItemIdx].name,
-              priceFromInCents: data[selectedItemIdx].priceCents
+              priceFromInCents: data[selectedItemIdx].priceCents ?? undefined
             }
           :
             null

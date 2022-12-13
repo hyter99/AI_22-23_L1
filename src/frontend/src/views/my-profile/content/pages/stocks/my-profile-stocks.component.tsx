@@ -80,8 +80,8 @@ const MyProfileStocks: React.FC<IStocksContent> = ({}) => {
           selectedItemIdx !== -1 ?
             {
               id: data[selectedItemIdx].Company.companyId,
-              name: data[selectedItemIdx].Company.name
-              // TODO - Don't know what to add in 'priceFromInCents' field (we don;t acquire precise data from backendAPI)
+              name: data[selectedItemIdx].Company.name,
+              priceFromInCents: data[selectedItemIdx].priceCents ?? undefined
             }
           :
             null
@@ -96,6 +96,7 @@ const MyProfileStocks: React.FC<IStocksContent> = ({}) => {
             {
               id: data[selectedItemIdx].userStockId,
               name: data[selectedItemIdx].Company.name,
+              priceFromInCents: data[selectedItemIdx].priceCents ?? undefined,
               availableQuantity: data[selectedItemIdx].stockQuantity
             }
           :

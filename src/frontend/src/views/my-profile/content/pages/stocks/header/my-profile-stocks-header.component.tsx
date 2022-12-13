@@ -18,14 +18,12 @@ interface IMyProfileStocksHeader {
 
 const MyProfileStocksHeader: React.FC<IMyProfileStocksHeader> = ({toggleOrderBy, searchInput}) => {
   const isOrderByHeader = (orderByName: ISearchOrderBy) => {
-    return (orderByName === "quantity");
-    //TODO - add priceCents header to orderBy
+    return (orderByName === "quantity" || orderByName === "priceCents");
   };
   
   return (
     <>
       {
-        //TODO - add priceCents header
         myProfileStocksTableHeaders.map(headerData => (
           <th
             key={headerData.id}

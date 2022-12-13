@@ -7,6 +7,9 @@ import styles from "./my-profile-stocks-body.module.scss";
 import Button from "../../../../../../components/ui/button/button.component";
 import { Link } from "react-router-dom";
 
+// functions
+import { CentsToString } from "../../../../../../functions/cents-to-string";
+
 // interfaces
 import { IMyStockAction } from "../../../../../../hooks/data-table/useDataTable.types";
 interface IMyProfileStocksBody {
@@ -27,7 +30,15 @@ const MyProfileStocksBody: React.FC<IMyProfileStocksBody> = ({data, handleBuyOff
             <td>{`${index+1}.`}</td>
             <td>{item.Company.name}</td>
             <td>{item.stockQuantity}</td>
-            {/*TODO - add priceCents body*/}
+            <td>
+              {
+                item.priceCents ?
+                  `${CentsToString(item.priceCents)} PLN`
+                :
+                  "-"
+              }
+            </td>
+            
             <td>
               <div className={styles.buttonWrapper}>
                 <Button

@@ -136,7 +136,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
               dataToAppend = resData.map((item: any) => ({
                 userStockId: item.userStockId,
                 stockQuantity: item.stockQuantity,
-                //TODO - add priceCents (and show it with feature to sortBy that value)
+                priceCents: item.priceCents,
                 Company: {
                   companyId: item.Company.companyId,
                   name: item.Company.name,

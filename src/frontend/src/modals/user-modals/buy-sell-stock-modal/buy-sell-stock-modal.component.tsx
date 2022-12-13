@@ -63,19 +63,19 @@ const BuySellStockModal: React.FC<IBuySellStockModal> = ({
             {data?.name}
           </div>
         </div>
-        {
-          data?.priceFromInCents ? //TODO - change to always visible when we acquire that data from backend API
-            <div className={styles.dataRow}>
-              <div className={`${styles.item} ${styles.big} ${styles.title}`}>
-                Oferty {isBuyModal ? "kupna" : "sprzedaży"} od:
-              </div>
-              <div className={`${styles.item} ${styles.big}`}>
-                {`${CentsToString(data?.priceFromInCents)} PLN`}
-              </div>
-            </div>
-          :
-            null
-        }
+        <div className={styles.dataRow}>
+          <div className={`${styles.item} ${styles.big} ${styles.title}`}>
+            Oferty sprzedaży od:
+          </div>
+          <div className={`${styles.item} ${styles.big}`}>
+            {
+              data?.priceFromInCents ?
+                `${CentsToString(data?.priceFromInCents)} PLN`
+              :
+                "Brak ofert"
+            }
+          </div>
+        </div>
         <div className={styles.inputRow}>
           <div className={styles.inputContainer}>
             <InputField
@@ -83,8 +83,8 @@ const BuySellStockModal: React.FC<IBuySellStockModal> = ({
               labelColor="black"
               name="quantity"
               value={inputFields.quantity}
-              label="Liczba"
-              placeholder="Liczba"
+              label="Liczba akcji"
+              placeholder="Liczba akcji"
               handleChange={handleInputChange}
               isError={inputFieldsErrors.quantity !== ""}
               errorMessage={inputFieldsErrors.quantity}
@@ -97,8 +97,8 @@ const BuySellStockModal: React.FC<IBuySellStockModal> = ({
               labelColor="black"
               name="price"
               value={inputFields.price}
-              label="Cena"
-              placeholder="Cena"
+              label="Cena / akcje"
+              placeholder="Cena / akcje"
               handleChange={handleInputChange}
               isError={inputFieldsErrors.price !== ""}
               errorMessage={inputFieldsErrors.price}
@@ -126,7 +126,7 @@ const BuySellStockModal: React.FC<IBuySellStockModal> = ({
           data?.availableQuantity ?
             <div className={styles.dataRow}>
               <div className={`${styles.item} ${styles.title}`}>
-                Posiadana ilość akcji:
+                Posiadana liczba akcji:
               </div>
               <div className={styles.item}>
                 {data.availableQuantity}
