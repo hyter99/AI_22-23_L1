@@ -76,18 +76,16 @@ export class TransactionService {
   async transactionCycle() {
     const activeBuyOffers = await this.getActiveBuyOffers();
 
-    return Promise.all(
-      activeBuyOffers.map((buyOffer) => {
-        if (
-          buyOffer.User.balanceCents <
-          buyOffer.quantity * buyOffer.unitBuyPriceCents
-        ) {
-          return this.setUserHasNoSufficientFundsStatus(buyOffer.buyOfferId);
-        } else {
-          return this.findMatchingSellOffers(buyOffer);
-        }
-      }),
-    );
+    for (const buyOffer of activeBuyOffers) {
+      if (
+        buyOffer.User.balanceCents <
+        buyOffer.quantity * buyOffer.unitBuyPriceCents
+      ) {
+        await this.setUserHasNoSufficientFundsStatus(buyOffer.buyOfferId);
+      } else {
+        await this.findMatchingSellOffers(buyOffer);
+      }
+    }
   }
 
   async findMatchingSellOffers(buyOffer: TransactionBuyOffer) {
