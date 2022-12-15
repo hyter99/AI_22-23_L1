@@ -2,6 +2,7 @@ import { Type } from "class-transformer";
 import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 import { OrderByForUserBuyOffer } from "../enum/orderByForUserBuyOffer.enum";
 import { Pagination } from "../../../queries/pagination.query";
+import { OfferStatus } from "@prisma/client";
 
 export class GetUserBuyOfferQuery extends Pagination {
   @IsEnum(OrderByForUserBuyOffer)
@@ -15,5 +16,5 @@ export class GetUserBuyOfferQuery extends Pagination {
   @Type(() => Number)
   @IsInt()
   @IsOptional()
-  readonly status?: number;
+  readonly status?: OfferStatus;
 }
