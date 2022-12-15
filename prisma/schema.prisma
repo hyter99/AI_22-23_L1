@@ -7,6 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum OfferStatus {
+  ACTIVE
+  EXPIRED
+  NO_SUFFICIENT_FUNDS
+  NO_USER_STOCK
+  OFFER_REALIZED
+  TRANSACTION_REALIZED
+}
+
+
 model BuyOffer {
   buyOfferId        Int           @id @default(autoincrement())
   userId            Int
@@ -14,7 +24,7 @@ model BuyOffer {
   unitBuyPriceCents Int
   quantity          Int
   created           DateTime      @default(now()) @db.Timestamptz(6)
-  status            Int           @default(0)
+  status            OfferStatus   @default(ACTIVE)
   User              User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
   Transaction       Transaction[]
   Company           Company       @relation(fields: [companyId], references: [companyId], onDelete: Cascade, map: "BuyOffer")
@@ -36,7 +46,7 @@ model SellOffer {
   unitSellPriceCents Int
   quantity           Int
   created            DateTime      @default(now()) @db.Timestamptz(6)
-  status             Int           @default(0)
+  status             OfferStatus   @default(ACTIVE)
   User               User          @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "User")
   Transaction        Transaction[]
   UserStock          UserStock     @relation(fields: [userStockId], references: [userStockId], onDelete: Cascade, map: "UserStock")
@@ -54,7 +64,7 @@ model Transaction {
   transactionId Int       @id @default(autoincrement())
   buyOfferId    Int
   sellOfferId   Int
-  status        Int       @default(0)
+  status        OfferStatus   @default(TRANSACTION_REALIZED)
   date          DateTime  @default(now()) @db.Timestamptz(6)
   sellerId      Int
   buyerId       Int
