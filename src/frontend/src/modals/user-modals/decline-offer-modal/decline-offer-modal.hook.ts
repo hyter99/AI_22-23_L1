@@ -21,7 +21,6 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
     e.preventDefault();
     
     if (id) {
-      //TODO - change url to proper when endpoint in backend is done
       const response = await fetch(`${environment.backendUrl}/api/cancel-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
         method: 'DELETE',
         headers: {
@@ -30,7 +29,7 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
         }
       });
       
-      console.log("wynik:", await response.json());
+      //console.log("wynik:", await response.json());
       setIsLoading(false);
       
       if (response.ok) {
