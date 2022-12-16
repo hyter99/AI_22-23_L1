@@ -44,46 +44,62 @@ export class CompanyService {
         priceCents:
           result.UserStock.length > 0
             ? Math.min(
-              ...result.UserStock.flatMap((us) => 
-                us.SellOffer.map((so) => so.unitSellPriceCents),
-              ),
-            )
-          : null
+                ...result.UserStock.flatMap((us) =>
+                  us.SellOffer.map((so) => so.unitSellPriceCents),
+                ),
+              )
+            : null,
       };
     });
-    
-    companies.sort((a,b) => {
-      const sortOrder = query.orderType === 'asc' ? 1: -1
+
+    companies.sort((a, b) => {
+      const sortOrder = query.orderType === 'asc' ? 1 : -1;
       let result = 0;
-      switch(query.orderBy){
-        case "description": {
-          if(a.description !== null && b.description !== null)
-          result = (a.description < b.description) ? -1 : (a.description > b.description) ? 1 : 0;
+      switch (query.orderBy) {
+        case 'description': {
+          if (a.description !== null && b.description !== null)
+            result =
+              a.description < b.description
+                ? -1
+                : a.description > b.description
+                ? 1
+                : 0;
           break;
         }
-        case "companyId": {
-          if(a.companyId !== null && b.companyId !== null)
-          result = (a.companyId < b.companyId) ? -1 : (a.companyId > b.companyId) ? 1 : 0;
+        case 'companyId': {
+          if (a.companyId !== null && b.companyId !== null)
+            result =
+              a.companyId < b.companyId
+                ? -1
+                : a.companyId > b.companyId
+                ? 1
+                : 0;
           break;
         }
-        case "name": {
-          if(a.name !== null && b.name !== null)
-          result = (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+        case 'name': {
+          if (a.name !== null && b.name !== null)
+            result = a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
           break;
         }
-        case "quantity": {
-          if(a.quantity !== null && b.quantity !== null)
-          result = (a.quantity < b.quantity) ? -1 : (a.quantity > b.quantity) ? 1 : 0;
+        case 'quantity': {
+          if (a.quantity !== null && b.quantity !== null)
+            result =
+              a.quantity < b.quantity ? -1 : a.quantity > b.quantity ? 1 : 0;
           break;
         }
-        case "priceCents": {
-          if(a.priceCents !== null && b.priceCents !== null)
-          result = (a.priceCents < b.priceCents) ? -1 : (a.priceCents > b.priceCents) ? 1 : 0;
+        case 'priceCents': {
+          if (a.priceCents !== null && b.priceCents !== null)
+            result =
+              a.priceCents < b.priceCents
+                ? -1
+                : a.priceCents > b.priceCents
+                ? 1
+                : 0;
           break;
         }
       }
       return result * sortOrder;
-    })
+    });
 
     return companies.slice(query.skip, query.skip + take);
   }
