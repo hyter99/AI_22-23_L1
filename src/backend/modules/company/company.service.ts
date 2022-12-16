@@ -25,7 +25,7 @@ export class CompanyService {
                 unitSellPriceCents: true,
               },
               where: {
-                status: 0,
+                status: "ACTIVE",
               },
             },
           },
@@ -123,7 +123,7 @@ export class CompanyService {
                   unitSellPriceCents: true,
                 },
                 where: {
-                  status: 0,
+                  status: "ACTIVE",
                 },
               },
             },

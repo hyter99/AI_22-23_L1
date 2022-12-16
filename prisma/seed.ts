@@ -1,6 +1,7 @@
 import {
   PrismaClient,
-  Prisma
+  Prisma,
+  OfferStatus
 } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 import { genSalt, hash } from 'bcrypt';
@@ -14,18 +15,13 @@ async function main() {
 
   // seed params
   const amountOfUsers = 20;
-  const amountOfCompanies = 10;
+  const amountOfCompanies = 30;
   const amountOfUserStocks = 5;
-  const amountOfStockOffers = 500;
   const amountOfBuyOffers = 50;
   const amountOfSellOffers = 100;
   const amountOfHistoricalStockPricingChanges = 50;
   const maxOfferCents = 100000;
 
-  // BACK-END
-  // number of implemented status codes
-  const statusCountBuyOffer = 3;
-  const statusCountSellOffer = 3;
 
   const users: Prisma.UserCreateManyInput[] = [];
   const companies: Prisma.CompanyCreateManyInput[] = [];
@@ -103,7 +99,7 @@ async function main() {
     });
     const userBuyQuantity = faker.datatype.number({ min: 1, max: 10 });
     const userBuyOfferCreatedAt = faker.date.recent();
-    const userBuyOfferStatus = faker.datatype.number(statusCountBuyOffer);
+    const userBuyOfferStatus :OfferStatus = "ACTIVE";
 
     const buyOffer: Prisma.BuyOfferUncheckedCreateInput = {
       userId: userId,
@@ -130,7 +126,7 @@ async function main() {
     });
     const userSellQuantity = faker.datatype.number({ min: 1, max: 10 });
     const userSellOfferCreatedAt = faker.date.recent();
-    const userSellOfferStatus = faker.datatype.number(statusCountSellOffer);
+    const userSellOfferStatus :OfferStatus = "ACTIVE";
 
     const sellOffer: Prisma.SellOfferUncheckedCreateInput = {
       userId: userId,

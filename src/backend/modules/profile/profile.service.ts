@@ -53,7 +53,9 @@ export class ProfileService {
                     unitSellPriceCents: true,
                   },
                   where: {
-                    status: 0,
+
+                    status: "ACTIVE"
+
                   },
                 },
               },
