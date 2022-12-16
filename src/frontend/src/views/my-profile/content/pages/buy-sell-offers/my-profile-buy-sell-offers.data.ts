@@ -11,11 +11,11 @@ export const myProfileBuySellOfferStateSelect: IMyProfileBuySellOfferStateSelect
   },
   {
     title: "Aktywny",
-    value: StockStatusEnum.ACTIVE_OFFER
+    value: StockStatusEnum.ACTIVE_OFFERS
   },
   {
     title: "Wygasły",
-    value: StockStatusEnum.EXPIRED_OFFER
+    value: StockStatusEnum.EXPIRED_OFFERS
   },
   {
     title: "Brak środków",

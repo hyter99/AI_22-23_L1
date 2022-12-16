@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 
-// types
+// functions
+import { GetOfferStatusBE } from "../../functions/get-offer-status-be";
+
+// data
+import { initialStocksInputFields, initialDataModals } from "./useDataTable.data";
+import { environment } from "../../constants/environment-variables";
+
+// redux
+import { useTypedSelector } from "../useTypedSelector";
+
+// interfaces
 import {
   ISelectedDataType,
   IStockAction,
@@ -9,13 +19,6 @@ import {
   ISearchOrderBy,
   IMyStockAction, IMyOfferAction, StockStatusEnum
 } from "./useDataTable.types";
-
-// data
-import { initialStocksInputFields, initialDataModals } from "./useDataTable.data";
-import { environment } from "../../constants/environment-variables";
-
-// redux
-import { useTypedSelector } from "../useTypedSelector";
 
 function useDataTable<T>(selectedDataType: ISelectedDataType) {  
   const FIRST_PAGE_NUM = 1;
@@ -72,8 +75,9 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       `?page=${pageToFetch}`,
       `&take=${ELEMENTS_PER_PAGE}`,
       searchInput.searchField !== "" ? `&companyName=${searchInput.searchField}` : "",
-      searchInput.status !== StockStatusEnum.ALL_OFFERS ? `&status=${searchInput.status}` : "",
-      // There is other 'orderBy' name for 'price' in 'sell-offers' and 'buy-offers' views
+      searchInput.status !== StockStatusEnum.ALL_OFFERS ? `&status=${searchInput.status}` : "", //TODO - change the 'searchInput.status' prop to fill the corresponding string from backend enum 'OfferStatus' (with using function named 'getOfferStatusBE(searchInput.status)')
+      // There is other 'orderBy' name for 'price' in 'mySellOffers' and 'myBuyOffers' views
+      // There is other 'orderBy' name for 'quantity' in 'myStockActions' view
       searchInput.orderBy !== "" ?
         `&orderBy=${
           selectedDataType === "myBuyOffers" ?

@@ -109,7 +109,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number)
       const priceToSet = parseFloat(inputFields.price)*100;
       const fetchBody: any = {
         quantity: parseInt(inputFields.quantity),
-        status: 0
+        status: 0 //TODO - change this status after merge from develop - by using getOfferStatusBE(StockStatusEnum.ACTIVE_OFFERS) function
       };
       if (isBuyModal) {
         fetchBody.companyId = id;
@@ -139,7 +139,6 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number)
             //console.log("Created!");
           }
           else {
-            //TODO - get error message from backend API (fi. when user hasn't got enough stock's quantity)
             //const resData = await response.json();
             setMessageBar({
               message: `Nie udało się złożyć oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,

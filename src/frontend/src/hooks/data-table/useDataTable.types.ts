@@ -42,11 +42,11 @@ export interface IMyOfferAction {
 // orderBy options
 export type ISearchOrderBy = "quantity" | "priceCents" | "created" | "status" | "";
 
-// statuses (TODO - change statuses)
+// statuses
 export enum StockStatusEnum {
   ALL_OFFERS = -1,
-  ACTIVE_OFFER = 0,
-  EXPIRED_OFFER = 1,
+  ACTIVE_OFFERS = 0,
+  EXPIRED_OFFERS = 1,
   USER_HAS_NO_SUFFICIENT_FUNDS = 2,
   USER_HAS_NO_STOCK = 3,
   OFFER_REALIZED = 4,
