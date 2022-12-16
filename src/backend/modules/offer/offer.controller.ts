@@ -25,7 +25,7 @@ export class OfferController {
   @UseGuards(JwtAuthenticationGuard)
   @Post('cancel-buy-offer/:buyOfferId')
   cancelBuyOffer(
-    @Param('buyOfferId') buyOfferId:string,
+    @Param('buyOfferId') buyOfferId: string,
   ) {
     return this.offerService.cancelBuyOffer(parseInt(buyOfferId));
   }
@@ -45,7 +45,7 @@ export class OfferController {
   @UseGuards(JwtAuthenticationGuard)
   @Post('cancel-buy-offer/:sellOfferId')
   cancelSelOffer(
-    @Param('sellOfferId') sellOfferId:string,
+    @Param('sellOfferId') sellOfferId: string,
   ) {
     return this.offerService.cancelSellOffer(parseInt(sellOfferId));
   }

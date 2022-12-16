@@ -26,7 +26,7 @@ export class OfferService {
   cancelBuyOffer(buyOfferId: number) {
     return this.prisma.buyOffer.update({
       where:{
-        buyOfferId:buyOfferId
+        buyOfferId: buyOfferId
       },
       data:{
         status: 'EXPIRED'
@@ -77,7 +77,7 @@ export class OfferService {
   cancelSellOffer(sellOfferId: number) {
     return this.prisma.sellOffer.update({
       where:{
-        sellOfferId:sellOfferId
+        sellOfferId: sellOfferId
       },
       data:{
         status: 'EXPIRED'
