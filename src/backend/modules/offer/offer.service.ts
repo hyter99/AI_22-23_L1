@@ -23,6 +23,17 @@ export class OfferService {
     });
   }
 
+  cancelBuyOffer(buyOfferId: number) {
+    return this.prisma.buyOffer.update({
+      where:{
+        buyOfferId:buyOfferId
+      },
+      data:{
+        status: 'EXPIRED'
+      }
+    });
+  }
+  
   async createSellOffer(
     createSellOfferDto: CreateSellOfferDto,
     userId: number,
@@ -62,4 +73,16 @@ export class OfferService {
       },
     });
   }
+
+  cancelSellOffer(sellOfferId: number) {
+    return this.prisma.sellOffer.update({
+      where:{
+        sellOfferId:sellOfferId
+      },
+      data:{
+        status: 'EXPIRED'
+      }
+    });
+  }
+    
 }
