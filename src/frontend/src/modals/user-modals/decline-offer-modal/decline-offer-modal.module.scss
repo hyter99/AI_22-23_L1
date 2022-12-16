@@ -14,9 +14,10 @@
     font-size: 25px;
     color: $colorBlack;
     margin-bottom: 5px;
-    
-    &:last-of-type {
-      margin-bottom: 0;
-    }
+  }
+
+  .messageBarContainer {
+    width: 100%;
+    height: 25px;
   }
 }

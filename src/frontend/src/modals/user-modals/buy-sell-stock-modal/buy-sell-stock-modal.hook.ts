@@ -147,7 +147,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number)
               isError: true
             });
           }
-        }).catch(err => {
+        }).catch(() => {
           setMessageBar({
             message: "Wystąpił nieoczekiwany błąd podczas składania oferty",
             isSuccess: false,

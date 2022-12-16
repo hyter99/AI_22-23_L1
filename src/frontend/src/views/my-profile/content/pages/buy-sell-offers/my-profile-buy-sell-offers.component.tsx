@@ -42,7 +42,8 @@ const MyProfileOffers: React.FC<IMyProfileOffers> = ({areBuyOffers}) => {
     selectedItemIdx,
     isLoading,
     dataModals,
-    isEndOfData
+    isEndOfData,
+    removeItemAtIndex
   } = useDataTable<IMyOfferAction>(areBuyOffers ? "myBuyOffers" : "mySellOffers");
   const {isMobileView} = useContext(IsMobileViewContext);
 
@@ -99,6 +100,7 @@ const MyProfileOffers: React.FC<IMyProfileOffers> = ({areBuyOffers}) => {
         isBuyModal={areBuyOffers}
         isOpened={dataModals.isDeclineModalOpen}
         handleCancelClick={() => handleDataModalChange("isDeclineModalOpen", false)}
+        additionalHandleSubmitClick={() => removeItemAtIndex(selectedItemIdx)}
         data={
           selectedItemIdx !== -1 ?
             {

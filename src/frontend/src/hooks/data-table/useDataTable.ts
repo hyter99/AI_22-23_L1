@@ -234,6 +234,14 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       isOrderTypeAscending: ascendingValueToSet
     }));
   };
+  
+  const removeItemAtIndex = (idx: number) => {
+    if (idx >= 0) {
+      const shallowData = [...data];
+      shallowData.splice(idx,1);
+      setData(shallowData);
+    }
+  };
 
   return {
     data,
@@ -247,7 +255,8 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     handleInputChange,
     handleDataModalChange,
     toggleOrderBy,
-    onSearchClick
+    onSearchClick,
+    removeItemAtIndex
   };
 }
 
