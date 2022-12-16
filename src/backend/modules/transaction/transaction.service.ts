@@ -247,7 +247,7 @@ export class TransactionService {
             quantity: {
               set: 0,
             },
-            status: "NO_USER_STOCK",
+            status: "OFFER_REALIZED",
             Transaction: {
               create: {
                 buyOfferId: buyOffer.buyOfferId,

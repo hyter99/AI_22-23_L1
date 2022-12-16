@@ -13,8 +13,8 @@ export class GetUserBuyOfferQuery extends Pagination {
   @IsOptional()
   readonly companyName?: string;
 
-  @Type(() => Number)
-  @IsInt()
+
+  @IsString()
   @IsOptional()
   readonly status?: OfferStatus;
 }
