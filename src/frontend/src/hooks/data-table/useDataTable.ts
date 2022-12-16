@@ -237,8 +237,8 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     if (selectedItemIdx >= 0) {
       const shallowData = [...data];
       shallowData.splice(selectedItemIdx,1);
-      setData(shallowData);
       setSelectedItemIdx(-1);
+      setData(shallowData);
     }
   };
   
@@ -265,7 +265,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     handleDataModalChange,
     toggleOrderBy,
     onSearchClick,
-    removeItemAtIndex: removeItemAtCurrentIndex
+    removeItemAtCurrentIndex
   };
 }
 

@@ -22,14 +22,15 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
     
     if (id) {
       //TODO - change url to proper when endpoint in backend is done
-      const response = await fetch(`${environment.backendUrl}/api/decline-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
+      const response = await fetch(`${environment.backendUrl}/api/cancel-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'
         }
       });
-
+      
+      console.log("wynik:", await response.json());
       setIsLoading(false);
       
       if (response.ok) {

@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Req, UseGuards } from "@nestjs/common";
 
 import { RequestWithUser } from '../../types';
 import JwtAuthenticationGuard from '../auth/guards/jwt.guard';
@@ -23,7 +23,7 @@ export class OfferController {
   }
 
   @UseGuards(JwtAuthenticationGuard)
-  @Post('cancel-buy-offer/:buyOfferId')
+  @Delete('cancel-buy-offer/:buyOfferId')
   cancelBuyOffer(
     @Param('buyOfferId') buyOfferId: string,
   ) {
@@ -43,7 +43,7 @@ export class OfferController {
   }
 
   @UseGuards(JwtAuthenticationGuard)
-  @Post('cancel-buy-offer/:sellOfferId')
+  @Delete('cancel-sell-offer/:sellOfferId')
   cancelSelOffer(
     @Param('sellOfferId') sellOfferId: string,
   ) {
