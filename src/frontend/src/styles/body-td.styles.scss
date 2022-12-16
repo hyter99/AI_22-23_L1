@@ -17,6 +17,10 @@ tr {
       width: 200px;
       margin: 0 auto 6px auto;
 
+      &.w100 {
+        width: 100%;
+      }
+      
       &:last-of-type {
         margin-bottom: 0;
       }

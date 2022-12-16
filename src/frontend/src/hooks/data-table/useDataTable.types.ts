@@ -35,7 +35,7 @@ export interface IMyOfferAction {
   unitPriceCents: number;
   quantity: number;
   created: string;
-  status: number;
+  status: string;
   name: string;
 }
 

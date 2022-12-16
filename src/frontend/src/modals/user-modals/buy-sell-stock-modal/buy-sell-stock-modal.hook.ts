@@ -8,6 +8,10 @@ import { environment } from "../../../constants/environment-variables";
 import { IsStringAPositiveInteger } from "../../../functions/is-string-a-positive-integer";
 import { IsStringAPrice } from "../../../functions/is-string-a-price";
 import { IsStringAPositivePrice } from "../../../functions/is-string-a-positive-price";
+import { GetOfferStatusBE } from "../../../functions/get-offer-status-be";
+
+// enum
+import { StockStatusEnum } from "../../../hooks/data-table/useDataTable.types";
 
 // hooks
 import useMessageBar from "../../../hooks/message-bar/useMessageBar";
@@ -109,7 +113,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number)
       const priceToSet = parseFloat(inputFields.price)*100;
       const fetchBody: any = {
         quantity: parseInt(inputFields.quantity),
-        status: 0 //TODO - change this status after merge from develop - by using getOfferStatusBE(StockStatusEnum.ACTIVE_OFFERS) function
+        status: GetOfferStatusBE(StockStatusEnum.ACTIVE_OFFERS)
       };
       if (isBuyModal) {
         fetchBody.companyId = id;
@@ -119,7 +123,6 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number)
         fetchBody.userStockId = id;
         fetchBody.unitSellPriceCents = priceToSet;
       }
-      
       //console.log("body to set:", fetchBody);
       
       fetch(fetchUrl, {

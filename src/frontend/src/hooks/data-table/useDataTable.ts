@@ -43,13 +43,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
   const {accessToken} = useTypedSelector(state => state.login.loginData);
   
   useEffect(() => {
-    setData([]);
-    setIsEndOfData(false);
-    setSearchInput(initialStocksInputFields);
-    setDataModals(initialDataModals);
-    setSelectedItemIdx(-1);
-    setIsFirstRender(false);
-    fetchData(true);
+    resetData();
     
     //console.log("API_URL:", API_URL);
   },[selectedDataType]);
@@ -61,9 +55,9 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
   },[searchInput.orderBy, searchInput.isOrderTypeAscending, searchInput.status]);
 
   /* TO BE REMOVED */
-  useEffect(() => {
-    console.log("data:", data);
-  },[data]);
+  // useEffect(() => {
+  //   console.log("data:", data);
+  // },[data]);
 
   const fetchData = (isStart?: boolean) => {
     // Get and change the page
@@ -75,7 +69,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       `?page=${pageToFetch}`,
       `&take=${ELEMENTS_PER_PAGE}`,
       searchInput.searchField !== "" ? `&companyName=${searchInput.searchField}` : "",
-      searchInput.status !== StockStatusEnum.ALL_OFFERS ? `&status=${searchInput.status}` : "", //TODO - change the 'searchInput.status' prop to fill the corresponding string from backend enum 'OfferStatus' (with using function named 'getOfferStatusBE(searchInput.status)')
+      searchInput.status !== StockStatusEnum.ALL_OFFERS ? `&status=${GetOfferStatusBE(searchInput.status)}` : "",
       // There is other 'orderBy' name for 'price' in 'mySellOffers' and 'myBuyOffers' views
       // There is other 'orderBy' name for 'quantity' in 'myStockActions' view
       searchInput.orderBy !== "" ?
@@ -103,7 +97,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       `&orderType=${searchInput.isOrderTypeAscending ? "asc" : "desc"}`
     );
     /* TO BE REMOVED */
-    console.log("fetchUrl:", fetchUrl);
+    //console.log("fetchUrl:", fetchUrl);
 
     // Prepare headers for fetch
     const fetchHeaders: any = {
@@ -169,11 +163,11 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
           }
         }
         else {
-          console.log("error:", resData);
+          //console.log("error:", resData);
         }
       })
       .catch(err => {
-        console.log("fatal error:", err);
+        //console.log("fatal error:", err);
       })
       .finally( () => {
         setIsLoading(false);
@@ -239,12 +233,23 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     }));
   };
   
-  const removeItemAtIndex = (idx: number) => {
-    if (idx >= 0) {
+  const removeItemAtCurrentIndex = () => {
+    if (selectedItemIdx >= 0) {
       const shallowData = [...data];
-      shallowData.splice(idx,1);
+      shallowData.splice(selectedItemIdx,1);
       setData(shallowData);
+      setSelectedItemIdx(-1);
     }
+  };
+  
+  const resetData = () => {
+    setData([]);
+    setIsEndOfData(false);
+    setSearchInput(initialStocksInputFields);
+    setDataModals(initialDataModals);
+    setSelectedItemIdx(-1);
+    setIsFirstRender(false);
+    fetchData(true);
   };
 
   return {
@@ -260,7 +265,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     handleDataModalChange,
     toggleOrderBy,
     onSearchClick,
-    removeItemAtIndex
+    removeItemAtIndex: removeItemAtCurrentIndex
   };
 }
 

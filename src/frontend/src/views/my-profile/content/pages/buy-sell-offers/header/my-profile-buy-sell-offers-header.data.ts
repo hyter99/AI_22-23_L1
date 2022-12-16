@@ -5,31 +5,31 @@ export const myProfileBuySellOffersTableHeaders: IStockTableHeader[] = [
     id: 1,
     title: "Lp.",
     orderByName: "",
-    percentageWidth: 5
+    percentageWidth: 4
   },
   {
     id: 2,
     title: "Nazwa akcji",
     orderByName: "",
-    percentageWidth: 19
+    percentageWidth: 20
   },
   {
     id: 3,
     title: "Liczba",
     orderByName: "quantity",
-    percentageWidth: 10
+    percentageWidth: 13
   },
   {
     id: 4,
     title: "Cena",
     orderByName: "priceCents",
-    percentageWidth: 17
+    percentageWidth: 15
   },
   {
     id: 5,
     title: "Data złożenia",
     orderByName: "created",
-    percentageWidth: 21
+    percentageWidth: 22
   },
   {
     id: 6,
@@ -41,6 +41,6 @@ export const myProfileBuySellOffersTableHeaders: IStockTableHeader[] = [
     id: 7,
     title: "",
     orderByName: "",
-    percentageWidth: 15
+    percentageWidth: 13
   }
 ];

@@ -100,7 +100,7 @@ const MyProfileOffers: React.FC<IMyProfileOffers> = ({areBuyOffers}) => {
         isBuyModal={areBuyOffers}
         isOpened={dataModals.isDeclineModalOpen}
         handleCancelClick={() => handleDataModalChange("isDeclineModalOpen", false)}
-        additionalHandleSubmitClick={() => removeItemAtIndex(selectedItemIdx)}
+        additionalHandleSubmitClick={() => removeItemAtIndex()}
         data={
           selectedItemIdx !== -1 ?
             {

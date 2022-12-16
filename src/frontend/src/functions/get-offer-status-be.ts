@@ -1,4 +1,4 @@
-// enums
+// enum
 import { StockStatusEnum } from "../hooks/data-table/useDataTable.types";
 
 export const GetOfferStatusBE = (statusInt: StockStatusEnum): string  => {

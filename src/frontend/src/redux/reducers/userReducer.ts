@@ -109,7 +109,7 @@ const reducer = (state: ILoginState = initialState, action: LoginActions): ILogi
       };
 
     case ActionType.USER_SET_BALANCE_CENTS:
-      console.log("WORKING for view:", action.payload.viewSet);
+      //console.log("WORKING for view:", action.payload.viewSet);
       // Can update on site change or every 10s on the same site
       if (action.payload.viewSet !== state.lastViewSet || (new Date().getTime() - state.lastTimeViewSet) > 10000) {
         //console.log("Update of balance with state.lastViewSet:", state.lastViewSet);

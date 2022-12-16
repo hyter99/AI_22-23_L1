@@ -17,44 +17,40 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
     resetData();
   },[isOpened]);
   
-  const handleSubmitClick = (e: React.FormEvent) => {
+  const handleSubmitClick = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    // TODO - write logic of this function (using id)
-    // logic depends on what type is the modal: buy or sell ...
     
     if (id) {
-      /* UNCOMMENT WHEN ENDPOINTS ARE DONE */
-      // fetch(`${environment.backendUrl}/api/decline-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
-      //   method: 'DELETE',
-      //   headers: {
-      //     'Authorization': `Bearer ${accessToken}`,
-      //     'Content-Type': 'application/json'
-      //   }
-      // }).then(async response => {
-      //   if (response.ok) {
-      //     setMessageBar({
-      //       message: `Poprawnie anulowano ofertę ${isBuyModal ? "kupna" : "sprzedaży"}`,
-      //       isSuccess: true,
-      //       isError: false
-      //     });
-      //   }
-      //   else {
-      //     setMessageBar({
-      //       message: `Nie udało się anulować oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,
-      //       isSuccess: false,
-      //       isError: true
-      //     });
-      //   }
-      // }).catch(() => {
-      //   setMessageBar({
-      //     message: "Wystąpił nieoczekiwany błąd podczas anulowania oferty",
-      //     isSuccess: false,
-      //     isError: true
-      //   });
-      // }).finally(() => {
-      //   setIsLoading(false);
-      // });
-      /* END */
+      //TODO - change url to proper when endpoint in backend is done
+      const response = await fetch(`${environment.backendUrl}/api/decline-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      setIsLoading(false);
+      
+      if (response.ok) {
+        setMessageBar({
+          message: `Poprawnie anulowano ofertę ${isBuyModal ? "kupna" : "sprzedaży"}`,
+          isSuccess: true,
+          isError: false
+        });
+      }
+      else {
+        setMessageBar({
+          message: `Nie udało się anulować oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,
+          isSuccess: false,
+          isError: true
+        });
+        
+        throw new Error("Can't decline offer");
+      }
+    }
+    else {
+      throw new Error("Can't decline offer");
     }
   };
 

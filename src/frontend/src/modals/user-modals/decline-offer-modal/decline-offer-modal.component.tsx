@@ -43,15 +43,23 @@ const DeclineOfferModal: React.FC<IDeclineOfferModal> = ({
       submitButtonTitle="Potwierdź"
       cancelButtonTitle="Zamknij"
       onSubmitClick={(e) => {
-        handleSubmitClick(e);
-        additionalHandleSubmitClick();
+        handleSubmitClick(e)
+          .then(() => additionalHandleSubmitClick())
+          .catch(() => undefined);
       }}
       onCancelClick={handleCancelClick}
       isSubmitButtonDisabled={messageBar.isSuccess}
     >
       <div className={styles.contentContainer}>
-        <p>Czy na pewno chcesz anulować następującą akcję?</p>
-        <p>{data?.name}: w liczbie {data?.quantity}</p>
+        {
+          data ?
+            <>
+              <p className={styles.info}>Czy na pewno chcesz anulować następującą akcję?</p>
+              <p className={styles.info}>{data.name}: w liczbie {data.quantity}</p>
+            </>
+          :
+            <p className={styles.info}>-</p>
+        }
         <div className={styles.messageBarContainer}>
           {
             (messageBar.isError || messageBar.isSuccess) ?
