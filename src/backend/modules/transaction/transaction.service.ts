@@ -27,7 +27,7 @@ export class TransactionService {
   async getActiveBuyOffers() {
     return this.prisma.buyOffer.findMany({
       where: {
-        status: 0,
+        status: "ACTIVE",
       },
       select: {
         buyOfferId: true,
@@ -50,25 +50,25 @@ export class TransactionService {
   async checkOfferValidity() {
     await this.prisma.buyOffer.updateMany({
       where: {
-        status: 0,
+        status: "ACTIVE",
         created: {
           lte: new Date(Date.now() - 60 * 60 * 1000),
         },
       },
       data: {
-        status: 1,
+        status: "EXPIRED",
       },
     });
 
     await this.prisma.sellOffer.updateMany({
       where: {
-        status: 0,
+        status: "ACTIVE",
         created: {
           lte: new Date(Date.now() - 60 * 60 * 1000),
         },
       },
       data: {
-        status: 1,
+        status: "EXPIRED",
       },
     });
   }
@@ -93,7 +93,7 @@ export class TransactionService {
 
     const matchingSellOffers = await this.prisma.sellOffer.findMany({
       where: {
-        status: 0,
+        status: "ACTIVE",
         unitSellPriceCents: {
           lte: unitBuyPriceCents,
         },
@@ -173,7 +173,7 @@ export class TransactionService {
         buyOfferId: buyOfferId,
       },
       data: {
-        status: 2,
+        status: "NO_SUFFICIENT_FUNDS",
       },
     });
   }
@@ -245,11 +245,11 @@ export class TransactionService {
             quantity: {
               set: 0,
             },
-            status: 4,
+            status: "OFFER_REALIZED",
             Transaction: {
               create: {
                 buyOfferId: buyOffer.buyOfferId,
-                status: 5,
+                status: "TRANSACTION_REALIZED",
                 sellerId: sellOfferFull.userId,
                 buyerId: buyOffer.userId,
               },
@@ -291,11 +291,11 @@ export class TransactionService {
           quantity: {
             decrement: sellOfferTake,
           },
-          status: 0,
+          status: "ACTIVE",
           Transaction: {
             create: {
               buyOfferId: buyOffer.buyOfferId,
-              status: 5,
+              status: "TRANSACTION_REALIZED",
               sellerId: sellOffer.userId,
               buyerId: buyOffer.userId,
             },
@@ -332,7 +332,7 @@ export class TransactionService {
         buyOfferId: buyOffer.buyOfferId,
       },
       data: {
-        status: buyOfferQuantityLeft > 0 ? 0 : 4,
+        status: buyOfferQuantityLeft > 0 ? "ACTIVE" : "OFFER_REALIZED",
         quantity: {
           set: buyOfferQuantityLeft,
         },
@@ -381,7 +381,7 @@ export class TransactionService {
             companyId: buyOffer.companyId,
           },
         },
-        status: 0,
+        status: "ACTIVE",
       },
       take: 1,
       orderBy: {
