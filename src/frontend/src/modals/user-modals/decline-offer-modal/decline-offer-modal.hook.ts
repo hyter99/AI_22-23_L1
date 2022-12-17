@@ -21,31 +21,36 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
     e.preventDefault();
     
     if (id) {
-      const response = await fetch(`${environment.backendUrl}/api/cancel-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
+      try {
+        const response = await fetch(`${environment.backendUrl}/api/cancel-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        //console.log("wynik:", await response.json());
+        setIsLoading(false);
+
+        if (response.ok) {
+          setMessageBar({
+            message: `Poprawnie anulowano ofertę ${isBuyModal ? "kupna" : "sprzedaży"}`,
+            isSuccess: true,
+            isError: false
+          });
         }
-      });
-      
-      //console.log("wynik:", await response.json());
-      setIsLoading(false);
-      
-      if (response.ok) {
-        setMessageBar({
-          message: `Poprawnie anulowano ofertę ${isBuyModal ? "kupna" : "sprzedaży"}`,
-          isSuccess: true,
-          isError: false
-        });
+        else {
+          setMessageBar({
+            message: `Nie udało się anulować oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,
+            isSuccess: false,
+            isError: true
+          });
+
+          throw new Error("Can't decline offer");
+        }
       }
-      else {
-        setMessageBar({
-          message: `Nie udało się anulować oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,
-          isSuccess: false,
-          isError: true
-        });
-        
+      catch(err) {
         throw new Error("Can't decline offer");
       }
     }
