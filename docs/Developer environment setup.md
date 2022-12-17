@@ -17,19 +17,19 @@ npm ci
 3. Duplicate file .env.example in the root, rename it to .env and fill in the blanks.
 4. Add .prettierignore file (on front-end we use value: **).
 
-4. Change provider field in file ./prisma/schema.prisma to the provider you've selected. 
+5. Change provider field in file ./prisma/schema.prisma to the provider you've selected. 
 Available providers:
 ```
 postgresql, mysql, sqlite, sqlserver, mongodb, cockroachdb
 ```
 
-4. Run command to setup Prisma:
+6. Run command to setup Prisma:
 
 ```
 npx prisma migrate deploy
 ```
 
-5. Generate prisma client
+7. Generate prisma client
 
 ```
 npx prisma generate
