@@ -22,6 +22,7 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
     
     if (id) {
       try {
+        setIsLoading(true);
         const response = await fetch(`${environment.backendUrl}/api/cancel-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
           method: 'DELETE',
           headers: {
@@ -51,6 +52,7 @@ const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: numbe
         }
       }
       catch(err) {
+        setIsLoading(false);
         throw new Error("Can't decline offer");
       }
     }
