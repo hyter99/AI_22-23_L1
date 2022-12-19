@@ -55,7 +55,7 @@ const UnauthenticatedApp: React.FC<IUnauthenticatedApp> = ({appVersion}) => {
       <Route
         path="*"
         component={() =>
-          <Redirect to="/logowanie" />
+          <Redirect to="/" />
         }
       />
     </Switch>

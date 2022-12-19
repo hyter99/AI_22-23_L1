@@ -1,4 +1,3 @@
-// TODO - write data types
 export interface IBuySellStockData {
   id: number;
   name: string;
@@ -14,10 +13,4 @@ export interface IInputFields {
 export interface IInputFieldsErrors {
   quantity: string;
   price: string;
-}
-
-export interface IMessageBar {
-  message: string;
-  isError: boolean;
-  isSuccess: boolean;
 }

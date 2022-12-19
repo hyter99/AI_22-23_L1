@@ -24,7 +24,7 @@ const MessageBox: React.FC<IMessageBox> = ({
       ${wide ? styles.wide : ""}
       ${isError ? styles.colorRed : styles.colorGreen}
     `}>
-      <p>{message}{link ? link : ""}</p>
+      <p className={styles.message}>{message}{link ? link : ""}</p>
     </div>
   )
 };

@@ -9,7 +9,8 @@ import Button from "../../../../../../components/ui/button/button.component";
 // functions
 import { CentsToString } from "../../../../../../functions/cents-to-string";
 import ConvertTimeFromBackendApi from "../../../../../../functions/convert-time-from-backend-api";
-import { GetOfferStatusName } from "../../../../../../functions/getOfferStatusName";
+import { GetOfferStatusName } from "../../../../../../functions/get-offer-status-name";
+import { GetOfferStatusFE } from "../../../../../../functions/get-offer-status-fe";
 
 // interfaces
 import { IMyOfferAction } from "../../../../../../hooks/data-table/useDataTable.types";
@@ -24,32 +25,33 @@ const MyProfileBuySellOffersBody: React.FC<IMyProfileBuySellOffersBody> = ({data
     <>
       {
         data.map((item, index) => {
-          const statusName = GetOfferStatusName(item.status);
+          const statusName = GetOfferStatusName(GetOfferStatusFE(item.status));
           
           return (
             <tr
               key={item.offerId}
             >
               <td>{`${index + 1}.`}</td>
-              <td>{""}</td>
-              {/*TODO - fill the 'action's name' from backendAPI when it's done*/}
+              <td>{item.name}</td>
               <td>{item.quantity}</td>
               <td>{`${CentsToString(item.unitPriceCents)} PLN`}</td>
               <td>{ConvertTimeFromBackendApi(item.created)}</td>
-              {/*convert date*/}
               <td
                 className={
                   statusName === "Aktywny" ?
                     styles.colorGreen
                   : statusName === "Wygasły" ?
                       styles.colorRed
+                  : statusName === "Brak środków" || statusName === "Brak akcji użytkownika" ?
+                      styles.colorDarkRed
+                  : statusName === "Zrealizowane" || statusName === "Oferta zrealizowana" || statusName === "Transakcja zrealizowana" ?
+                      styles.colorDarkGreen
                   :
                     ""
                 }
               >{statusName}</td>
-              {/*convert status*/}
               <td>
-                <div className={styles.buttonWrapper}>
+                <div className={`${styles.buttonWrapper} ${styles.w100}`}>
                   <Button
                     fontColor="white"
                     backgroundColor="darkerGray"

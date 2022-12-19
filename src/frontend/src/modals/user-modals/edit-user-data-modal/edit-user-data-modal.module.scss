@@ -3,4 +3,32 @@
 .contentContainer {
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  
+  .row {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+    
+    .inputContainer {
+      width: 100%;
+      height: auto;
+      
+      &.short {
+        width: 300px;
+      }
+    }
+  }
+  
+  .messageBarContainer {
+    width: 100%;
+    height: 25px;
+  }
 }

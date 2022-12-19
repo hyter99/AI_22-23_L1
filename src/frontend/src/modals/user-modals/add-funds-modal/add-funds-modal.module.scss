@@ -3,4 +3,44 @@
 .contentContainer {
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  
+  .inputContainer {
+    width: 250px;
+    margin-bottom: 10px;
+  }
+
+  .dataRow {
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+
+    .item {
+      font-size: 25px;
+      font-weight: 700;
+      color: $colorBlack;
+      margin-right: 28px;
+      padding-top: 5px;
+
+      &.title {
+        font-size: 30px;
+        padding-top: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .messageBarContainer {
+    width: 100%;
+    height: 25px;
+  }
 }

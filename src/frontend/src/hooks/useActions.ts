@@ -3,12 +3,12 @@ import {bindActionCreators} from "redux";
 
 // **Add other imports and bind them to action creators - when it enlarges**
 import {
-  loginUserActionCreators
+  userActionCreators
 } from "../redux";
 
 export const useActions = () => {
   const dispatch = useDispatch();
   return bindActionCreators(Object.assign({},
-    loginUserActionCreators
+    userActionCreators
   ), dispatch);
 }

@@ -1,25 +1,33 @@
 import React, {useState, useEffect} from "react";
 
 // data
-import { initialMessageBar, initialInputFields, initialInputFieldsErrors } from "./buy-sell-stock-modal.data";
+import { initialInputFields, initialInputFieldsErrors } from "./buy-sell-stock-modal.data";
 import { environment } from "../../../constants/environment-variables";
 
 // functions
 import { IsStringAPositiveInteger } from "../../../functions/is-string-a-positive-integer";
 import { IsStringAPrice } from "../../../functions/is-string-a-price";
+import { IsStringAPositivePrice } from "../../../functions/is-string-a-positive-price";
+import { GetOfferStatusBE } from "../../../functions/get-offer-status-be";
+
+// enum
+import { StockStatusEnum } from "../../../hooks/data-table/useDataTable.types";
+
+// hooks
+import useMessageBar from "../../../hooks/message-bar/useMessageBar";
 
 // redux
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
 
 // interfaces
-import { IMessageBar, IInputFields, IInputFieldsErrors } from "./buy-sell-stock-modal.types";
+import { IInputFields, IInputFieldsErrors } from "./buy-sell-stock-modal.types";
 
-const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: number) => {
+const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [inputFields, setInputFields] = useState<IInputFields>(initialInputFields);
   const [inputFieldsErrors, setInputFieldsErrors] = useState<IInputFieldsErrors>(initialInputFieldsErrors);
   const [isLiveValidation, setIsLiveValidation] = useState<boolean>(false);
-  const [messageBar, setMessageBar] = useState<IMessageBar>(initialMessageBar);
+  const {messageBar, setMessageBar, resetMessageBar} = useMessageBar();
   
   const {accessToken} = useTypedSelector(state => state.login.loginData);
   
@@ -54,9 +62,10 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
     
     // Price check
     let priceErrorMessage = "";
-    if (!IsStringAPrice(inputFields.price)) {
+    //!IsStringAPrice(inputFields.price) || Number(inputFields.price) <= 0
+    if (!IsStringAPositivePrice(inputFields.price)) {
       isError = true;
-      priceErrorMessage = "Podaj poprawną cenę";
+      priceErrorMessage = "Zły format ceny";
     }
 
     setInputFieldsErrors(prev => ({
@@ -96,25 +105,25 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
     e.preventDefault();
     setIsLiveValidation(true);
     
-    if (companyId && validateInputData()) {
+    if (id && validateInputData()) {
       setIsLoading(true);
       
       const fetchUrl = `${environment.backendUrl}/api/make-${isBuyModal ? "buy" : "sell"}-offer`;
       
       const priceToSet = parseFloat(inputFields.price)*100;
       const fetchBody: any = {
-        companyId: companyId,
         quantity: parseInt(inputFields.quantity),
-        status: 0
+        status: GetOfferStatusBE(StockStatusEnum.ACTIVE_OFFERS)
       };
       if (isBuyModal) {
+        fetchBody.companyId = id;
         fetchBody.unitBuyPriceCents = priceToSet;
       }
       else { //isSellModal
+        fetchBody.userStockId = id;
         fetchBody.unitSellPriceCents = priceToSet;
       }
-      
-      console.log("body to set:", fetchBody);
+      //console.log("body to set:", fetchBody);
       
       fetch(fetchUrl, {
         method: 'POST',
@@ -133,7 +142,6 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
             //console.log("Created!");
           }
           else {
-            //TODO - get error message from backend API (fi. when user hasn't got enough stock's quantity)
             //const resData = await response.json();
             setMessageBar({
               message: `Nie udało się złożyć oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,
@@ -141,7 +149,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
               isError: true
             });
           }
-        }).catch(err => {
+        }).catch(() => {
           setMessageBar({
             message: "Wystąpił nieoczekiwany błąd podczas składania oferty",
             isSuccess: false,
@@ -168,7 +176,7 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, companyId?: 
     setInputFields(initialInputFields);
     setInputFieldsErrors(initialInputFieldsErrors);
     setIsLiveValidation(false);
-    setMessageBar(initialMessageBar);
+    resetMessageBar();
   };
   
   return {

@@ -65,21 +65,13 @@ const MyProfileData: React.FC = ({}) => {
           />
         </div>
       </div>
-      {/*TODO - create EditUserDataModal*/}
       <EditUserDataModal
         isOpened={modalsState.isEditDataOpen}
         handleCancelClick={() => handleModalStateChange("isEditDataOpen", false)}
-        data={{
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email
-        }}
       />
-      {/*TODO - create AddFundsModal modal*/}
       <AddFundsModal
         isOpened={modalsState.isAddFundsOpen}
         handleCancelClick={() => handleModalStateChange("isAddFundsOpen", false)}
-        actualBalanceCents={user.balanceCents}
       />
     </div>
   );

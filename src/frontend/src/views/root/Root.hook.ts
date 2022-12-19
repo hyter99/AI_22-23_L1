@@ -7,7 +7,7 @@ import IsUserAuthenticated from "../../functions/is-user-authenticated";
 const useRoot = () => {
   const {accessToken} = useTypedSelector(state => state.login.loginData); //const {accessToken, user: {roles: userRoles}}
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(IsUserAuthenticated(accessToken));
-
+  
   useEffect(() => {
     setIsUserLoggedIn(IsUserAuthenticated(accessToken));
   },[accessToken]);

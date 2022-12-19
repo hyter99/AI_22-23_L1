@@ -5,24 +5,30 @@ export const myProfileStocksTableHeaders: IStockTableHeader[] = [
     id: 1,
     title: "Lp.",
     orderByName: "",
-    percentageWidth: 11
+    percentageWidth: 5
   },
   {
     id: 2,
     title: "Nazwa akcji",
     orderByName: "",
-    percentageWidth: 33
+    percentageWidth: 31
   },
   {
     id: 3,
     title: "Posiadana liczba",
     orderByName: "quantity",
-    percentageWidth: 29
+    percentageWidth: 25
   },
   {
     id: 4,
+    title: "Min. cena",
+    orderByName: "priceCents",
+    percentageWidth: 17
+  },
+  {
+    id: 5,
     title: "",
     orderByName: "",
-    percentageWidth: 27
+    percentageWidth: 22
   }
 ];

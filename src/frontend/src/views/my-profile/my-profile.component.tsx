@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 
 // templates
 import TemplateView from "../../templates/view/view.template";

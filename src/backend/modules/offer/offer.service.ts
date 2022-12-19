@@ -8,8 +8,8 @@ import { CreateSellOfferDto } from './dto/create-sell-offer.dto';
 export class OfferService {
   constructor(private readonly prisma: PrismaService) {}
 
-  createBuyOffer(createBuyOfferDto: CreateBuyOfferDto, userId: number) {
-    return this.prisma.buyOffer.create({
+  async createBuyOffer(createBuyOfferDto: CreateBuyOfferDto, userId: number) {
+    return await this.prisma.buyOffer.create({
       data: {
         userId: userId,
         companyId: createBuyOfferDto.companyId,
@@ -23,6 +23,22 @@ export class OfferService {
     });
   }
 
+  async cancelBuyOffer(buyOfferId: number) {
+    return await this.prisma.buyOffer.delete({
+      where:{
+        buyOfferId: buyOfferId
+      }
+    });
+    // return await this.prisma.buyOffer.update({
+    //   where:{
+    //     buyOfferId: buyOfferId
+    //   },
+    //   data:{
+    //     status: 'EXPIRED'
+    //   }
+    // });
+  }
+  
   async createSellOffer(
     createSellOfferDto: CreateSellOfferDto,
     userId: number,
@@ -61,5 +77,21 @@ export class OfferService {
         sellOfferId: true,
       },
     });
+  }
+
+  async cancelSellOffer(sellOfferId: number) {
+    return await this.prisma.sellOffer.delete({
+      where:{
+        sellOfferId: sellOfferId
+      }
+    });
+    // return await this.prisma.sellOffer.update({
+    //   where:{
+    //     sellOfferId: sellOfferId
+    //   },
+    //   data:{
+    //     status: 'EXPIRED'
+    //   }
+    // });
   }
 }

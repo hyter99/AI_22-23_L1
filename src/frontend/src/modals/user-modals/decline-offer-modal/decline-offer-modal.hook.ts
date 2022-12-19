@@ -1,17 +1,74 @@
 import React, {useState, useEffect} from "react";
 
-const useDeclineOfferModal = (isBuyModal: boolean) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  // TODO - write logic of this modal
+// hooks
+import useMessageBar from "../../../hooks/message-bar/useMessageBar";
+import { environment } from "../../../constants/environment-variables";
 
-  const handleSubmitClick = (e: React.FormEvent) => {
+// redux
+import { useTypedSelector } from "../../../hooks/useTypedSelector";
+
+const useDeclineOfferModal = (isBuyModal: boolean, isOpened: boolean, id?: number) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {messageBar, setMessageBar, resetMessageBar} = useMessageBar();
+  
+  const {accessToken} = useTypedSelector(state => state.login.loginData);
+
+  useEffect(() => {
+    resetData();
+  },[isOpened]);
+  
+  const handleSubmitClick = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-    // TODO - write logic of this function
-    // other logic (which depends on what type is the modal: buy or sell) ...
+    
+    if (id) {
+      try {
+        setIsLoading(true);
+        const response = await fetch(`${environment.backendUrl}/api/cancel-${isBuyModal ? "buy" : "sell"}-offer/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        //console.log("wynik:", await response.json());
+        setIsLoading(false);
+
+        if (response.ok) {
+          setMessageBar({
+            message: `Poprawnie anulowano ofertę ${isBuyModal ? "kupna" : "sprzedaży"}`,
+            isSuccess: true,
+            isError: false
+          });
+        }
+        else {
+          setMessageBar({
+            message: `Nie udało się anulować oferty ${isBuyModal ? "kupna" : "sprzedaży"}`,
+            isSuccess: false,
+            isError: true
+          });
+
+          throw new Error("Can't decline offer");
+        }
+      }
+      catch(err) {
+        setIsLoading(false);
+        throw new Error("Can't decline offer");
+      }
+    }
+    else {
+      throw new Error("Can't decline offer");
+    }
+  };
+
+  const resetData = () => {
+    setIsLoading(false);
+    resetMessageBar();
   };
   
   return {
     isLoading,
+    messageBar,
     handleSubmitClick
   };
 };

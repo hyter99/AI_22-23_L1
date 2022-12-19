@@ -96,7 +96,8 @@
             }
 
             &.value {
-              color: $colorDarkWhite2
+              color: $colorDarkWhite2;
+              text-align: end;
             }
           }
 

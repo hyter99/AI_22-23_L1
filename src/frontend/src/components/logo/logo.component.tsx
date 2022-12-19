@@ -3,9 +3,13 @@ import React from "react";
 // styles
 import styles from "./logo.module.scss";
 
-//SVGS
+// SVGS
 import SVGLoginImage from "../../assets/svg/stock-logo.svg";
 
+// components
+import { Link } from "react-router-dom";
+
+// interfaces
 interface ILogo {
   size: "normal" | "small";
 }
@@ -13,7 +17,10 @@ interface ILogo {
 const Logo:React.FC<ILogo> = ({size}) => {
 
   return (
-    <div className={styles.container}>
+    <Link
+      to="/"
+      className={styles.container}
+    >
       <div className={`${styles.inline} ${size === "small" ? styles.smallPadding : ""}`}>
         <img
           src={SVGLoginImage}
@@ -25,7 +32,7 @@ const Logo:React.FC<ILogo> = ({size}) => {
         </div>
       </div>
       <div className={styles.pad}/>
-    </div>
+    </Link>
   );
 };
 

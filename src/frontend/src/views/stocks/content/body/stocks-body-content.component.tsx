@@ -30,7 +30,14 @@ const StocksBodyContent: React.FC<IStocksBodyContent> = ({data, isLogged, handle
             <td>{`${index+1}.`}</td>
             <td>{item.name}</td>
             <td>{item.quantity}</td>
-            <td>{`${CentsToString(item.priceCents)} PLN`}</td>
+            <td>
+              {
+                item.priceCents ?
+                  `${CentsToString(item.priceCents)} PLN`
+                :
+                  "-"
+              }
+            </td>
             <td>
               {
                 isLogged ?

@@ -47,7 +47,7 @@ const TemplateActionModal: React.FC<IActionModal> = ({
     >
       <form
         className={styles.modalContainer}
-        onSubmit={(e: React.FormEvent) => onSubmitClick(e)}
+        onSubmit={!isSubmitButtonDisabled ? onSubmitClick : undefined}
         noValidate
       >
         <div className={styles.titleContainer}>

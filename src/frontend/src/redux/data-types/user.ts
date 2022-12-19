@@ -12,5 +12,5 @@ export interface ILogin {
 export interface INewUserData {
   firstName: string;
   lastName: string;
-  email: string;
+  email: string | null;
 }

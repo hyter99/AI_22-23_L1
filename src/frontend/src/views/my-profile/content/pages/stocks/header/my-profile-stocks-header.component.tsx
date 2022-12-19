@@ -18,7 +18,7 @@ interface IMyProfileStocksHeader {
 
 const MyProfileStocksHeader: React.FC<IMyProfileStocksHeader> = ({toggleOrderBy, searchInput}) => {
   const isOrderByHeader = (orderByName: ISearchOrderBy) => {
-    return (orderByName === "quantity");
+    return (orderByName === "quantity" || orderByName === "priceCents");
   };
   
   return (

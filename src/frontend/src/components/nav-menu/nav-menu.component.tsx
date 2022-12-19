@@ -25,7 +25,7 @@ interface INavMenu {
 const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
   const selectedNavItems = isLogged ? AuthenticatedNavItems : UnauthenticatedNavItems;
   const {balanceCents, firstName, lastName} = useTypedSelector(state => state.login.loginData.user);
-  const {logoutUser} = useActions();
+  const {logoutUserLocal} = useActions();
 
   return (
     <div className={`${styles.container}`}>
@@ -50,7 +50,7 @@ const NavMenu: React.FC<INavMenu> = ({isLogged}) => {
                 <div
                   key={item.id}
                   className={`noSelect ${styles.navItem}`}
-                  onClick={() => logoutUser()}
+                  onClick={() => logoutUserLocal()}
                 >
                   {item.name}
                 </div>

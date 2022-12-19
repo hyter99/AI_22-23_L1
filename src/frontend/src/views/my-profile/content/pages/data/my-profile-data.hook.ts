@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 
 // data
 import { initialMyProfileDataModalsState } from "./my-profile-data.data";

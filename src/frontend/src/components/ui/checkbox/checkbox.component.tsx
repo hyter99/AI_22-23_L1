@@ -9,17 +9,24 @@ interface ICheckbox {
   value: string;
   checked?: boolean;
   label: string;
+  labelColor: "white" | "black";
   handleChange: (name: string, value: string, checked: boolean) => void;
   isError?: boolean;
   disabled?: boolean;
 }
 
 const Checkbox: React.FC<ICheckbox> = ({
-    name, value, checked, label, handleChange, isError, disabled
+    name, value, checked, label, labelColor, handleChange, isError, disabled
   }) => {
 
   return (
-    <label className={`noSelect ${styles.container} ${disabled ? styles.disabledContainer : ""} ${isError ? styles.error : ""}`}>
+    <label className={`
+      noSelect
+      ${styles.container}
+      ${disabled ? styles.disabledContainer : ""}
+      ${isError ? styles.error : ""}
+      ${labelColor === "black" ? styles.black : ""}
+    `}>
       {label}
       <input
         className={disabled ? styles.disabledInput : ""}
