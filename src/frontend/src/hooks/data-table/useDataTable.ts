@@ -59,42 +59,45 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
   //   console.log("data:", data);
   // },[data]);
 
-  const fetchData = (isStart?: boolean) => {
+  const fetchData = (isStart?: boolean, useInitialSearchInput?: boolean) => {
     // Get and change the page
-    const pageToFetch = isStart ? FIRST_PAGE_NUM : currentPage+1;
+    const pageToFetch: number = isStart ? FIRST_PAGE_NUM : currentPage+1;
     setCurrentPage(pageToFetch);
+    
+    // Get searchInput to use
+    const searchInputToFetch: IStocksInputFields = useInitialSearchInput ? initialStocksInputFields : searchInput;
 
     // Prepare url with queryParams
     const fetchUrl: string = API_URL.concat(
       `?page=${pageToFetch}`,
       `&take=${ELEMENTS_PER_PAGE}`,
-      searchInput.searchField !== "" ? `&companyName=${searchInput.searchField}` : "",
-      searchInput.status !== StockStatusEnum.ALL_OFFERS ? `&status=${GetOfferStatusBE(searchInput.status)}` : "",
+      searchInputToFetch.searchField !== "" ? `&companyName=${searchInputToFetch.searchField}` : "",
+      searchInputToFetch.status !== StockStatusEnum.ALL_OFFERS ? `&status=${GetOfferStatusBE(searchInputToFetch.status)}` : "",
       // There is other 'orderBy' name for 'price' in 'mySellOffers' and 'myBuyOffers' views
       // There is other 'orderBy' name for 'quantity' in 'myStockActions' view
-      searchInput.orderBy !== "" ?
+      searchInputToFetch.orderBy !== "" ?
         `&orderBy=${
           selectedDataType === "myBuyOffers" ?
-            searchInput.orderBy === "priceCents" ?
+            searchInputToFetch.orderBy === "priceCents" ?
               "unitBuyPriceCents"
             :
-              searchInput.orderBy
+              searchInputToFetch.orderBy
           : selectedDataType === "mySellOffers" ?
-              searchInput.orderBy === "priceCents" ?
+              searchInputToFetch.orderBy === "priceCents" ?
                 "unitSellPriceCents"
               :
-                searchInput.orderBy
+                searchInputToFetch.orderBy
           : selectedDataType === "myStockActions" ?
-            searchInput.orderBy === "quantity" ?
+                searchInputToFetch.orderBy === "quantity" ?
               "stockQuantity"
             :
-              searchInput.orderBy
+                  searchInputToFetch.orderBy
           :
-            searchInput.orderBy
+                searchInputToFetch.orderBy
         }`
       :
         "",
-      `&orderType=${searchInput.isOrderTypeAscending ? "asc" : "desc"}`
+      `&orderType=${searchInputToFetch.isOrderTypeAscending ? "asc" : "desc"}`
     );
     /* TO BE REMOVED */
     //console.log("fetchUrl:", fetchUrl);
@@ -249,7 +252,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
     setDataModals(initialDataModals);
     setSelectedItemIdx(-1);
     setIsFirstRender(false);
-    fetchData(true);
+    fetchData(true, true);
   };
 
   return {
