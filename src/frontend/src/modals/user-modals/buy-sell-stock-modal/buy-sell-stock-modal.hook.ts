@@ -110,7 +110,11 @@ const useBuySellStockModal = (isOpen: boolean, isBuyModal: boolean, id?: number)
       
       const fetchUrl = `${environment.backendUrl}/api/make-${isBuyModal ? "buy" : "sell"}-offer`;
       
-      const priceToSet = parseFloat(inputFields.price)*100;
+      // Prepare priceToSet
+      // Instead we could use 'parseInt((parseFloat(inputFields.price)*100).toFixed(0))' - toFixed() function is great to rounding up floating values (answer from here: https://stackoverflow.com/questions/21472828/javascript-multiplying-by-100-giving-weird-result)
+      const priceToSet = Math.round(parseFloat(inputFields.price)*100);
+      //console.log("Price to set:", priceToSet);
+      
       const fetchBody: any = {
         quantity: parseInt(inputFields.quantity),
         status: GetOfferStatusBE(StockStatusEnum.ACTIVE_OFFERS)

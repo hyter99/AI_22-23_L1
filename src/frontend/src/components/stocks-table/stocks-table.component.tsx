@@ -12,7 +12,7 @@ interface IStocksTable {
   dataLength: number;
   isLoading?: boolean;
   isEndOfData?: boolean;
-  fetchData: (isStart?: boolean) => void;
+  fetchData: (isStart?: boolean, useInitialSearchInput?: boolean) => void;
   headerContent: ReactNode;
   bodyContent: ReactNode;
 }
