@@ -100,7 +100,7 @@ function useDataTable<T>(selectedDataType: ISelectedDataType) {
       `&orderType=${searchInputToFetch.isOrderTypeAscending ? "asc" : "desc"}`
     );
     /* TO BE REMOVED */
-    console.log("fetchUrl:", fetchUrl);
+    //console.log("fetchUrl:", fetchUrl);
 
     // Prepare headers for fetch
     const fetchHeaders: any = {
