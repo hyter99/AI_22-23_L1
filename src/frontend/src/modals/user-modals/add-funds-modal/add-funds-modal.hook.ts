@@ -45,7 +45,7 @@ const useAddFundsModal = (isOpened: boolean) => {
     setIsLiveValidation(true);
     
     if (validateData()) {
-      const amountToAdd = parseFloat(inputAmount)*100;
+      const amountToAdd = Math.round(parseFloat(inputAmount)*100);
       const fetchUrl = `${environment.backendUrl}/api/profile/add-wallet`;
       fetch(fetchUrl, {
         method: 'POST',
