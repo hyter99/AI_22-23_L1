@@ -6,8 +6,8 @@ import { MyProfilePagesEnum } from "./my-profile-content.data";
 import { MyProfileAvailableUrlEnum } from "../my-profile.data";
 
 // functions
-import {TranslateEngPlMyProfilePageName} from "../../../functions/translate-pl-eng-my-profile-page-name";
-import {TranslatePlEngMyProfilePageName} from "../../../functions/translate-eng-pl-my-profile-page-name";
+import {TranslateEngPlMyProfilePageName} from "../../../functions/translate-eng-pl-my-profile-page-name";
+import {TranslatePlEngMyProfilePageName} from "../../../functions/translate-pl-eng-my-profile-page-name";
 import { ChangeUrlSuffix } from "../../../functions/change-url-suffix";
 
 const useMyProfileContent = () => {

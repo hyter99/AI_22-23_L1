@@ -2,17 +2,17 @@
 import { MyProfilePagesEnum } from "../views/my-profile/content/my-profile-content.data";
 import { MyProfileAvailableUrlEnum } from "../views/my-profile/my-profile.data";
 
-export const TranslatePlEngMyProfilePageName = (currentPageName: MyProfileAvailableUrlEnum): MyProfilePagesEnum => {
+export const TranslateEngPlMyProfilePageName = (currentPageName: MyProfilePagesEnum): MyProfileAvailableUrlEnum => {
   switch (currentPageName) {
-    case MyProfileAvailableUrlEnum.DATA:
-      return MyProfilePagesEnum.DATA;
-    case MyProfileAvailableUrlEnum.STOCKS:
-      return MyProfilePagesEnum.STOCKS;
-    case MyProfileAvailableUrlEnum.BUY_OFFERS:
-      return MyProfilePagesEnum.BUY_OFFERS;
-    case MyProfileAvailableUrlEnum.SELL_OFFERS:
-      return MyProfilePagesEnum.SELL_OFFERS;
+    case MyProfilePagesEnum.DATA:
+      return MyProfileAvailableUrlEnum.DATA;
+    case MyProfilePagesEnum.STOCKS:
+      return MyProfileAvailableUrlEnum.STOCKS;
+    case MyProfilePagesEnum.BUY_OFFERS:
+      return MyProfileAvailableUrlEnum.BUY_OFFERS;
+    case MyProfilePagesEnum.SELL_OFFERS:
+      return MyProfileAvailableUrlEnum.SELL_OFFERS;
     default:
-      return MyProfilePagesEnum.DATA;
+      return MyProfileAvailableUrlEnum.DATA;
   }
 };
