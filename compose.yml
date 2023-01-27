@@ -2,6 +2,7 @@ services:
     app:
         build: .
         image: ai2223l1/stock:latest
+        restart: unless-stopped
         networks:
             - main-network
         ports:

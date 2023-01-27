@@ -1,0 +1,16 @@
+services:
+    migrate:
+        build:
+            context: .
+            dockerfile: dev.Dockerfile
+        image: ai2223l1/stock:dev
+        networks:
+          - main-network
+        command: ["npx", "prisma", "migrate", "reset", "--force"]
+        volumes:
+          - ./prisma/:/usr/local/stock-app/prisma
+        env_file:
+          - .env
+        
+networks:
+    main-network:

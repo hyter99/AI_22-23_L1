@@ -10,7 +10,7 @@ USER node
 WORKDIR /tmp
 
 # Copy Node dependency lists
-COPY --chown=node package.json package-lock.json .
+COPY --chown=node package.json package-lock.json ./
 
 # Install Node dependencies
 RUN npm ci
